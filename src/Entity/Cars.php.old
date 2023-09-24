@@ -1,0 +1,253 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\CarsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+//use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+//use Symfony\Component\Form\FormTypeInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+#[Vich\Uploadable]
+#[ORM\Entity(repositoryClass: CarsRepository::class)]
+class Cars
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $Brand = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $Model = null;
+
+    #[ORM\Column]
+    private ?int $Year = null;
+
+    #[ORM\Column]
+    private ?int $kilometers = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
+    /*#[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $Image1 = null;*/
+
+    #[ORM\Column(length: 50)]
+    private ?string $TypeFuel = null;
+
+    /*#[ORM\OneToMany(targetEntity: "App\Entity\Images", mappedBy: "cars", cascade: ["persist", "remove"])]
+
+    private $images; //champs One TO Many vers Images (champ image)*/
+
+    //#[ORM\Column(type: "string", length: 255, nullable: true)]
+    //private ?string $imageName = null; //ajouté
+
+    #[ORM\OneToMany(targetEntity: "App\Entity\Images", mappedBy: "cars", cascade: ["persist", "remove"])]
+    #[Vich\UploadableField(mapping: "cars", fileNameProperty: "imageName", mimeType: "image/jpeg")]
+    private $imageFile; //ajouté
+
+    #[ORM\Column(type: "datetime_immutable", nullable: true)]
+    #[Assert\NotNull()]
+    private ?\DateTimeImmutable $updatedAt = null;//ajouté
+    //ancienne relation onetomany
+    /*#[ORM\OneToMany(mappedBy: 'cars', targetEntity: Images::class)]
+    private Collection $Images;
+*/
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getBrand(): ?string
+    {
+        return $this->Brand;
+    }
+
+    public function setBrand(string $Brand): self
+    {
+        $this->Brand = $Brand;
+
+        return $this;
+    }
+
+    public function getModel(): ?string
+    {
+        return $this->Model;
+    }
+
+    public function setModel(string $Model): self
+    {
+        $this->Model = $Model;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->Year;
+    }
+
+    public function setYear(int $Year): self
+    {
+        $this->Year = $Year;
+
+        return $this;
+    }
+
+    public function getKilometers(): ?int
+    {
+        return $this->kilometers;
+    }
+
+    public function setKilometers(int $kilometers): self
+    {
+        $this->kilometers = $kilometers;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /*public function getImage1()
+    {
+        return $this->Image1;
+    }
+
+    public function setImage1($Image1): self
+    {
+        $this->Image1 = $Image1;
+
+        return $this;
+    }*/
+
+    public function getTypeFuel(): ?string
+    {
+        return $this->TypeFuel;
+    }
+
+    public function setTypeFuel(string $TypeFuel): self
+    {
+        $this->TypeFuel = $TypeFuel;
+
+        return $this;
+    }
+    /*public function getImageName(): ?string //ajouté
+    {
+        return $this->imageName;
+    }*/
+
+    /*public function setImageName(?string $imageName): self //ajouté
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }*/
+
+    public function setImageFile(?File $imageFile = null): self //ajouté
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getImageFile(): ?File //ajouté
+    {
+        return $this->imageFile;
+    }
+    public function getUpdatedAt(): ?\DateTimeImmutable //ajouté
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self //ajouté
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getImages(): Collection //ajouté
+    {
+        return $this->images;
+    }
+
+    public function setImages(?File $image): void //self //ajouté
+    {
+        $this->$image = $image;
+        if (null !== $image) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        /*if (!$this->images->contains($image)) { // si pas present dans le tableau
+            $this->images[] = $image; // Ajout d'image dans la table existante
+            $image->setCars($this); // ajouter dans le vehicule actuel dans la table Images (entité)
+
+
+        }*/
+        /*if (!$this->images->contains($image)) { // si pas present dans le tableau
+            $this->images[] = $image; // Ajout d'image dans la table existante
+            for ($i = 0; $i < sizeof($this->$image); $i++) {
+                $image->setCars($this); // ajouter dans le vehicule actuel dans la table Images (entité)
+            }
+
+        }*/
+
+        //return $this;
+    }
+
+    public function __toString(){
+        return "";
+    }
+    /**
+     * @return Collection<int, Images>
+     */
+    //Images reference classe Image
+    /*public function getImages(): Collection
+    {
+        return $this->Images;
+    }*/
+
+    /*public function addImage(Images $image): self
+    {
+        if (!$this->Images->contains($image)) {
+            $this->Images->add($image);
+            $image->setCars($this);
+        }
+
+        return $this;
+    }*/
+
+    /*public function removeImage(Images $image): self
+    {
+        if ($this->Images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getCars() === $this) {
+                $image->setCars(null);
+            }
+        }
+
+        return $this;
+    }*/
+}

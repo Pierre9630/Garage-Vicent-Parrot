@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ImagesRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImagesRepository::class)]
@@ -15,19 +14,11 @@ class Images
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
-    #[ORM\Column(type: Types::BLOB)]
-    /**
-     * @Vich\UploadableField(mapping="car_images", fileNameProperty="name")
-     */
-    private $ImageFile = null;
-
-    #[ORM\ManyToOne(targetEntity:"App\Entity\Cars", inversedBy:"images")]
-
-    #[ORM\JoinColumn(nullable:true)]
-
-    private $cars;
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cars $cars_id = null;
 
     public function getId(): ?int
     {
@@ -36,36 +27,24 @@ class Images
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getImageFile()
+    public function getCarsId(): ?Cars
     {
-        return $this->ImageFile;
+        return $this->cars_id;
     }
 
-    public function setImageFile($ImageFile): static
+    public function setCarsId(?Cars $cars_id): self
     {
-        $this->ImageFile = $ImageFile;
-
-        return $this;
-    }
-
-    public function getCars()
-    {
-        return $this->cars;
-    }
-
-    public function setCars($cars): static
-    {
-        $this->cars = $cars;
+        $this->cars_id = $cars_id;
 
         return $this;
     }
