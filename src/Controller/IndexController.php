@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Cars;
+use App\Entity\Contact;
+use App\Form\ContactType;
 use App\Form\SearchFormType;
 //use App\Model\CarsData;
 use App\Repository\CarsRepository;
@@ -17,7 +19,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\ResSlots;
+//use App\Service\ResSlots;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormTypeInterface;
@@ -108,15 +110,26 @@ class IndexController extends AbstractController
         ]);
     }
 
-#[Route('/comment', name: 'app_img')]
-    public function commentar(Request $req, SluggerInterface $sl){
-
+/*#[Route('/contact', name: 'app_img')]
+    public function contact(Request $req, SluggerInterface $sl,EntityManagerInterface $entityManager){
+        $contact = new Contact();
+        $searchType = $this->createForm(ContactType::class,$contact);
+        $repository = $entityManager->getRepository(Contact::class);
+        $searchType->handleRequest($req);
+        if($searchType->isSubmitted() && $searchType->isValid()){
+            //dd($cars);
+            $criteria = $searchType->getData();
+            $contact = $repository->findBySearch($criteria);
+            //dd($cars);
+        }
 
 
         return $this->render('index/comment.html.twig',[
 
+            'contact' => $contact,
+            'form' => $searchType->createView(),
         ]);
-    }
+    }*/
 
 
 }

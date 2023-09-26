@@ -39,7 +39,7 @@ class CarsController extends AbstractController
                 $folder = 'cars';
 
                 //Appel du Service PictureService.php
-                $file = $pictureService->add($image,$folder,500,500);
+                $file = $pictureService->add($image,$folder,800,600);
 
                 $img = new Images();
                 $img->setName($file);
@@ -67,12 +67,25 @@ class CarsController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_cars_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cars $car, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Cars $car, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
         $form = $this->createForm(CarsType::class, $car);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images = $form->get('images')->getData();
+            foreach($images as $image){
+                //définir le dossier de destination
+                $folder = 'cars';
+
+                //Appel du Service PictureService.php
+                $file = $pictureService->add($image,$folder,800,600);
+
+                $img = new Images();
+                $img->setName($file);
+                $car->addImage($img);
+
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_cars_index', [], Response::HTTP_SEE_OTHER);

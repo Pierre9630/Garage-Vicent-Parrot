@@ -37,8 +37,11 @@ class Cars
     #[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Images::class, orphanRemoval: true,cascade: ["persist", "remove"])]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Contact::class)]
+    #[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Contact::class, orphanRemoval: true,cascade: ["persist", "remove"])]
     private Collection $contact_id;
+
+    #[ORM\Column(length: 50)]
+    private ?string $typeFuel = null;
 
     public function __construct()
     {
@@ -183,6 +186,18 @@ class Cars
                 $contactId->setCarsId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeFuel(): ?string
+    {
+        return $this->typeFuel;
+    }
+
+    public function setTypeFuel(string $typeFuel): static
+    {
+        $this->typeFuel = $typeFuel;
 
         return $this;
     }
