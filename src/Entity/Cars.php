@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CarsRepository::class)]
+
 class Cars
 {
     #[ORM\Id]
@@ -48,6 +49,9 @@ class Cars
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modifiedAt = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $reference = null;
 
     public function __construct()
     {
@@ -231,4 +235,17 @@ class Cars
 
         return $this;
     }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): static
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
 }

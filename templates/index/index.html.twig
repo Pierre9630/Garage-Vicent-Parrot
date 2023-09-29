@@ -61,7 +61,6 @@
                             <div class="carousel-item">
                                 <img class="d-block w-100" src="..." alt="Third slide">
                             </div>#}
-                            {% set counter = counter + 1 %}
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleControls{{ counter }}" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -72,9 +71,10 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
+                    {% set counter = counter + 1 %}
                     {#  <img src="" alt="" class="card-img-top">#}
                     <div class="card-body">
-                        <h3 class="card-title">{{car.brand }} {{ car.model }}</h3>
+                        <h3 class="card-title" ><a href="{{ path('app_cars_show', {id:car.id }) }}">{{car.brand }} {{ car.model }}</a></h3>
                         <h4 class="card-title">{{car.model }}</h4>
                         <h5 class="card-kilometers"> {{car.kilometers }} km</h5>
                         <p class="card-text">{{ counter }}</p>

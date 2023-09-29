@@ -2,14 +2,16 @@
 
 namespace App\DataFixtures;
 
+use AllowDynamicProperties;
 use App\Entity\Images;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Cars;
 use Faker;
 
-class CarsFixtures extends Fixture //implements DependentFixtureInterface
+#[AllowDynamicProperties] class CarsFixtures extends Fixture //implements DependentFixtureInterface
 {
     const Brand = [
         'Volkswagen',
@@ -71,15 +73,16 @@ class CarsFixtures extends Fixture //implements DependentFixtureInterface
         10000,
         10000
     ];
-    /*const createdAt = [
+    const createdAt = [
+        '2023-09-25 10:00:00',
         '2023-09-26 10:00:00',
-        '2023-09-26 10:00:00',
-        '2023-09-26 10:00:00',
-        '2023-09-26 10:00:00',
-        '2023-09-26 10:00:00',
-        '2023-09-26 10:00:00'
+        '2023-09-27 10:00:00',
+        '2023-09-29 12:00:00',
+        '2023-09-29 10:00:00',
+        '2023-09-30 10:00:00',
+        '2023-10-01 10:00:00'
 
-    ];*/
+    ];
    /* const Imagename = [
         'Golf',
         'ClasseE',
@@ -89,20 +92,25 @@ class CarsFixtures extends Fixture //implements DependentFixtureInterface
         'A4'
     ];*/
 
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
     public function load(ObjectManager $manager): void
     {
-    $faker = new Faker\Factory();
+    //$faker = new Faker\Factory();
         foreach (self::Brand as $Index => $BrandName) {
             $car = new Cars();
+            $carsRepository = $this->entityManager->getRepository(\App\Entity\Cars::class);
             $car->setBrand($BrandName);
             $car->setModel( (self::Model[$Index]));
             $car->setYear( (self::Year[$Index]));
             $car->setKilometers((self::Kilometers[$Index]));
             $car->setDescription( (self::Description[$Index]));
             $car->setTypeFuel( (self::Type_fuel[$Index]));
-            $car->setCreatedAt(new \DateTimeImmutable());
+            $car->setCreatedAt(new \DateTimeImmutable(self::createdAt[$Index]));
             $car->setPrice(self::price[$Index]);
-            //$Images = $this->getDependencies();
+            $car->setReference($carsRepository->generateReferenceForDate(new \DateTimeImmutable(self::createdAt[$Index])));            //$Images = $this->getDependencies();
             //$car->addImage( $this->getReference($Images[$Index]));
 
             /*if($Index == 3){
