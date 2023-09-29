@@ -42,8 +42,8 @@ class IndexController extends AbstractController
         }
         $pagination = $paginator->paginate(
             $repository->paginateCars(),
-            $req->query->get('page',1),
-            5
+            /*$req->query->get('page',2),
+            5*/
         );
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',

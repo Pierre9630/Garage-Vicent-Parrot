@@ -43,6 +43,12 @@ class Cars
     #[ORM\Column(length: 50)]
     private ?string $typeFuel = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $modifiedAt = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -168,7 +174,7 @@ class Cars
         return $this->contact_id;
     }
 
-    public function addContactId(Contact $contactId): static
+    public function addContactId(Contact $contactId): self
     {
         if (!$this->contact_id->contains($contactId)) {
             $this->contact_id->add($contactId);
@@ -178,7 +184,7 @@ class Cars
         return $this;
     }
 
-    public function removeContactId(Contact $contactId): static
+    public function removeContactId(Contact $contactId): self
     {
         if ($this->contact_id->removeElement($contactId)) {
             // set the owning side to null (unless already changed)
@@ -195,9 +201,33 @@ class Cars
         return $this->typeFuel;
     }
 
-    public function setTypeFuel(string $typeFuel): static
+    public function setTypeFuel(string $typeFuel): self
     {
         $this->typeFuel = $typeFuel;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(?\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }

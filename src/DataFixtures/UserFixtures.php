@@ -6,28 +6,43 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
-    const Users = [
-        'John',
-        'Kath',
-        'Aziz',
-        'Vlad',
+    const Emails = [
+        'John@thebest.us',
+        'Kath@vodafone.de',
+        'Aziz@gmail.ly',
+        'Vlad@runet.ru',
     ];
     const Pass = [
         'America!',
         'Deutschland!',
-        'Allah!',
+        'Libia!',
         'Russia!',
     ];
-    const Names = [
-        'John Doe',
-        'Katherine Neu',
-        'Aziz Abdoul',
-        'Vladmir Poutine',
+    const FirstNames = [
+        'Doe',
+        'Neu',
+        'Abdel',
+        'Poutine',
     ];
+
+    const LastNames = [
+        'John',
+        'Katherine',
+        'Aziz',
+        'Vladmir',
+    ];
+
+    /*const PhoneNumbers = [
+        '19631776',
+        '19891939',
+        '9112001',
+        '19452022',
+    ];*/
 
     public function __construct(UserPasswordHasherInterface $hasher)
     {
@@ -41,13 +56,16 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        foreach (self::Users as $Index => $UserName){
+        foreach (self::Emails as $Index => $Emails){
             $user = new User();
-            $user->setUsername($UserName);
+            $user->setEmail($Emails);
 
             $password = $this->hasher->hashPassword($user,self::Pass[$Index]);
             $user->setPassword($password);
-            $user->SetName(self::Names[$Index]);
+            $user->setFirstname(self::FirstNames[$Index]);
+            $user->setLastname(self::LastNames[$Index]);
+            //$user->setPhone(self::PhoneNumbers[$Index]);
+            //$this->addReference('user-reference', $user);
             /*if($Index == 3){
                 dd($UserName.' '. self::Pass[$Index]);
             }*/
@@ -72,6 +90,12 @@ class UserFixtures extends Fixture
         $manager->persist($user);
         $manager->flush();
         */
+    }
+
+    public function getOrder()
+    {
+        // TODO: Implement getOrder() method.
+        return 10;
     }
 }
 /*

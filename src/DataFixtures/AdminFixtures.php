@@ -10,15 +10,20 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminFixtures extends Fixture
 {
-    const Users = [
-        'Ptuner',
-        'PierreAdmin',
+    const Emails = [
+        'Ptuner@Ptuner.com',
+        'PierreAdmin@admin.com',
     ];
     const Pass = [
         'test44',
         'test44',
     ];
-    const Names = [
+    const FirstNames = [
+        'Pierre',
+        'Pierre',
+    ];
+
+    const LastNames = [
         'Pierre',
         'Pierre',
     ];
@@ -35,14 +40,15 @@ class AdminFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        foreach (self::Users as $Index => $UserName){
+        foreach (self::Emails as $Index => $Emails){
             $user = new User();
-            $user->setUsername($UserName);
+            $user->setEmail($Emails);
 
             $password = $this->hasher->hashPassword($user,self::Pass[$Index]);
             $user->setRoles(['ROLE_ADMIN']);
             $user->setPassword($password);
-            $user->SetName(self::Names[$Index]);
+            $user->setFirstname(self::FirstNames[$Index]);
+            $user->setLastname(self::LastNames[$Index]);
             /*if($Index == 3){
                 dd($UserName.' '. self::Pass[$Index]);
             }*/

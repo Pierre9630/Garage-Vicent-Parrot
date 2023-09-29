@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Products;
+//use App\Entity\Products;
+use AllowDynamicProperties;
 use App\Entity\User;
 use App\Form\UserFormType;
 use App\Repository\UserRepository;
@@ -15,7 +16,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\SecurityBundle\Security;
 
-#[Route('/user')]
+#[AllowDynamicProperties]
+#[Route('/user')]//, name:"app_user")]
 class UserController extends AbstractController
 {
     public function __construct(Security $security)
@@ -25,12 +27,12 @@ class UserController extends AbstractController
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $repository = $entityManager->getRepository(Products::class);
+        $repository = $entityManager->getRepository(User::class);
 
         return $this->render('user/index.html.twig', [
             'user' => $this->security->getUser(),
             //'admins' => $userRepository->foundAdmins(),
-            'products'=>$repository->findAll(),
+            //'products'=>$repository->findAll(),
         ]);
     }
 

@@ -7,8 +7,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Cars;
+use Faker;
 
-class CarsFixtures extends Fixture implements DependentFixtureInterface
+class CarsFixtures extends Fixture //implements DependentFixtureInterface
 {
     const Brand = [
         'Volkswagen',
@@ -16,7 +17,8 @@ class CarsFixtures extends Fixture implements DependentFixtureInterface
         'Citroen',
         'Renault',
         'Alfa Romeo',
-        'Audi'
+        'Audi',
+        'Porsche'
     ];
     const Model = [
         'Golf',
@@ -24,7 +26,8 @@ class CarsFixtures extends Fixture implements DependentFixtureInterface
         'C3',
         'Megane RS',
         'Giulietta',
-        'A4'
+        'A4',
+        '911'
     ];
     const Year = [
         2016,
@@ -32,41 +35,63 @@ class CarsFixtures extends Fixture implements DependentFixtureInterface
         2019,
         2018,
         2015,
-        2018
+        2018,
+        2020
     ];const Kilometers = [
         120000,
         60000,
         130000,
         70000,
         150000,
-        50000
+        50000,
+        80000
     ];const Description = [
         '2016',
         '2020',
         '2019',
         '2018',
         '2015',
-        '2018'
+        '2018',
+        '2020'
     ];const Type_fuel = [
         'essence',
         'diesel',
         'diesel',
         'essence',
         'essence',
-        'diesel'
+        'diesel',
+        'essence'
     ];
-    const Imagename = [
+    const price = [
+        10000,
+        10000,
+        10000,
+        10000,
+        10000,
+        10000,
+        10000
+    ];
+    /*const createdAt = [
+        '2023-09-26 10:00:00',
+        '2023-09-26 10:00:00',
+        '2023-09-26 10:00:00',
+        '2023-09-26 10:00:00',
+        '2023-09-26 10:00:00',
+        '2023-09-26 10:00:00'
+
+    ];*/
+   /* const Imagename = [
         'Golf',
         'ClasseE',
         'C3',
         'RS',
         'Giuletta',
         'A4'
-    ];
+    ];*/
 
     public function load(ObjectManager $manager): void
     {
-
+    $faker = new Faker\Factory();
         foreach (self::Brand as $Index => $BrandName) {
             $car = new Cars();
             $car->setBrand($BrandName);
@@ -75,6 +100,8 @@ class CarsFixtures extends Fixture implements DependentFixtureInterface
             $car->setKilometers((self::Kilometers[$Index]));
             $car->setDescription( (self::Description[$Index]));
             $car->setTypeFuel( (self::Type_fuel[$Index]));
+            $car->setCreatedAt(new \DateTimeImmutable());
+            $car->setPrice(self::price[$Index]);
             //$Images = $this->getDependencies();
             //$car->addImage( $this->getReference($Images[$Index]));
 
@@ -90,11 +117,12 @@ class CarsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    /*public function getDependencies()
     {
         // TODO: Implement getDependencies() method.
         return [
-            ImagesFixtures::class,
+            CarsFixtures::class,
+            //ImagesFixtures::class,
         ];
-    }
+    }*/
 }
