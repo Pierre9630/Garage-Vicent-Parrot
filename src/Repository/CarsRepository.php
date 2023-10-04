@@ -81,7 +81,7 @@ class CarsRepository extends ServiceEntityRepository
         $incrementedReference = str_pad($lastReference + 1, 3, '0', STR_PAD_LEFT);
 
         // Créez la référence complète
-        return "A{$month}{$day}{$incrementedReference}";
+        return "C{$month}{$day}{$incrementedReference}";
     }
     public function generateReferenceForDate(\DateTimeImmutable $date): string
     {
@@ -97,7 +97,7 @@ class CarsRepository extends ServiceEntityRepository
         $incrementedReference = str_pad($lastReference + 1, 3, '0', STR_PAD_LEFT);
 
         // Créez la référence complète
-        return "A{$month}{$day}{$incrementedReference}";
+        return "C{$month}{$day}{$incrementedReference}";
     }
 
 

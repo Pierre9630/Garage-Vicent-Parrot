@@ -21,7 +21,7 @@ class CarsType extends AbstractType
             ->add('kilometers')
             ->add('price')
             ->add('description')
-            ->add('images', FileType::class, [
+            /*->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,
                 'mapped' => false,
@@ -34,7 +34,7 @@ class CarsType extends AbstractType
                         ])
                     )
                 ]
-            ])
+            ])*/
         ;
     }
 

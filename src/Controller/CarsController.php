@@ -6,7 +6,7 @@ use App\Entity\Cars;
 use App\Entity\Images;
 use App\Form\CarsType;
 use App\Repository\CarsRepository;
-use App\Service\PictureService;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,27 +26,14 @@ class CarsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_cars_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $car = new Cars();
         $form = $this->createForm(CarsType::class, $car);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //On rajoute les images
-            $images = $form->get('images')->getData();
-            foreach($images as $image){
-                //définir le dossier de destination
-                $folder = 'cars';
-
-                //Appel du Service PictureService.php
-                $file = $pictureService->add($image,$folder,800,600);
-
-                $img = new Images();
-                $img->setName($file);
-                $car->addImage($img);
-
-            }
+            
             $entityManager->persist($car);
             $entityManager->flush();
 

@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Contact;
+use App\Entity\Contacts;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContactType extends AbstractType
+class ContactsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -15,14 +15,14 @@ class ContactType extends AbstractType
             ->add('email')
             ->add('subject')
             ->add('message')
-            ->add('cars_id')
+            ->add('offer')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Contact::class,
+            'data_class' => Contacts::class,
         ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Contact;
+use App\Entity\Contacts;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,14 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Contact[]    findAll()
  * @method Contact[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContactRepository extends ServiceEntityRepository
+class ContactsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Contact::class);
+        parent::__construct($registry, Contacts::class);
     }
 
-    public function save(Contact $entity, bool $flush = false): void
+    public function save(Contacts $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ContactRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Contact $entity, bool $flush = false): void
+    public function remove(Contacts $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 

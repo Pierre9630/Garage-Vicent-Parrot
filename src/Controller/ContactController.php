@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
+
+use App\Entity\Contacts;
+use App\Form\ContactsType;
 use App\Form\ContactType;
-use App\Repository\ContactRepository;
+use App\Repository\ContactsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     #[Route('/', name: 'app_contact_index', methods: ['GET'])]
-    public function index(ContactRepository $contactRepository): Response
+    public function index(ContactsRepository $contactRepository): Response
     {
         return $this->render('contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
@@ -25,8 +27,8 @@ class ContactController extends AbstractController
     #[Route('/new', name: 'app_contact_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $contact = new Contact();
-        $form = $this->createForm(ContactType::class, $contact);
+        $contact = new Contacts();
+        $form = $this->createForm(ContactsType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

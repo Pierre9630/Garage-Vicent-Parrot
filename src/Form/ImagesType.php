@@ -13,7 +13,7 @@ class ImagesType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('cars_id')
+            ->add('offer')
         ;
     }
 

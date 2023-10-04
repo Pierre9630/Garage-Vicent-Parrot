@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures;
 
-use AllowDynamicProperties;
+//use AllowDynamicProperties;
 use App\Entity\Images;
+use App\Entity\Offers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,7 +12,8 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Cars;
 use Faker;
 
-#[AllowDynamicProperties] class CarsFixtures extends Fixture //implements DependentFixtureInterface
+//#[AllowDynamicProperties]
+class CarsFixtures extends Fixture //implements DependentFixtureInterface
 {
     const Brand = [
         'Volkswagen',
@@ -96,6 +98,10 @@ use Faker;
     {
         $this->entityManager = $entityManager;
     }
+
+    /**
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager): void
     {
     //$faker = new Faker\Factory();
@@ -110,7 +116,10 @@ use Faker;
             $car->setTypeFuel( (self::Type_fuel[$Index]));
             $car->setCreatedAt(new \DateTimeImmutable(self::createdAt[$Index]));
             $car->setPrice(self::price[$Index]);
-            $car->setReference($carsRepository->generateReferenceForDate(new \DateTimeImmutable(self::createdAt[$Index])));            //$Images = $this->getDependencies();
+            $car->setReference($carsRepository->generateReferenceForDate(new \DateTimeImmutable(self::createdAt[$Index])));
+            $offer = new Offers();
+            $offer->setReference(self::class);
+            //$car->setReference($carsRepository->generateReferenceForDate(new \DateTimeImmutable(self::createdAt[$Index])));            //$Images = $this->getDependencies();
             //$car->addImage( $this->getReference($Images[$Index]));
 
             /*if($Index == 3){

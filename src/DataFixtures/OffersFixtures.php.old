@@ -1,0 +1,74 @@
+<?php
+
+namespace App\DataFixtures;
+
+use App\Entity\Cars;
+use App\Entity\Offers;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
+;
+
+class OffersFixtures extends Fixture implements DependentFixtureInterface
+{
+    public function getDependencies(): array
+    {
+        return [
+            CarsFixtures::class,
+        ];
+    }
+    const TITLE = [
+        'Golf tdi 1.8',
+        'Classe E 2.0',
+        'C3 hdi 1.6 110cv',
+        'Megane RS 2.0 250cv',
+        'Giulietta 2.0 230cv',
+        'A4 2.5 250cv',
+        '911 3.5 450cv'
+    ];
+    const createdAt = [
+        '2023-09-25 10:00:00',
+        '2023-09-26 10:00:00',
+        '2023-09-27 10:00:00',
+        '2023-09-29 12:00:00',
+        '2023-09-29 10:00:00',
+        '2023-09-30 10:00:00',
+        '2023-10-01 10:00:00'
+
+    ];
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function load(ObjectManager $manager): void
+    {
+        // $product = new Product();
+        // $manager->persist($product);
+        foreach (self::TITLE as $Index => $title) {
+            $offers = new Offers();
+            $offersRepository = $this->entityManager->getRepository(\App\Entity\Offers::class);
+            $offers->setOfferTitle($title);
+            //$offers->setReference($BrandName);
+            $car = new Cars();
+            $offers->setCarId($this->getReference(CarsFixtures::ID));
+
+            $offers->setCreatedAt(new \DateTimeImmutable(self::createdAt[$Index]));
+            $offers->setReference($offersRepository->generateReferenceForDate(new \DateTimeImmutable(self::createdAt[$Index])));            //$Images = $this->getDependencies();
+            //$car->addImage( $this->getReference($Images[$Index]));
+
+            /*if($Index == 3){
+                dd($UserName.' '. self::Pass[$Index]);
+            }*/
+
+            $manager->persist($offers);
+        }
+
+        $manager->flush();
+    }
+}

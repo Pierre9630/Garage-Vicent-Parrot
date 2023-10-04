@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -16,12 +17,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue("CUSTOM")]
-    #[Assert\Uuid]
-    #[UniqueEntity('email', 'Cet email existe déjà!')]
+    #[Assert\Uuid]    
     #[ORM\Column(type:"uuid", unique:true)]
     #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
     private ?string $id = null;
 
+    #[UniqueEntity('email', 'Cet email existe déjà!')]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 

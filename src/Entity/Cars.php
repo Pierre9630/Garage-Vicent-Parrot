@@ -7,15 +7,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CarsRepository::class)]
+#[UniqueEntity(fields: ['reference'])]
 
 class Cars
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Id]    
+    #[ORM\GeneratedValue("CUSTOM")]
+    #[Assert\Uuid]
+    #[ORM\Column(type:"uuid", unique:true)]
+    #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
+
+
+    private ?string $id = null;
 
     #[ORM\Column(length: 100)]
     private ?string $brand = null;
@@ -35,11 +42,11 @@ class Cars
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Images::class, orphanRemoval: true,cascade: ["persist", "remove"])]
-    private Collection $images;
+    /*#[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Images::class, orphanRemoval: true,cascade: ["persist", "remove"])]
+    private Collection $images;*/
 
-    #[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Contact::class, orphanRemoval: true,cascade: ["persist", "remove"])]
-    private Collection $contact_id;
+    /*#[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Contact::class, orphanRemoval: true,cascade: ["persist", "remove"])]
+    private Collection $contact_id;*/
 
     #[ORM\Column(length: 50)]
     private ?string $typeFuel = null;
@@ -47,19 +54,26 @@ class Cars
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    /*#[ORM\OneToOne(mappedBy: 'car', cascade: ['persist', 'remove'])]
+    private ?Offers $offer = null;*/
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modifiedAt = null;
+
 
     #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
+    /*#[ORM\Column(length: 100)]
+    private ?string $reference = null;*/
+
     public function __construct()
     {
-        $this->images = new ArrayCollection();
-        $this->contact_id = new ArrayCollection();
+        //$this->images = new ArrayCollection();
+        //$this->contact_id = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -134,71 +148,13 @@ class Cars
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Images $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setCarsId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getCarsId() === $this) {
-                $image->setCarsId(null);
-            }
-        }
-
-        return $this;
-    }
+    }    
+    
     public function __toString() : string
     {
-        return $this->brand;
-    }
-
-    /**
-     * @return Collection<int, Contact>
-     */
-    public function getContactId(): Collection
-    {
-        return $this->contact_id;
-    }
-
-    public function addContactId(Contact $contactId): self
-    {
-        if (!$this->contact_id->contains($contactId)) {
-            $this->contact_id->add($contactId);
-            $contactId->setCarsId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeContactId(Contact $contactId): self
-    {
-        if ($this->contact_id->removeElement($contactId)) {
-            // set the owning side to null (unless already changed)
-            if ($contactId->getCarsId() === $this) {
-                $contactId->setCarsId(null);
-            }
-        }
-
-        return $this;
-    }
+        //return $this->brand;
+        return $this->getReference();
+    }    
 
     public function getTypeFuel(): ?string
     {
@@ -232,6 +188,36 @@ class Cars
     public function setModifiedAt(?\DateTimeInterface $modifiedAt): self
     {
         $this->modifiedAt = $modifiedAt;
+
+        return $this;
+    }
+
+    /*public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): static
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }*/
+
+    public function getOffer(): ?Offers
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(Offers $offer): static
+    {
+
+        // set the owning side of the relation if necessary
+        if ($offer->getCar() !== $this) {
+            $offer->setCar($this);
+        }
+
+        $this->offer = $offer;
 
         return $this;
     }

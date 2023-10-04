@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Cars;
 use App\Entity\Contact;
+use App\Entity\Offers;
 use App\Form\ContactType;
+use App\Form\OffersType;
 use App\Form\SearchFormType;
 //use App\Model\CarsData;
 use App\Repository\CarsRepository;
 //use App\Service\UploadPhoto;
 //use Carbon\Carbon;
 //se Carbon\Doctrine\DateTimeType;
+use App\Repository\OffersRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 //use http\Env\Request;
@@ -30,25 +33,25 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator): Response
     {
-        $cars = new Cars();
-        $searchType = $this->createForm(SearchFormType::class,$cars);
-        $repository = $entityManager->getRepository(Cars::class);
+        $offers = new Offers();
+        $searchType = $this->createForm(OffersType::class,$offers);
+        $repository = $entityManager->getRepository(Offers::class);
         $searchType->handleRequest($req);
         if($searchType->isSubmitted() && $searchType->isValid()){
             //dd($cars);
             $criteria = $searchType->getData();
-            $cars = $repository->findBySearch($criteria);
+            $offers = $repository->findBySearch($criteria);
             //dd($cars);
         }
         $pagination = $paginator->paginate(
-            $repository->paginateCars(),
-            /*$req->query->get('page',2),
-            5*/
+            $repository->paginateOffers(),
+            $req->query->get('page',1),
+            5
         );
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             //'cars' => $repository->findAll(),
-            'cars' => $pagination,
+            'offers' => $offers,
             'form' => $searchType->createView()
         ]);
 

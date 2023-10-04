@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offers{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>  {{ offer.offertitle }}</h1>
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {%for image in offer.images %}
+                    {% if loop.first %}
+                        <div class="carousel-item active" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                            <img class=" img-fluid  d-block w-100 " src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                        </div>
+                    {% elseif loop.last %}
+                        <div class="carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                            <img class=" img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                        </div>
+                    {% else %}
+                        <div class="carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                            <img class="img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <table class="table">
+            <tbody>
+
+            <tr>
+                <th>Id</th>
+                <td>{{ offer.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ offer.reference }}</td>
+            </tr>
+            <tr>
+                <th>Offer_title</th>
+                <td>{{ offer.offerTitle }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Modified_at</th>
+                <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_offers_index') }}">back to list</a>
+
+        <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>
+
+        {{ include('offers/_delete_form.html.twig') }}
+    </div>
+
+{% endblock %}
