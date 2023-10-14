@@ -18,7 +18,7 @@
             <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
 
 
-                {#<p>
+                <p>
 
                     {% set trans_day_hash = {
                         "Monday": "Lundi",
@@ -30,19 +30,25 @@
                         "Sunday": "Dimanche"
                     }
                     %}
-                <h1>Réserver une table</h1>
+                <h4>Horaires</h4>
+
+
+                {% for openHour in openingHours %}
+
+                      {# <p>{{openingTime.dayOfWeek|capitalize}} : {{openingTime.lunchOpen|date('H:i')}} - {{openingTime.lunchClose|date('H:i')}} / {{openingTime.dinnerOpen|date('H:i')}} - {{openingTime.dinnerClose|date('H:i')}} </p>
+                {% endfor %}
                 {% set oh = OpenHoursMethod() %}
 
-                 <p>{% for day,hours in OpenHours %}
-                        {{ day }}
+                 <p>{% for openhour in openingHours %}
+                        {{ day }}#}
 
-                <h3>{{ trans_day_hash[day] }}</h3>
-                {% if hours == 'closed' %}
-                    {{ hours }}
+                <h5>{{ trans_day_hash[openHour.dayofweek|trans] }}</h5>
+                {% if openHour is not same as '' %}
+                    {{ openHour.morningOpen|date('H:i') }} - {{ openHour.morningClose|date('H:i')}}
                 {% else %}
                     fermé
                 {% endif %}
-                {% endfor %}#}
+                {% endfor %}
 
                 </p>
             </div>

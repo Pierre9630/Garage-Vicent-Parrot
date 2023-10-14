@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {#  {{ form_label(form.phone, 'Votre Numero', {'label_attr': {'class': 'foo'}}) }}#}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Form\DataTransformer;
+
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
+use App\Entity\OpeningHours;
+class OpeningHoursToStringTransformer implements DataTransformerInterface
+{
+
+    public function transform(mixed $value) : String
+    {
+        if (null === $value) {
+            return '';
+        }
+
+        if (!$value instanceof OpeningHours) {
+            throw new TransformationFailedException('Expected an instance of OpeningHours');
+        }
+
+        return $value->getDayOfWeek();
+    }
+
+    public function reverseTransform(mixed $value) : ?OpeningHours
+    {
+        if (!$value) {
+            return null;
+        }
+
+        // You may need to implement a method to find an OpeningHours entity based on the selected day of the week.
+        // Example: $openingHours = $this->openingHoursRepository->findOneBy(['dayOfWeek' => $value]);
+
+        // Return the OpeningHours entity.
+        // Example: return $openingHours;
+
+        throw new TransformationFailedException('Transformation is not supported in this direction');
+    }
+}

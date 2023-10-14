@@ -3,11 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\OpeningHours;
+use App\Repository\OffersRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class OpeningHoursFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -30,7 +32,7 @@ class OpeningHoursFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHours();
-        $openinghours->setDayOfWeek('Wed');
+        $openinghours->setDayOfWeek('Wednesday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));

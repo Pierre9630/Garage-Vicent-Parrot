@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Cars;
-use App\Entity\Contact;
+use App\Entity\Contacts;
 use App\Entity\Offers;
-use App\Form\ContactType;
+use App\Entity\OpeningHours;
+use App\Form\ContactsType;
 use App\Form\OffersType;
 use App\Form\SearchFormType;
 //use App\Model\CarsData;
@@ -14,6 +15,7 @@ use App\Repository\CarsRepository;
 //use Carbon\Carbon;
 //se Carbon\Doctrine\DateTimeType;
 use App\Repository\OffersRepository;
+use App\Repository\OpeningHoursRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 //use http\Env\Request;
@@ -31,8 +33,9 @@ use Symfony\Component\Form\FormTypeInterface;
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
-    public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator): Response
+    public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator, OpeningHoursRepository $oh): Response
     {
+
         $offers = new Offers();
         $searchType = $this->createForm(OffersType::class,$offers);
         $repository = $entityManager->getRepository(Offers::class);
@@ -43,16 +46,17 @@ class IndexController extends AbstractController
             $offers = $repository->findBySearch($criteria);
             //dd($cars);
         }
-        $pagination = $paginator->paginate(
+        /*$pagination = $paginator->paginate(
             $repository->paginateOffers(),
             $req->query->get('page',1),
             5
-        );
+        );*/
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             //'cars' => $repository->findAll(),
-            'offers' => $offers,
-            'form' => $searchType->createView()
+            'offers' => $repository->findAll(),
+            'form' => $searchType->createView(),
+            'openingHours' => $oh->findAll(),
         ]);
 
     }
@@ -104,12 +108,13 @@ class IndexController extends AbstractController
         ]);
     }
 #[Route('/img', name: 'app_img')]
-    public function img(Request $req, SluggerInterface $sl){
+    public function img(Request $req, SluggerInterface $sl, OpeningHours $oh){
 
         $uploader = new UploadPhoto($req->get('file'), $sl);
 
         return $this->render('index/img.html.twig',[
             'controller_name' => 'IndexController',
+            'openingHours' => $oh,
         ]);
     }
 

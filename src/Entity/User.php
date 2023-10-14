@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields:['email'],message: 'Cet email existe déjà!')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
     private ?string $id = null;
 
-    #[UniqueEntity('email', 'Cet email existe déjà!')]
+
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 

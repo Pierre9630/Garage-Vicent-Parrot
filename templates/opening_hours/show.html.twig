@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OpeningHours{% endblock %}
+
+{% block body %}
+    <h1>OpeningHours</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ openingHours.id }}</td>
+            </tr>
+            <tr>
+                <th>MorningOpen</th>
+                <td>{{ openingHours.morningOpen ? openingHours.morningOpen|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>MorningClose</th>
+                <td>{{ openingHours.morningClose ? openingHours.morningClose|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>AfternoonOpen</th>
+                <td>{{ openingHours.afternoonOpen ? openingHours.afternoonOpen|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>AfternoonClose</th>
+                <td>{{ openingHours.afternoonClose ? openingHours.afternoonClose|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DayOfWeek</th>
+                <td>{{ openingHours.dayOfWeek }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_opening_hours_index') }}">back to list</a>
+
+    <a href="{{ path('app_opening_hours_edit', {'id': openingHours.id}) }}">edit</a>
+
+
+{% endblock %}

@@ -11,17 +11,22 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OffersRepository::class)]
-#[UniqueEntity(fields: ['reference'])]
+//#[UniqueEntity(fields: ['reference'])]
+#[UniqueEntity(fields: ['reference'],message: 'Ce titre ou reference existe déjà !')]
 class Offers
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue("CUSTOM")]
+    #[Assert\Uuid]
+    #[ORM\Column(type:"uuid", unique:true)]
+    #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
+
+    private ?string $id = null;
 
     /**
      * @Assert\Unique(message="La valeur {{ value }}  est déjà dans la base.")
      */
+
     #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
@@ -54,7 +59,7 @@ class Offers
         $this->contacts = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

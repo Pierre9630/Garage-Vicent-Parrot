@@ -24,17 +24,29 @@
 {#        <li>Your controller at <code><a href="{{ 'C:/Users/Pierre DEv/PhpstormProjects/TestProject/TestProject/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>#}
 {#        <li>Your template at <code><a href="{{ 'C:/Users/Pierre DEv/PhpstormProjects/TestProject/TestProject/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>#}
 {#    </ul>#}
-    <input type="text" name="" id="" class="filter" placeholder="Entrer votre Recherche" onchange="searchCar()">
-    <div class="price-field">
-        <input type="range" min="500" max="100000" value="500" id="lower">
-        <input type="range" min="500" max="100000" value="100000" id="upper">
+    {#  Ancien champs de recherche <input type="text" name="" id="" class="filter" placeholder="Entrer votre Recherche" onchange="searchCar()"> #}
+    <div id="search-container">
+        <input
+                type="search"
+                id="search-input"
+                placeholder="Rechercher une annonce.."
+        />
+        <button id="search">Rechercher</button>
     </div>
+    <div class="price-filter">
+        <div id="price-slider"></div>
+        {# <span id="min-price">500 €</span>
+        <span id="max-price">100000 €</span>#}
+    </div>
+    <span id="lowerValue">500 €</span>
+    <span id="upperValue">100000 €</span>
+
     <div class="container">
         <div class="row">
             {% set counter = 0 %}
             {% for offer in offers %}
             <div class="col-sm-12 m-5">
-                <div class="card">
+                <div class="card border">
                     <div id="carouselExampleControls{{ counter }}" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             {#  {{ dump(car) }}#}
@@ -73,10 +85,11 @@
                     </div>
                     {% set counter = counter + 1 %}
                     {#  <img src="" alt="" class="card-img-top">#}
-                    <div class="card-body">
-                        <h3 class="card-title" ><a href="{{ path('app_cars_show', {id:car.id }) }}">{{car.brand }} {{ car.model }}</a></h3>
-                        <h4 class="card-title">{{car.model }}</h4>
-                        <h5 class="card-kilometers"> {{car.kilometers }} km</h5>
+                    <div class="card-body ">
+                        <h3 class="card-title" ><a href="{{ path('app_offers_show', {id:offer.id }) }}">{{offer.offertitle }}</a></h3>
+                        <h4 class="card-title">{{offer.car.brand }} {{offer.car.model }}</h4>
+                        <h5 class="card-kilometers"> {{offer.car.kilometers }} km</h5>
+                        <h5 class="card-price"> {{ offer.car.price }} €</h5>
                         <p class="card-text">{{ counter }}</p>
                     </div>
                 </div>

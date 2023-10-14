@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>User index</h1>
+    <h2>Logged User : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }}{% endif %}</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Type de Compte</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                {% set AdminRole = "ROLE_ADMIN" %}
+                <td>{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %}</td>
+                <td>
+                    <a href="{{ path('app_admin_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {%  if knp_pagination_render(users) %}
+    <label>Changer de Page : </label>{{ knp_pagination_render(users)}}<br>
+    {% endif %}
+    <a href="{{ path('app_admin_new') }}">Create new Users</a>
+    <h1>Admins</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Password</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for admin in admins %}
+            <tr>
+                <td>{{ admin.id }}</td>
+                <td>{{ admin.email }}</td>
+                {% set AdminRole = "ROLE_ADMIN" %}
+                <td>{% if AdminRole in admin.roles  %}Compte Admin {% else %} Compte Client {% endif %}</td>
+                <td>{{ admin.password }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': admin.id}) }}">show</a>
+                    <a href="{{ path('app_user_edit', {'id': admin.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    <section class="unapproved-comments">
+        <div class="container my-5 py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="text-center mb-4 pb-2">Commentaires non approuvés</h4>
+
+                            <div class="row">
+                                <div class="col">
+                                    {% for comment in contacts %}
+                                        {% if not comment.isApproved %}
+                                            <div class="d-flex align-items-start mb-4">
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="{#  {{ comment.avatarUrl }}#}" alt="avatar" width="65" height="65" />
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
+                                                        </p>
+                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                        {{ comment.message }}
+                                                    </p>
+                                                    {# Si vous souhaitez ajouter un bouton d'approbation pour ce commentaire #}
+                                                    <button class="btn btn-primary btn-sm mt-2" href="{{ path('app_contact_approve', {'id': comment.id}) }}">Approuver</button>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

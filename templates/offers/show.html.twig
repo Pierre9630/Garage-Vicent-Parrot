@@ -3,21 +3,23 @@
 {% block title %}Offers{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <section class="gradient-custom">
+        <div class="container my-5 py-5">
         <h1>  {{ offer.offertitle }}</h1>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 {%for image in offer.images %}
+
                     {% if loop.first %}
-                        <div class="carousel-item active" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                        <div class="img-fluid carousel-item active" {#  {% if dzdzzd == 0 alors "active" %}#}>
                             <img class=" img-fluid  d-block w-100 " src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
                         </div>
                     {% elseif loop.last %}
-                        <div class="carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                        <div class="img-fluid carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
                             <img class=" img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
                         </div>
                     {% else %}
-                        <div class="carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
+                        <div class="img-fluid carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
                             <img class="img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
                         </div>
                     {% endif %}
@@ -34,11 +36,6 @@
         </div>
         <table class="table">
             <tbody>
-
-            <tr>
-                <th>Id</th>
-                <td>{{ offer.id }}</td>
-            </tr>
             <tr>
                 <th>Reference</th>
                 <td>{{ offer.reference }}</td>
@@ -57,7 +54,127 @@
             </tr>
             </tbody>
         </table>
+        <section class="gradient-custom">
+            <div class="container my-5 py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10 col-xl-8">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <h4 class="text-center mb-4 pb-2">Section des commentaires imbriqués</h4>
 
+                                <div class="row">
+                                    <div class="col">
+                                        {% for comment in offer.contacts %}
+                                          {% if comment.isApproved is same as true %}
+                                            <div class="d-flex align-items-start mb-4">
+                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65"
+                                                     height="65" />
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
+                                                        </p>
+                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                        {{ comment.message }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            {# Si vous souhaitez afficher les réponses, décommentez cette partie #}
+                                            {% if comment.hasreply is defined %}
+                                                <div class="d-flex align-items-start ml-5">
+                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
+                                                         width="65" height="65" />
+                                                    <div class="flex-grow-1">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                Simona Disa <span class="small">- {{ comment.replyTime }}</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            {{ comment.replyMessage }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                          {% endif %}
+                                            {# Fin de la partie réponses #}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {#  <section class="gradient-custom">
+            <div class="container my-5 py-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10 col-xl-8">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
+
+                                <div class="row">
+                                    <div class="col">
+                                        {% for comment in offer.contacts %}
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65"
+                                                 height="65" />
+                                            <div class="flex-grow-1 flex-shrink-1">
+                                                <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            {{ comment.email }} <span class="small"> {{ comment.createdAt | date('Y-m-d H:i') }}</span>
+                                                        </p>
+                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                        {{ comment.message }}
+                                                    </p>
+                                                </div>#}
+                                              {#  {% if comment.hasreply is defined %}
+                                                <div class="d-flex flex-start mt-4">
+                                                    <a class="me-3" href="#">
+                                                        <img class="rounded-circle shadow-1-strong"
+                                                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
+                                                             width="65" height="65" />
+                                                    </a>
+                                                    <div class="flex-grow-1 flex-shrink-1">
+                                                        <div>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <p class="mb-1">
+                                                                    Simona Disa <span class="small">- 3 hours ago</span>
+                                                                </p>
+                                                            </div>
+                                                            <p class="small mb-0">
+                                                                letters, as opposed to using 'Content here, content here',
+                                                                making it look like readable English.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>#}
+                                                {#  {% endif %} #}
+
+
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {#  <div class="contact">
+                        <div class="aff-com">
+
+                    </div></section>#}
+    </section>
         <a href="{{ path('app_offers_index') }}">back to list</a>
 
         <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>

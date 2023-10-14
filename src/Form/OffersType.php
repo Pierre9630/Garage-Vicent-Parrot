@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cars;
+use App\Entity\Contacts;
 use App\Entity\Offers;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,7 +33,7 @@ class OffersType extends AbstractType
                 'choice_value' => 'id',
             ])
             ->add('images', FileType::class, [
-                'label' => false,
+                'label' => "Image(s) à Uploader",
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,

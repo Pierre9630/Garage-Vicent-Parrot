@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Contacts;
+use App\Entity\Offers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Collection;
 
 /**
  * @extends ServiceEntityRepository<Contact>
@@ -37,6 +39,22 @@ class ContactsRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function findApprovedComments(Offers $offer)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.isApproved = :approved')
+            ->setParameter('approved', 1)
+            ->getQuery()
+            ->getResult();
+    }
+    public function findNotApproved()
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.isApproved = :approved')
+            ->setParameter('approved', 0)
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
