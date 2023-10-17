@@ -93,6 +93,31 @@ class OffersRepository extends ServiceEntityRepository
             ->orderBy('a.id', 'ASC')
             ->getQuery();
     }
+
+    public function findByFilters(string $keyword, ?int $minPrice, ?int $maxPrice, ?int $maxKilometers)
+    {
+        $query = $this->createQueryBuilder('o')
+            ->andWhere('o.offer_title LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%');
+
+        if ($minPrice !== null) {
+            $query->andWhere('o.car.price >= :minPrice')
+                ->setParameter('minPrice', $minPrice);
+        }
+
+        if ($maxPrice !== null) {
+            $query->andWhere('o.car.price <= :maxPrice')
+                ->setParameter('maxPrice', $maxPrice);
+        }
+
+        if ($maxKilometers !== null) {
+            $query->andWhere('o.car.kilometers <= :maxKilometers')
+                ->setParameter('maxKilometers', $maxKilometers);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Offers[] Returns an array of Offers objects
 //     */

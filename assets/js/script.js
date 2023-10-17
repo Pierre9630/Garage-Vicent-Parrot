@@ -1,10 +1,10 @@
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
 
-// Créez un slider noUiSlider
+/*// Créez un slider noUiSlider
 const priceSlider = document.getElementById('price-slider');
 const minPriceSpan = document.getElementById('min-price');
-const maxPriceSpan = document.getElementById('max-price');
+const maxPriceSpan = document.getElementById('max-price');*/
 // Search button click
 document.getElementById("search").addEventListener("click", () => {
     // Initializations
@@ -24,17 +24,18 @@ document.getElementById("search").addEventListener("click", () => {
         }
     });
 });
-noUiSlider.create(priceSlider, {
+
+/*noUiSlider.create(priceSlider, {
     start: [500, 100000], // Valeurs initiales
     connect: true,
     range: {
         'min': 500,
         'max': 100000
     }
-});
+});*/
 
-// Mettez à jour le filtrage lorsque les curseurs sont déplacés
-priceSlider.noUiSlider.on('update', function (values, handle) {
+// Mettre à jour le filtrage lorsque les curseurs sont déplacés
+/*priceSlider.noUiSlider.on('update', function (values, handle) {
     const minPrice = parseInt(values[0]);
     const maxPrice = parseInt(values[1]);
 
@@ -59,7 +60,7 @@ function filterOffers(minPrice, maxPrice) {
             card.style.display = 'd-none';
         }
     });
-}
+}*/
 // Initially display all products
 window.onload = () => {
 

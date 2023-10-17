@@ -8,6 +8,7 @@ use App\Entity\OpeningHours;
 use App\Form\CarsType;
 use App\Repository\CarsRepository;
 
+use App\Repository\OffersRepository;
 use App\Repository\OpeningHoursRepository;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,11 +34,13 @@ class CarsController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager,OpeningHoursRepository $oh): Response
     {
         $car = new Cars();
+        $carRepository = $entityManager->getRepository(Cars::class);
         $form = $this->createForm(CarsType::class, $car);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $car->setReference($carRepository->generateReference());
+            $car->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($car);
             $entityManager->flush();
 
@@ -90,4 +93,7 @@ class CarsController extends AbstractController
 
         return $this->redirectToRoute('app_cars_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }

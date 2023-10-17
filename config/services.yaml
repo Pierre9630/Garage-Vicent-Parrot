@@ -24,3 +24,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    searchservice:
+        # Classe de votre service
+        class: App\Service\SearchService
+        # Autres arguments ou dépendances si nécessaires
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager' # Exemple de dépendance

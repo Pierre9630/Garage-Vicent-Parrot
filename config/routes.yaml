@@ -3,3 +3,14 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+app_search_index:
+    path: /search
+    controller: App\Controller\SearchController::search
+    methods: ['GET', 'POST']
+    defaults:
+        keyword: ''
+        brand: ''
+        minPrice: 0
+        maxPrice: 100000
+        minKilometers: 0
+        maxKilometers: 1000000

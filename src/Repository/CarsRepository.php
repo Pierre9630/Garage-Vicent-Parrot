@@ -72,6 +72,7 @@ class CarsRepository extends ServiceEntityRepository
         $today = new \DateTimeImmutable();
         $month = $today->format('m'); // Mois sous forme de deux chiffres
         $day = $today->format('d');   // Jour sous forme de deux chiffres
+        $year = $today->format('y'); // Année sous forme de deux chiffres
 
         // Récupérez le dernier numéro de référence pour la journée actuelle
         $lastReference = $this->getLastReferenceForToday($today);
@@ -81,7 +82,7 @@ class CarsRepository extends ServiceEntityRepository
         $incrementedReference = str_pad($lastReference + 1, 3, '0', STR_PAD_LEFT);
 
         // Créez la référence complète
-        return "C{$month}{$day}{$incrementedReference}";
+        return "C{$year}{$month}{$day}{$incrementedReference}";
     }
     public function generateReferenceForDate(\DateTimeImmutable $date): string
     {
@@ -104,16 +105,16 @@ class CarsRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    private function getLastReferenceForToday(\DateTimeImmutable $today): int
+    public function getLastReferenceForToday(): int
     {
         $today = new \DateTimeImmutable();
         $startDate = new \DateTime($today->format('Y-m-d 00:00:00'));
         $endDate = new \DateTime($today->format('Y-m-d 23:59:59'));
 
-        $queryBuilder = $this->createQueryBuilder('c')
-            ->select('MAX(SUBSTRING(c.reference, 7)) AS lastReference')
-            ->where('c.createdAt >= :startDate')
-            ->andWhere('c.createdAt <= :endDate')
+        $queryBuilder = $this->createQueryBuilder('o')
+            ->select('MAX(SUBSTRING(o.reference, 10)) AS lastReference')
+            ->where('o.createdAt BETWEEN :startDate AND :endDate')
+            //->andWhere('o.created_at <= :endDate')
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->getQuery();

@@ -14,9 +14,16 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            entry_point: form_login
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider #users_in_memory
             custom_authenticator: App\Security\UserAuthenticator
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true # It's optional
+                default_target_path: app_user_index # add here your redirect path
+                always_use_default_target_path: true
             logout:
                 path: app_logout
                 # where to redirect after logout

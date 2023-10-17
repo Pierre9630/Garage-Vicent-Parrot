@@ -12,6 +12,7 @@ use App\Repository\ContactsRepository;
 use App\Repository\OffersRepository;
 use App\Repository\OpeningHoursRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Service\SearchService;
 
 #[Route('/offers')]
 class OffersController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $doctrine) {}
+
+
     #[Route('/', name: 'app_offers_index', methods: ['GET'])]
     public function index(OffersRepository $offersRepository, OpeningHoursRepository $oh): Response
     {
@@ -49,12 +52,12 @@ class OffersController extends AbstractController
             //dd($offerRepository->generateReference());
             //On rajoute les images
             $images = $form->get('images')->getData();
-            foreach($images as $image){
+            foreach ($images as $image) {
                 //définir le dossier de destination
                 $folder = 'cars';
 
                 //Appel du Service PictureService.php
-                $file = $pictureService->add($image,$folder,800,600);
+                $file = $pictureService->add($image, $folder, 800, 600);
 
                 $img = new Images();
                 $img->setName($file);
@@ -84,7 +87,8 @@ class OffersController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_offers_show', methods: ['GET'])]
+
+    #[Route('/show/{id}', name: 'app_offers_show', methods: ['GET'])]
     public function show(Offers $offer, OpeningHoursRepository $oh): Response
     {
         //$approvedContacts = $contactsRepository->findApprovedContactsForOffer($offer);
@@ -115,54 +119,57 @@ class OffersController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_offers_edit', methods: ['GET', 'POST'])]
-public function edit(Request $request, Offers $offer, EntityManagerInterface $entityManager, PictureService $pictureService, OpeningHoursRepository $oh, ContactsRepository $cr): Response
-{
-    $form = $this->createForm(OffersType::class, $offer);
-    $form->handleRequest($request);
+    #[Route('/edit/{id}', name: 'app_offers_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Offers $offer, EntityManagerInterface $entityManager, PictureService $pictureService, OpeningHoursRepository $oh, ContactsRepository $cr): Response
+    {
+        $form = $this->createForm(OffersType::class, $offer);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $offer->setModifiedAt(new \DateTimeImmutable());
-        $images = $form->get('images')->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offer->setModifiedAt(new \DateTime());
+            $images = $form->get('images')->getData();
 
-        if (!empty($images)) {
-            $folder = 'cars';
+            if (!empty($images)) {
+                $folder = 'cars';
 
-            foreach ($images as $image) {
-                $file = $pictureService->add($image, $folder, 800, 600);
+                foreach ($images as $image) {
+                    $file = $pictureService->add($image, $folder, 800, 600);
 
-                $img = new Images();
-                $img->setName($file);
-                $offer->addImage($img);
+                    $img = new Images();
+                    $img->setName($file);
+                    $offer->addImage($img);
+                }
+
+                $entityManager->flush();
+
+                $this->addFlash("success", "Annonce modifiée avec succès !");
+                return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
             }
 
+            // S'il n'y a pas d'images, vous pouvez simplement appeler flush ici
             $entityManager->flush();
-
             $this->addFlash("success", "Annonce modifiée avec succès !");
             return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        // S'il n'y a pas d'images, vous pouvez simplement appeler flush ici
-        $entityManager->flush();
-        $this->addFlash("success", "Annonce modifiée avec succès !");
-        return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('offers/edit.html.twig', [
+            'offer' => $offer,
+            'form' => $form,
+            'openingHours' => $oh->findAll(),
+        ]);
     }
 
-    return $this->render('offers/edit.html.twig', [
-        'offer' => $offer,
-        'form' => $form,
-        'openingHours' => $oh->findAll(),
-    ]);
-}
-
-    #[Route('/{id}', name: 'app_offers_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_offers_delete', methods: ['POST'])]
     public function delete(Request $request, Offers $offer, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$offer->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $offer->getId(), $request->request->get('_token'))) {
             $entityManager->remove($offer);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }

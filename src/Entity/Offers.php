@@ -49,8 +49,9 @@ class Offers
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modified_at = null;
 
-    #[ORM\JoinColumn]
-    #[ORM\OneToOne(cascade: ['persist'])]
+
+    #[ORM\OneToOne(inversedBy : 'offer',cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Cars $car = null;
 
     public function __construct()

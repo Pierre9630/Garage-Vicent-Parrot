@@ -4,13 +4,13 @@
 {# https://stackoverflow.com/questions/7680917/how-do-i-get-the-entity-that-represents-the-current-user-in-symfony2 #}
 {% block body %}
 
-    <h1>{% if app.user.Firstname is defined %}{{ app.user.Firstname }}{% else %}Pas de User pour l'instant  {% endif %}</h1>
+    <h1>{% if app.user.firstname is defined %}{{ app.user.firstname }}{% else %}Pas de User pour l'instant  {% endif %}</h1>
 
 
 <table class="table">
     <thead>
     <tr>
-        <th>Id</th>
+        {#  <th>Id</th>#}
         <th>Nom du Client</th>
         <th>Roles</th>
         <th>Mot de passe</th>
@@ -19,8 +19,9 @@
     </thead>
 
     <tbody>
+    {% for user in users %}
         <tr>
-            <td>{% if user.id is defined %}{{ user.id }}{% endif %}</td>
+            {#  <td>{% if user.id is defined %}{{ user.id }}{% endif %}</td>#}
             <td>{% if user.email is defined %}  {{ user.email }} {% endif %}</td>
             {% set AdminRole = "ROLE_ADMIN" %}
             <td>{% if user.roles is defined %}{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %} {% endif %}{# {{ user.roles ? user.roles|json_encode : '' }} #}</td>
@@ -30,6 +31,11 @@
                 <a href="{% if user.id is defined %}{{ path('app_user_edit', {'id': user.id}) }}{% endif %}" >edit</a>
             </td>
         </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">Pas d'utilisateurs</td>
+        </tr>
+    {% endfor %}
     </tbody>
 </table>
 

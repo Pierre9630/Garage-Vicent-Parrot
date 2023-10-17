@@ -21,6 +21,7 @@ class CarsType extends AbstractType
             ->add('kilometers')
             ->add('price')
             ->add('description')
+            ->add('typeFuel')
             /*->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,
