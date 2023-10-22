@@ -1,13 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <div class="example-wrapper">
         <form method="GET" action="{{ path('app_search_index') }}">
             <!-- Vos champs de formulaire ici -->
-            <input placeholder="Titre de l'annonce" type="text" name="keyword" value="{{ app.request.request.get('keyword') }}" >
-            <input placeholder="Marque du Véhicule" type="text" name="brand" value="{{ app.request.request.get('brand') }}" >
-            <input placeholder= "Prix Mini" type="text" name="minPrice" value="{{ app.request.request.get('minPrice') }}">
-            <input placeholder= "Prix Maxi" type="text" name="maxPrice" value="{{ app.request.request.get('maxPrice') }}">
+            <label>
+                <input placeholder="Titre de l'annonce" type="text" name="keyword" value="{{ app.request.request.get('keyword') }}" >
+            </label>
+            {# <label>
+                <input placeholder="Marque du Véhicule" type="text" name="brand" value="{{ app.request.request.get('brand') }}" >
+            </label> #}
+            {#  <input placeholder= "Prix Mini" type="text" name="minPrice" value="{{ app.request.request.get('minPrice') }}">
+            <input placeholder= "Prix Maxi" type="text" name="maxPrice" value="{{ app.request.request.get('maxPrice') }}">#}
+            <!-- Slider pour le prix minimum -->
+            <!--<div id="priceMinSlider" data-start="0{#  {{ app.request.request.get('minPrice')|default(0) }}#}" >
+                <div  class="noUiSlider"  id="minPrice">
+            </div>-->
+            {#  <label for="minPrice"></label><input type="text" name="minPrice" id="minPrice" value="{{ app.request.request.get('minPrice') }}">#}
+
+
+                <!-- Slider pour le prix maximum -->
+            <!--<div id="priceMaxSlider" data-start="10000{#  {{ app.request.request.get('maxPrice')|default(10000) }}#}">
+                <div  class="noUiSlider" id="maxPrice">
+            </div>-->
+            {#  <input type="text" name="maxPrice" id="maxPrice" value="{{ app.request.request.get('maxPrice') }}">#}
+
+            <!-- Curseur pour priceMin -->
+            <label>Filtre par prix</label>
+            <div id="priceSlider"></div>
+            <span id="minPriceLabel">Min: 0</span>
+            <span id="maxPriceLabel">Max: 100000</span>
+
+            <input type="hidden" name="minPrice" id="minPrice" value="{{ app.request.request.get('minPrice', 0) }}">
+            <input type="hidden" name="maxPrice" id="maxPrice" value="{{ app.request.request.get('maxPrice', 100000) }}">
+
+
             <input placeholder="Kilometres Min" type="text" name="minKilometers" value="{{ app.request.request.get('minKilometers') }}">
             <input placeholder="Kilometres Max" type="text" name="maxKilometers" value="{{ app.request.request.get('maxKilometers') }}">
             <input placeholder="Reference de l'annonce" type="text" name="reference" value="{{ app.request.request.get('reference') }}">
@@ -72,3 +100,9 @@
 
 
 {% endblock %}
+{#  {% block javascripts%}
+    <script>
+        let priceMinValue = {{ minPrice }};
+        let priceMaxValue = {{ maxPrice }};
+    </script>
+{% endblock %}#}

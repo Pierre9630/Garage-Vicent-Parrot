@@ -28,7 +28,7 @@ class SearchController extends AbstractController
         $this->entityManager = $entityManager;
     }*/
     #[Route('/search', name: 'app_search_index', methods: ['GET','POST'])]
-    public function search(Request $request,OpeningHoursRepository $oh, ): Response
+    public function search(Request $request,OpeningHoursRepository $oh ): Response
     {
         /*$keyword = $request->query->get('keyword', '');
         $minPrice = $request->query->get('minPrice', 0);
@@ -65,6 +65,8 @@ class SearchController extends AbstractController
         return $this->render('search/index.html.twig', [
             'results' => $searchResults,
             'openingHours'=>$oh,
+            //'minPrice'=>$minPrice,
+            //'maxPrice'=>$maxPrice,
         ]);
     }
     /*public function index(Request $request, #[MapEntity(mapping: ['keyword' => 'offerTitle',

@@ -1,81 +1,33 @@
-import * as noUiSlider from 'nouislider';
-import 'nouislider/dist/nouislider.css';
 
-/*// Créez un slider noUiSlider
-const priceSlider = document.getElementById('price-slider');
-const minPriceSpan = document.getElementById('min-price');
-const maxPriceSpan = document.getElementById('max-price');*/
-// Search button click
-document.getElementById("search").addEventListener("click", () => {
-    // Initializations
-    let searchInput = document.getElementById("search-input").value.trim().toUpperCase(); //trim() permet d'enlever les blancs puis convertit la valeur en majuscules
-    let cards = document.querySelectorAll(".card"); //recuperer les cartes dans le dom
+import noUiSlider from 'nouislider';
 
-    // Loop through all cards
-    cards.forEach(card => {
-        let titleElement = card.querySelector(".card-body");
-        if (titleElement) {
-            let cardTitle = titleElement.innerText.toUpperCase();
-            if (cardTitle.includes(searchInput)) {
-                card.classList.remove("d-none");
-            } else {
-                card.classList.add("d-none");
-            }
+document.addEventListener("DOMContentLoaded", function() {
+    //const sliderContainer = document.getElementById("sliderContainer");
+    const priceSlider = document.getElementById("priceSlider");
+    const minPriceInput = document.getElementById("minPrice");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const minPriceLabel = document.getElementById("minPriceLabel");
+    const maxPriceLabel = document.getElementById("maxPriceLabel");
+
+    noUiSlider.create(priceSlider, {
+        start: [0, 100000],
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 100000
         }
     });
-});
 
-/*noUiSlider.create(priceSlider, {
-    start: [500, 100000], // Valeurs initiales
-    connect: true,
-    range: {
-        'min': 500,
-        'max': 100000
-    }
-});*/
+    priceSlider.noUiSlider.on('update', function (values) {
+        // Arrondir les valeurs au nombre entier le plus proche
+        const minPrice = Math.round(values[0]);
+        const maxPrice = Math.round(values[1]);
 
-// Mettre à jour le filtrage lorsque les curseurs sont déplacés
-/*priceSlider.noUiSlider.on('update', function (values, handle) {
-    const minPrice = parseInt(values[0]);
-    const maxPrice = parseInt(values[1]);
+        minPriceInput.value = minPrice;
+        maxPriceInput.value = maxPrice;
 
-    // Mettez à jour les valeurs affichées
-    minPriceSpan.textContent = minPrice + ' €';
-    maxPriceSpan.textContent = maxPrice + ' €';
-
-    // Filtrez les offres en fonction des nouvelles valeurs du curseur
-    filterOffers(minPrice, maxPrice);
-    console.log('filterOffers called');
-});
-
-// Fonction pour filtrer les annonces
-function filterOffers(minPrice, maxPrice) {
-    const cardPrices = document.querySelectorAll('.card-price');
-    cardPrices.forEach(function (cardPrice) {
-        const price = parseInt(cardPrice.textContent);
-        const card = cardPrice.closest('.card');
-        if (price >= minPrice && price <= maxPrice) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'd-none';
-        }
+        minPriceLabel.textContent = "Min: " +  Math.round(values[0]);
+        maxPriceLabel.textContent = "Max: " + Math.round(values[1]);
     });
-}*/
-// Initially display all products
-window.onload = () => {
-
-    let cards = document.querySelectorAll(".card"); //recuperer les cartes dans le dom
-    cards.forEach(card => {
-        card.classList.remove("d-none");
-    });
-};
-
-
-
-
-
-
-
-
-
+});
 

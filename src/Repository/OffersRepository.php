@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Contacts;
 use App\Entity\Offers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -117,7 +118,17 @@ class OffersRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
-
+    public function findApprovedContactsForOffer(Offers $offer)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('c')
+            ->from(Contacts::class, 'c')
+            ->where('c.offer = :offer')
+            ->andWhere('c.isApproved = true')
+            ->setParameter('offer', $offer)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Offers[] Returns an array of Offers objects
 //     */

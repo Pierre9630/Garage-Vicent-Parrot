@@ -38,6 +38,9 @@ class ContactController extends AbstractController
             // Obtenez l'objet Contacts depuis le formulaire
             // Obtenez le nom du champ correct à partir de votre formulaire
             $offer = $contact->getOffer();
+            if($this->isGranted('ROLE_ADMIN')){
+                $contact->setIsApproved(true);
+            }
             if ($offer !== null) {
                 $offerReference = $offer->getReference();
 

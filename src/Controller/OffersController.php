@@ -89,8 +89,10 @@ class OffersController extends AbstractController
 
 
     #[Route('/show/{id}', name: 'app_offers_show', methods: ['GET'])]
-    public function show(Offers $offer, OpeningHoursRepository $oh): Response
+    public function show(Offers $offer, OpeningHoursRepository $oh, ContactsRepository $cr): Response
     {
+        // Récupérer les commentaires approuvés liés à l'offre
+        $approvedComments = $cr->findApprovedComments($offer);
         //$approvedContacts = $contactsRepository->findApprovedContactsForOffer($offer);
 
         // Ajoutez les commentaires approuvés à l'objet Offer
@@ -115,6 +117,7 @@ class OffersController extends AbstractController
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
             'openingHours' => $oh->findAll(),
+            'approvedComments' => $approvedComments,
             //'comments' => $cr->findApprovedComments(),
         ]);
     }

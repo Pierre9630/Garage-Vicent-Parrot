@@ -41,6 +41,7 @@ class Offers
     private Collection $images;
 
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Contacts::class, orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $contacts;
 
     #[ORM\Column]
