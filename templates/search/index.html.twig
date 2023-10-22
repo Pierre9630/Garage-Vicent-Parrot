@@ -97,7 +97,10 @@
             {% endfor %}
         </div>
     </div>
-
+    <!-- Afficher la pagination -->
+    <div class="pagination">
+        {{ knp_pagination_render(results) }}
+    </div>
 
 {% endblock %}
 {#  {% block javascripts%}

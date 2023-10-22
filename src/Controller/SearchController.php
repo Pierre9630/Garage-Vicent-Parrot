@@ -6,11 +6,13 @@ use App\Entity\Offers;
 use App\Repository\OpeningHoursRepository;
 use App\Service\SearchService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 
 class SearchController extends AbstractController
@@ -28,12 +30,13 @@ class SearchController extends AbstractController
         $this->entityManager = $entityManager;
     }*/
     #[Route('/search', name: 'app_search_index', methods: ['GET','POST'])]
-    public function search(Request $request,OpeningHoursRepository $oh ): Response
+    public function search(Request $request,OpeningHoursRepository $oh,PaginatorInterface $paginator ): Response
     {
         /*$keyword = $request->query->get('keyword', '');
         $minPrice = $request->query->get('minPrice', 0);
         $maxPrice = $request->query->get('maxPrice', 1000000);
         $maxKilometers = $request->query->get('maxKilometers', 100000);*/
+
         $keyword = $request->query->get('keyword');
         $brand = $request->query->get('brand');
         $minPrice = $request->query->get('minPrice',0);
@@ -61,9 +64,15 @@ class SearchController extends AbstractController
         }
 
         $searchResults = $this->searchService->searchWithFilters($keyword, $brand, $minPrice, $maxPrice, $minKilometers, $maxKilometers,$reference);
+        $pagination = $paginator->paginate(
+            $searchResults, // Les données à paginer
+            $request->query->getInt('page', 1), // Le numéro de la page
+            3 // Le nombre d'éléments par page
+        );
+
         //dd($searchResults);
         return $this->render('search/index.html.twig', [
-            'results' => $searchResults,
+            'results' => $pagination,
             'openingHours'=>$oh,
             //'minPrice'=>$minPrice,
             //'maxPrice'=>$maxPrice,
