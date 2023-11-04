@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Avis{% endblock %}
+
+{% block body %}
+    <h1>Modifier Avis</h1>
+
+    {{ include('testimonial/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+
+    {{ include('testimonial/_delete_form.html.twig') }}
+{% endblock %}

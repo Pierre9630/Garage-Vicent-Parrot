@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Avis{% endblock %}
+
+{% block body %}
+
+    <h2>Contactez-nous</h2>
+
+
+
+    {{ include('testimonial/_form.html.twig') }}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {# L'utilisateur est connecté en tant qu'utilisateur non anonyme #}
+        <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    {% else %}
+        {# L'utilisateur n'est pas connecté ou est anonyme #}
+
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+<style>
+    .user-nav{
+        padding-top: 7px;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a href="#" class="navbar-brand">Brand<b>Name</b></a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Collection of nav links, forms, and other content for toggling -->
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+        <div class="navbar-nav mr-auto"> <!-- Les éléments au début de la navbar -->
+            <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>
+            <a href="{{ path('app_index') }}" class="nav-item nav-link">Nos Services</a>
+            <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link">Contact</a>
+        </div>
+    </div>
+    <div class="navbar-nav justify-content-end"> <!-- Les éléments à la fin de la navbar -->
+        {% if app.user %}
+            <div class="nav-item user-nav col-lg-6 ml-1">
+                <a class="user" href="{{ path("app_user_index") }}">{{ app.user.lastname }}</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="{{ path("app_logout") }}">Déconnexion</a>
+            </div>
+        {% else %}
+            <div class="nav-item">
+                <a class="nav-link" href="{{ path("app_login") }}">Connexion</a>
+            </div>
+        {% endif %}
+    </div>
+</nav>

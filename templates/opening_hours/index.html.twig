@@ -1,39 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OpeningHours index{% endblock %}
+{% block title %}Heures d'ouverture{% endblock %}
 
 {% block body %}
-    <h1>OpeningHours index</h1>
+    <h1>Heures d'ouverture</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>MorningOpen</th>
-                <th>MorningClose</th>
-                <th>AfternoonOpen</th>
-                <th>AfternoonClose</th>
-                <th>DayOfWeek</th>
-                <th>actions</th>
+                {#<th>Id</th>#}
+                <th>Ouverture Matin</th>
+                <th>Fermeture Matin</th>
+                <th>Ouverture Après-Midi</th>
+                <th>Fermeture Après-Midi</th>
+                <th>Jour</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for openingHour in openingHours %}
             <tr>
-                <td>{{ openingHour.id }}</td>
+                {#<td>{{ openingHour.id }}</td>#}
                 <td>{{ openingHour.morningOpen ? openingHour.morningOpen|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.morningClose ? openingHour.morningClose|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.afternoonOpen ? openingHour.afternoonOpen|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.afternoonClose ? openingHour.afternoonClose|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.dayOfWeek }}</td>
                 <td>
-                    <a href="{{ path('app_opening_hours_show', {'id': openingHour.id}) }}">show</a>
-                    <a href="{{ path('app_opening_hours_edit', {'id': openingHour.id}) }}">edit</a>
+                    <a href="{{ path('app_opening_hours_show', {'id': openingHour.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_opening_hours_edit', {'id': openingHour.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas d'heures configurées !</td>
             </tr>
         {% endfor %}
         </tbody>

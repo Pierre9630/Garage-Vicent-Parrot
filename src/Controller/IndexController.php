@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Cars;
-use App\Entity\Contacts;
-use App\Entity\Offers;
-use App\Entity\OpeningHours;
-use App\Form\ContactsType;
-use App\Form\OffersType;
-use App\Form\SearchFormType;
+use App\Entity\Car;
+use App\Entity\Contact;
+use App\Entity\Offer;
+use App\Entity\OpeningHour;
+use App\Form\ContactType;
+use App\Form\OfferType;
+use App\Form\SearchType;
 //use App\Model\CarsData;
-use App\Repository\CarsRepository;
+use App\Repository\CarRepository;
 //use App\Service\UploadPhoto;
 //use Carbon\Carbon;
 //se Carbon\Doctrine\DateTimeType;
-use App\Repository\OffersRepository;
-use App\Repository\OpeningHoursRepository;
+use App\Repository\OfferRepository;
+use App\Repository\OpeningHourRepository;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 //use http\Env\Request;
@@ -33,12 +34,13 @@ use Symfony\Component\Form\FormTypeInterface;
 class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
-    public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator, OpeningHoursRepository $oh): Response
+    public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator,
+        ServiceRepository $sr, OpeningHourRepository $oh): Response
     {
 
-        $offers = new Offers();
-        $searchType = $this->createForm(OffersType::class,$offers);
-        $repository = $entityManager->getRepository(Offers::class);
+        $offers = new Offer();
+        $searchType = $this->createForm(OfferType::class,$offers);
+        $repository = $entityManager->getRepository(Offer::class);
         $searchType->handleRequest($req);
         if($searchType->isSubmitted() && $searchType->isValid()){
             //dd($cars);
@@ -54,69 +56,15 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             //'cars' => $repository->findAll(),
-            'offers' => $repository->findAll(),
+            'offers' => $repository->findBy(['isExposed' => true]),
             'form' => $searchType->createView(),
             'openingHours' => $oh->findAll(),
+            'services'=>$sr->findAll()
         ]);
 
     }
 
-    #[Route('/res', name: 'app_res')]
-    public function res(EntityManagerInterface $em, ResSlots $resslots,  $date = 0): Response
-    {
 
-        //dd(\DateTime::createFromFormat('Y-m-d H:i:s','2023-05-02 00:00:00'));
-        //dd($date);
-        
-        //$finaldate = $date->format('Y-m-d');
-        //dd($finaldate);
-
-        $numberslots = $resslots->getAvailableTimeSlots($em,Carbon::now(),2);
-        //dd($numberslots);
-        $openingHours = OpeningHours::create([
-            'monday' => ['12:00-14:00', '19:00-22:00'],
-            'tuesday' => ['12:00-14:00', '19:00-22:00'],
-            'thursday' => ['12:00-14:00', '19:00-22:00'],
-            'friday' => ['12:00-14:00', '19:00-21:00'],
-            'saturday' => ['12:00-14:00', '19:00-22:00'],
-            'sunday' => ['12:00-14:00'],
-        ]);
-        /*$test = [
-            0 => [
-                 'monday' => '12:00-14:00'
-            ],
-            1 =>['12:30-13:30'],
-        ];
-        $people = array(
-            2 => array(
-                'name' => 'John',
-                'fav_color' => 'green',
-                'date' => '02-05-2026',
-            ),
-            5=> array(
-                'name' => 'Samuel',
-                'fav_color' => 'blue'
-            )
-        );
-        dd($people);*/
-
-        return $this->render('index/reservation.html.twig', [
-            'controller_name' => 'IndexController',
-            'resslots' => $numberslots,
-
-            //dd($openingHours->forWeek()),
-        ]);
-    }
-#[Route('/img', name: 'app_img')]
-    public function img(Request $req, SluggerInterface $sl, OpeningHours $oh){
-
-        $uploader = new UploadPhoto($req->get('file'), $sl);
-
-        return $this->render('index/img.html.twig',[
-            'controller_name' => 'IndexController',
-            'openingHours' => $oh,
-        ]);
-    }
 
 /*#[Route('/contact', name: 'app_img')]
     public function contact(Request $req, SluggerInterface $sl,EntityManagerInterface $entityManager){

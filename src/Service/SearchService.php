@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Service;
-use App\Entity\Cars;
-use App\Entity\Offers;
+use App\Entity\Car;
+use App\Entity\Offer;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SearchService
@@ -19,7 +19,7 @@ class SearchService
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb->select('o')
-            ->from(Offers::class, 'o')
+            ->from(Offer::class, 'o')
             //->innerJoin(Cars::class,'c','ON','c.offer','c.offer = o.car');
               ->innerJoin('o.car','c');
 

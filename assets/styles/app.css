@@ -1,3 +1,112 @@
+@media (max-width: 1024px) {
+    .fixed-height-carousel {
+        max-height: 350vh;
+        height: auto;
+        overflow: hidden; /* Pour cacher le contenu dépassant de la hauteur fixe */
+        position: relative;
+    }
+}
+
 body {
     background-color: lightgray;
 }
+button {
+    background-color: #007bff; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border: none; /* Supprimer la bordure du bouton */
+    padding: 10px 20px; /* Espacement interne du bouton */
+    text-align: center; /* Alignement du texte au centre */
+    text-decoration: none; /* Supprimer la décoration du texte */
+    display: inline-block; /* Affichage en ligne du bouton */
+    font-size: 16px; /* Taille de la police du texte */
+    margin: 5px 2px; /* Marge extérieure du bouton */
+    cursor: pointer; /* Curseur pointeur au survol */
+}
+
+a{
+    padding:5px;
+}
+.custom-button:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+.error-message {
+    color: red;
+}
+.fixed-height-carousel-show{
+    max-height: 1200px;
+    height : 1200px;
+}
+
+.fixed-height-carousel-show img {
+    max-width: 100%;
+    max-height: 75%;
+    object-fit: cover;
+}
+
+.fixed-height-carousel {
+   
+    /*height: 220px ;*/
+    overflow: hidden;
+    position: relative;
+}
+.fixed-height-carousel img {
+    /*min-width: 135px;
+    max-height: 90px;*/
+    object-fit: cover;
+}
+
+.carousel-container .carousel img {
+    max-width: 100%;
+    height: auto;
+}
+.carousel-control-prev, .carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.carousel-control-prev {
+    left: 10px;
+}
+.carousel-control-next {
+    right: 10px;
+}
+
+#contact_show_offer_message {
+    width: 200px;
+    font-size: 16px;
+}
+.custom-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajustez la hauteur selon vos besoins */
+}
+
+.custom-label {
+    text-align: left;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.custom-input,
+.custom-textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.custom-textarea {
+    height: 150px; /* Ajustez la hauteur selon vos besoins */
+}
+
+.custom-rating {
+    display: none; /* Cache le champ de notation */
+}
+
+.custom-condition {
+    margin-top: 10px;
+}
+

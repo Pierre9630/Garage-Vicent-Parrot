@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Offers;
-use App\Repository\OpeningHoursRepository;
+use App\Entity\Offer;
+use App\Repository\OpeningHourRepository;
 use App\Service\SearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -30,7 +30,7 @@ class SearchController extends AbstractController
         $this->entityManager = $entityManager;
     }*/
     #[Route('/search', name: 'app_search_index', methods: ['GET','POST'])]
-    public function search(Request $request,OpeningHoursRepository $oh,PaginatorInterface $paginator ): Response
+    public function search(Request $request,OpeningHourRepository $oh,PaginatorInterface $paginator ): Response
     {
         /*$keyword = $request->query->get('keyword', '');
         $minPrice = $request->query->get('minPrice', 0);
@@ -67,13 +67,13 @@ class SearchController extends AbstractController
         $pagination = $paginator->paginate(
             $searchResults, // Les données à paginer
             $request->query->getInt('page', 1), // Le numéro de la page
-            3 // Le nombre d'éléments par page
+            4 // Le nombre d'éléments par page
         );
 
         //dd($searchResults);
         return $this->render('search/index.html.twig', [
             'results' => $pagination,
-            'openingHours'=>$oh,
+            'openingHours'=>$oh->FindAll(),
             //'minPrice'=>$minPrice,
             //'maxPrice'=>$maxPrice,
         ]);

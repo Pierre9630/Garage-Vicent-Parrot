@@ -1,0 +1,10 @@
+{#<script import 'rateyo';</script>#}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <button class="btn">Envoyer{#{{ button_label|default('Save') }}#}</button>
+{{ form_end(form) }}
+

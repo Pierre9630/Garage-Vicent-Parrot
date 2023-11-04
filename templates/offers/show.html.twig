@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Offers{% endblock %}
+{% block title %}Annonce {{ offer.reference }}{% endblock %}
 
 {% block body %}
     <section class="gradient-custom">
-        <div class="container my-5 py-5">
+        <div class="container my-5 py-5 fixed-height-carousel" >
         <h1>  {{ offer.offertitle }}</h1>
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -41,15 +41,31 @@
                 <td>{{ offer.reference }}</td>
             </tr>
             <tr>
-                <th>Offer_title</th>
+                <th>Titre de l'annonce</th>
                 <td>{{ offer.offerTitle }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
+                <th>Marque</th>
+                <td>{{ offer.car.Brand }}</td>
+            </tr>
+            <tr>
+                <th>Modèle</th>
+                <td>{{ offer.car.Model }}</td>
+            </tr>
+            <tr>
+                <th>Puissance  Dyn</th>
+                <td>{{ offer.car.Power }} CV</td>
+            </tr>
+            <tr>
+                <th>Nombre Portes</th>
+                <td>{{ offer.car.Doors }}</td>
+            </tr>
+            <tr>
+                <th>Annonce Crée le </th>
                 <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Modified_at</th>
+                <th>Annonce Modifié le</th>
                 <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             </tbody>
@@ -58,31 +74,33 @@
             <div class="container my-5 py-5">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12 col-lg-10 col-xl-8">
+                        {% set userRole = "ROLE_USER" %}
+                        {% if app.user %}
+                        {% if userRole in app.user.roles %}
                         <div class="card">
                             <div class="card-body p-4">
                                 <h4 class="text-center mb-4 pb-2">Section des commentaires imbriqués</h4>
-
                                 <div class="row">
                                     <div class="col">
                                         {% for comment in offer.contacts %}
                                         {#  {% if comment.isApproved is same as true %}#}
                                             <div class="d-flex align-items-start mb-4">
-                                                <img class="rounded-circle shadow-1-strong me-3"
+                                                {#  <img class="rounded-circle shadow-1-strong me-3"
                                                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65"
-                                                     height="65" />
+                                                     height="65" />#}
                                                 <div class="flex-grow-1">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <p class="mb-1">
                                                             {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
                                                         </p>
-                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                        <a href="#Form"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
                                                     </div>
                                                     <p class="small mb-0">
                                                         {{ comment.message }}
                                                     </p>
-                                                    {% set AdminRole = "ROLE_ADMIN" %}
+
                                                     {% if app.user %}
-                                                    {% if AdminRole in app.user.roles %}
+                                                    {% if userRole in app.user.roles %}
                                                     {% if comment.isApproved is same as false %}
                                                         <span class="text-danger">Commentaire non approuvé !</span>
                                                     {% else %}
@@ -95,18 +113,18 @@
                                             {# Si vous souhaitez afficher les réponses, décommentez cette partie #}
                                             {% if comment.hasreply is defined %}
                                                 <div class="d-flex align-items-start ml-5">
-                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                    {#  <img class="rounded-circle shadow-1-strong me-3"
                                                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
                                                          width="65" height="65" />
                                                     <div class="flex-grow-1">
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <p class="mb-1">
-                                                                Simona Disa <span class="small">- {{ comment.replyTime }}</span>
+                                                                 <span class="small">- {{ comment.replyTime }}</span>
                                                             </p>
                                                         </div>
                                                         <p class="small mb-0">
                                                             {{ comment.replyMessage }}
-                                                        </p>
+                                                        </p>#}
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -117,6 +135,20 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endif %}
+                        <div id="Form" class="mt-5">
+                            <h2>Vous voulez plus d'informations ? N'Hésitez pas à nous contacter depuis le formulaire
+                            ci dessous :</h2>
+                            <div class="card">
+                                {{ form_start(commentForm) }}
+                                {{ form_widget(commentForm) }}
+                                {#  {{ form_row(form.cars_id.model) }}#}
+                                <button class="btn">{{ button_label|default('Envoyer') }}</button>
+                                {{ form_end(commentForm) }}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -1,0 +1,13 @@
+
+import noUiSlider from 'nouislider';
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Récupérez les données JSON à partir de la balise script
+    var jsonDataElement = document.getElementById('json-data');
+    var jsonData = JSON.parse(jsonDataElement.textContent);
+
+    // Faites quelque chose avec les données JSON
+    console.log(jsonData);
+
+    // Par exemple, accédez à jsonData.key1
+});

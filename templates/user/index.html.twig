@@ -1,49 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Comptes Utilisateurs{% endblock %}
 {# https://stackoverflow.com/questions/7680917/how-do-i-get-the-entity-that-represents-the-current-user-in-symfony2 #}
 {% block body %}
 
-    <h1>{% if app.user.firstname is defined %}{{ app.user.firstname }}{% else %}Pas de User pour l'instant  {% endif %}</h1>
-
-
-<table class="table">
-    <thead>
-    <tr>
-        {#  <th>Id</th>#}
-        <th>Nom du Client</th>
-        <th>Roles</th>
-        <th>Mot de passe</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    {% for user in users %}
+    <h1>{% if app.user.firstname is defined %}{{ app.user.firstname }} {{ app.user.lastname }}{% else %}Je ne sais pas comment vous vous êtes retrouvé ici! {% endif %}</h1>
+    {% set AdminRole = "ROLE_ADMIN" %}
+    {% if is_granted('ROLE_ADMIN') %}Admin{% else %} Employé {% endif %}
+    <table class="table">
+        <thead>
         <tr>
-            {#  <td>{% if user.id is defined %}{{ user.id }}{% endif %}</td>#}
-            <td>{% if user.email is defined %}  {{ user.email }} {% endif %}</td>
-            {% set AdminRole = "ROLE_ADMIN" %}
-            <td>{% if user.roles is defined %}{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %} {% endif %}{# {{ user.roles ? user.roles|json_encode : '' }} #}</td>
-            <td><a href="{% if user.id is defined %}{{ path('app_user_edit', {'id': user.id}) }}{% endif %}">Changer de Mot de Passe</a></td>
-            <td>
-                <a href="{% if user.id is defined %}{{ path('app_user_show', {'id': user.id}) }}{% endif %}">show</a>
-                <a href="{% if user.id is defined %}{{ path('app_user_edit', {'id': user.id}) }}{% endif %}" >edit</a>
-            </td>
+            {#  <th>Id</th>#}
+            <th>Nom du Client</th>
+            <th>Roles</th>
+            <th>Mot de passe</th>
+            <th>actions</th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="7">Pas d'utilisateurs</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
 
-    <a href="{{ path('app_user_new') }}">Create new Users</a>
-    <a href="{{ path('app_user_index') }}">back to site</a>
-{#  {% endif %}#}
+        <tbody>
+        {% for user in users %}
+            <tr>
+                {#  <td>{% if user.id is defined %}{{ user.id }}{% endif %}</td>#}
+                <td>{% if user.email is defined %}  {{ user.email }} {% endif %}</td>
 
-    {% endblock %}
+                <td>{% if user.roles is defined %}{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %} {% endif %}{# {{ user.roles ? user.roles|json_encode : '' }} #}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{% if user.id is defined %}
+                {{ path('app_user_edit', {'id': user.id}) }}{% endif %}">Changer de Mot de Passe</a></td>
+                {% else %}
+                    <td>Option non disponible !</td>
+                {% endif %}
+                <td>
+                    <a href="{% if user.id is defined %}{{ path('app_user_show', {'id': user.id}) }}{% endif %}">Voir</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{% if user.id is defined %}{{ path('app_user_edit', {'id': user.id}) }}{% endif %}" >Modifier</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas d'utilisateurs</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_user_new') }}">Créer un nouvel utilisateur</a>
+    {% endif %}
+    <a href="{{ path('app_index') }}">Retour sur le site</a>
+    {#  {% endif %}#}
+
+{% endblock %}
 {#
 {% block body %}
     <h1>User index</h1>

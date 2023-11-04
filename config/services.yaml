@@ -30,3 +30,6 @@ services:
         # Autres arguments ou dépendances si nécessaires
         arguments:
             $entityManager: '@doctrine.orm.entity_manager' # Exemple de dépendance
+
+    Liip\ImagineBundle\Binary\Loader\LoaderInterface:
+        alias: liip_imagine.binary.loader.default

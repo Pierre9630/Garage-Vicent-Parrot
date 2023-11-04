@@ -4,55 +4,53 @@
     <div class="container p-4">
         <!--Grid row-->
         <div class="row">
-            <!--Grid column-->
-            <div class="col-lg-8 col-md-12 mb-4 mb-md-0">
+            <!--Grid column pour le copyright -->
+<div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+    <p>
+        © 2023 Copyright Garage V.Parrot
+    </p>
 
+    <i class="fa-brands fa-facebook"></i>
+    <i class="fa-brands fa-instagram"></i>
+    <i class="fa-brands fa-x-twitter"></i>
+</div>
+<!-- Fin de la colonne pour le copyright -->
 
-                <p>
-                    © 2020 Copyright
-                </p>
-            </div>
-            <!--Grid column-->
+<!-- Grid column pour "Contactez-nous" au milieu -->
+<div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+    <h4>Contactez-nous</h4>
+    <p>
+        <a href="{{ path('app_index') }}" class="btn btn-primary">Contactez nous</a>
+    </p>
+</div>
+<!-- Fin de la colonne pour "Contactez-nous" au milieu -->
 
-            <!--Grid column-->
-            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+<!-- Grid column pour les horaires à droite -->
+<div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+    <p>
+        {% set trans_day_hash = {
+            "Monday": "Lundi",
+            "Tuesday": "Mardi",
+            "Wednesday": "Mercredi",
+            "Thursday": "Jeudi",
+            "Friday": "Vendredi",
+            "Saturday": "Samedi",
+            "Sunday": "Dimanche"
+        }
+        %}
+        <h4>Horaires</h4>
+        {% for openHour in openingHours %}
+            <h5>{{ trans_day_hash[openHour.dayofweek|trans] }}</h5>
+            {% if openHour is not same as '' %}
+                {{ openHour.morningOpen|date('H:i') }} - {{ openHour.morningClose|date('H:i')}}
+            {% else %}
+                fermé
+            {% endif %}
+        {% endfor %}
+    </p>
+</div>
+<!-- Fin de la colonne pour les horaires à droite -->
 
-
-                <p>
-
-                    {% set trans_day_hash = {
-                        "Monday": "Lundi",
-                        "Tuesday": "Mardi",
-                        "Wednesday": "Mercredi",
-                        "Thursday": "Jeudi",
-                        "Friday": "Vendredi",
-                        "Saturday": "Samedi",
-                        "Sunday": "Dimanche"
-                    }
-                    %}
-                <h4>Horaires</h4>
-
-
-                {% for openHour in openingHours %}
-
-                      {# <p>{{openingTime.dayOfWeek|capitalize}} : {{openingTime.lunchOpen|date('H:i')}} - {{openingTime.lunchClose|date('H:i')}} / {{openingTime.dinnerOpen|date('H:i')}} - {{openingTime.dinnerClose|date('H:i')}} </p>
-                {% endfor %}
-                {% set oh = OpenHoursMethod() %}
-
-                 <p>{% for openhour in openingHours %}
-                        {{ day }}#}
-
-                <h5>{{ trans_day_hash[openHour.dayofweek|trans] }}</h5>
-                {% if openHour is not same as '' %}
-                    {{ openHour.morningOpen|date('H:i') }} - {{ openHour.morningClose|date('H:i')}}
-                {% else %}
-                    fermé
-                {% endif %}
-                {% endfor %}
-
-                </p>
-            </div>
-            <!--Grid column-->
         </div>
         <!--Grid row-->
     </div>

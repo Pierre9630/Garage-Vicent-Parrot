@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Menu;
-use App\Entity\Offers;
+use App\Entity\Offer;
 use App\Entity\User;
-use App\Form\UserFormType;
-use App\Form\AdminFormType;
-use App\Repository\ContactsRepository;
-use App\Repository\OpeningHoursRepository;
+use App\Form\UserType;
+use App\Form\AdminType;
+use App\Repository\ContactRepository;
+use App\Repository\OpeningHourRepository;
+use App\Repository\TestimonialRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +26,10 @@ use Knp\Component\Pager\PaginatorInterface;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'app_admin_index')]
-    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request,PaginatorInterface $paginator, ContactsRepository $cr
-    , OpeningHoursRepository $oh): Response
+    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator, ContactRepository $cr
+    , OpeningHourRepository $oh, TestimonialRepository $tr): Response
     {
-        $repository = $entityManager->getRepository(Offers::class);
+        $repository = $entityManager->getRepository(Offer::class);
         //$users = $userRepository->findAll();
         $pagination = $paginator->paginate(
             $userRepository->paginateUsers(),
@@ -41,14 +41,15 @@ class AdminController extends AbstractController
             'admins' => $userRepository->foundAdmins(),
             'menus'=>$repository->findAll(),
             'contacts'=>$cr->findNotApproved(), //a optimiser pour ne retourner que les commentaires non approuvées !
+            'testimonials'=>$tr->findNotApproved(),
             'openingHours'=>$oh->findAll(),
         ]);
     }
     #[Route('/new', name: 'app_admin_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, OpeningHoursRepository $oh ): Response
+    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, OpeningHourRepository $oh ): Response
     {
         $admin = new User();
-        $form = $this->createForm(AdminFormType::class, $admin);
+        $form = $this->createForm(AdminType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -73,7 +74,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_show', methods: ['GET'])]
-    public function show(User $admin,OpeningHoursRepository $oh): Response
+    public function show(User $admin,OpeningHourRepository $oh): Response
     {
         return $this->render('admin/show.html.twig', [
             'user' => $admin,
@@ -84,7 +85,7 @@ class AdminController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $admin, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserFormType::class, $admin);
+        $form = $this->createForm(UserType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -112,7 +113,7 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'app_admin_dash', methods: ['POST'])]
     public function dash(Request $request, User $admin, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $repository = $entityManager->getRepository(Menu::class);
+        $repository = $entityManager->getRepository(Offer::class);
 
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),

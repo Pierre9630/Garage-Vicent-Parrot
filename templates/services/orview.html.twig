@@ -1,0 +1,18 @@
+
+<section class="">
+    <h3> Nos Services </h3>
+    <figure class="container-flex">
+        <img src="" alt="Réparation et Services Garage Vincent Parrot"/>
+        <p class=""> Des pièces originales garanties par les constructeurs. Une réparation à l'écoute et d'une fiabilité certifié constructeur. Notre équipe est composé de profesionnels passionnées et experimentés
+        dans la réparation, la maintenance automobile ainsi que la carosserie</p>
+        <ul class="">
+            {% for service in services %}
+                {% if service.ispublished is same as true %}
+                <li>{{ service.name }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>N’hésitez pas à nous<a href="">contacter</a>si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre à toutes vos questions et vous fournir les reinseignements dont vous avez besoin.
+        </p>
+    </figure>
+</section>

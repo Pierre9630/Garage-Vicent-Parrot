@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Offers;
+use App\Repository\OpeningHoursRepository;
+use App\Service\SearchService;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+
+
+
+class SearchController extends AbstractController
+{
+
+
+    #[Route('/search', name: 'app_search_index', methods: ['GET', 'POST'])]
+    public function search(EntityManagerInterface $em,OpeningHoursRepository $oh): Response
+    {
+        // Récupérez les données depuis vos entités (exemple basé sur vos entités)
+        $offers = $em->getRepository(Offers::class)->findAll();
+
+
+        // Créez un tableau de données à partir de vos entités (à adapter en fonction de vos besoins)
+        $jsonData = [
+            'offers' => $offers,
+
+            // Ajoutez d'autres données ici
+        ];
+        dd(json_encode($jsonData));
+        // Utilisez la méthode `render` pour afficher le template
+        return $this->render('search/index.html.twig', [
+            'jsonData' => json_encode($jsonData), // Convertissez les données en JSON
+            'openingHours'=>$oh,
+        ]);
+    }
+
+
+}

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Offers index{% endblock %}
+{% block title %}Annonces{% endblock %}
 
 {% block body %}
-    <h1>Offers index</h1>
+    <h1>Annonces</h1>
 
     <table class="table">
         <thead>
@@ -25,6 +25,7 @@
                 <td>
                     <a href="{{ path('app_offers_show', {'id': offer.id}) }}">show</a>
                     <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>
+                    {{ include('offers/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

@@ -1,0 +1,51 @@
+
+import noUiSlider from 'nouislider';
+
+const offers = []
+
+
+async function getOffers(){
+
+    console.log("début fonction getOffers");
+    let response  = await fetch('http://127.0.0.1:8000/api/offerss');
+    let data = await response.json(); 
+
+    return data; 
+}
+console.log("avant appel de la fonction");
+getOffers().then(taData => {
+    console.log("ta data est arrivé");
+    console.log(taData);
+});
+console.log("après appel de la fonction");
+
+document.addEventListener("DOMContentLoaded", function() {
+    //const sliderContainer = document.getElementById("sliderContainer");
+    const priceSlider = document.getElementById("priceSlider");
+    const minPriceInput = document.getElementById("minPrice");
+    const maxPriceInput = document.getElementById("maxPrice");
+    const minPriceLabel = document.getElementById("minPriceLabel");
+    const maxPriceLabel = document.getElementById("maxPriceLabel");
+
+    noUiSlider.create(priceSlider, {
+        start: [0, 100000],
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 100000
+        }
+    });
+
+    priceSlider.noUiSlider.on('update', function (values) {
+        // Arrondir les valeurs au nombre entier le plus proche
+        const minPrice = Math.round(values[0]);
+        const maxPrice = Math.round(values[1]);
+
+        minPriceInput.value = minPrice;
+        maxPriceInput.value = maxPrice;
+
+        minPriceLabel.textContent = "Min: " +  Math.round(values[0]);
+        maxPriceLabel.textContent = "Max: " + Math.round(values[1]);
+    });
+});
+

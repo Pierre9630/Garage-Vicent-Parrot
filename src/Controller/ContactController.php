@@ -3,23 +3,26 @@
 namespace App\Controller;
 
 
-use App\Entity\Contacts;
-use App\Entity\Offers;
-use App\Form\ContactsType;
-use App\Repository\ContactsRepository;
-use App\Repository\OpeningHoursRepository;
+use App\Entity\Contact;
+use App\Entity\Offer;
+use App\Form\ContactType;
+use App\Repository\ContactRepository;
+use App\Repository\OpeningHourRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/contact')]
 class ContactController extends AbstractController
 {
+
     #[Route('/', name: 'app_contact_index', methods: ['GET'])]
-    public function index(ContactsRepository $contactRepository,OpeningHoursRepository $oh): Response
+    public function index(ContactRepository $contactRepository,OpeningHourRepository $oh): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
             "openingHours" => $oh,
@@ -27,12 +30,12 @@ class ContactController extends AbstractController
     }
 
     #[Route('/new', name: 'app_contact_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,OpeningHoursRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,OpeningHourRepository $oh): Response
     {
-        $contact = new Contacts();
-        $form = $this->createForm(ContactsType::class, $contact);
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
-        $offer = new Offers();
+        $offer = new Offer();
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Obtenez l'objet Contacts depuis le formulaire
@@ -75,7 +78,7 @@ class ContactController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_contact_show', methods: ['GET'])]
-    public function show(Contacts $contact,OpeningHoursRepository $oh): Response
+    public function show(Contact $contact,OpeningHourRepository $oh): Response
     {
         return $this->render('contact/show.html.twig', [
             'contact' => $contact,
@@ -83,10 +86,10 @@ class ContactController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_contact_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Contacts $contact, EntityManagerInterface $entityManager, OpeningHoursRepository $oh): Response
+    #[Route('/edit/{id}', name: 'app_contact_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Contact $contact, EntityManagerInterface $entityManager, OpeningHourRepository $oh): Response
     {
-        $form = $this->createForm(ContactsType::class, $contact);
+        $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -102,8 +105,10 @@ class ContactController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_contact_delete', methods: ['POST'])]
-    public function delete(Request $request, Contacts $contact, EntityManagerInterface $entityManager): Response
+    #[IsGranted("ROLE_ADMIN")]
+    public function delete(Request $request, Contact $contact, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
             $entityManager->remove($contact);
@@ -114,8 +119,8 @@ class ContactController extends AbstractController
     }
 
     #[Route("/contact/approve/{id}", name: "app_contact_approve", methods: ["GET","POST"])]
-    #[IsGranted("ROLE_USER","ROLE_ADMIN")] // Vous pouvez ajuster cette annotation pour gérer les autorisations
-    public function approve(int $id, EntityManagerInterface $entityManager, ContactsRepository $cr): Response
+    #[IsGranted("ROLE_USER")]
+    public function approve(string $id, EntityManagerInterface $entityManager, ContactRepository $cr): Response
     {
         // Récupérez le commentaire à partir de son ID
         $contact = $cr->find($id);
@@ -133,7 +138,7 @@ class ContactController extends AbstractController
 
         // Redirigez l'utilisateur vers la page précédente ou une autre page de votre choix
         // Dans cet exemple, nous redirigeons simplement vers la page d'accueil
-        return $this->redirectToRoute('app_index');
+        return $this->redirectToRoute('app_admin_index');
     }
 
 }
