@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import images from "core-js/internals/array-iteration";
 import * as PropTypes from "prop-types";
 //import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
 import ImageCarousel from './ImageCarousel';
 
 {/*function Carousel(props) {
@@ -18,20 +20,29 @@ export default function CardCar(props) {
 
     return (
         <div>
-            <div className="card-container h-70">
+            
+            <Card style={{  }}>
+                <ImageCarousel imageList={images}/>
+                <Card.Body>
+                    <Card.Link href={`/offers/show/${offer.id}`}>{offer.offer_title}</Card.Link>
+                    <Card.Text>Marque Modèle : </Card.Text>
+                    <Card.Text>{car.brand}  {car.model}</Card.Text>
+                    <Card.Text> Nombre Portes : </Card.Text>
+                    <Card.Text>{car.doors}</Card.Text>
+                    <Card.Text> Energie : </Card.Text>
+                    <Card.Text>{car.fuel}</Card.Text>
+                    <Card.Text> Kilomètres : </Card.Text>
+                    <Card.Text>{car.kilometers}km</Card.Text>
+                    <Card.Text> Prix : </Card.Text>
+                    <Card.Text>{car.price}€</Card.Text>
+                </Card.Body>
+            </Card>
+            {/*<div className="card-container h-70">
                 <div className="row">
                     <div className="col-md-3 mb-4">
                         <div className="card border">
-                            <ImageCarousel imageList={images}/>
-                            {/*<Carousel showArrows={true}>
-                                {images.map((image, index) => (
-                                    <div key={index}>
-                                        <img src={`/assets/uploadscars/${image.name}`} alt={`Image ${index + 1}`} />
-                                    </div>
-                                ))}
-                                </Carousel>*/}
-                                
-                                
+                            <ImageCarousel imageList={images}/>                       
+                                                                
                         </div>
                             <div className="card-body">
                                 <h3 className="card-title">
@@ -43,8 +54,8 @@ export default function CardCar(props) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+    </div>*/}
+    </div>
         
     )
 }

@@ -9,14 +9,11 @@ export default function ImageCarousel(props) {
   const { imageList } = props
 
   return (
-    <Carousel prevLabel nextLabel >
+    <Carousel prevLabel nextLabel indicators={null} >
     
-
-
       {imageList.map(image => (<Carousel.Item key={image.id}>
         <Image src={`/assets/uploadscars/${image.name}`} thumbnail />
       </Carousel.Item>))}
-
 
     </Carousel>
   )

@@ -1,7 +1,7 @@
 api_platform:
     title: Hello API Platform
     version: 1.0.0
-    enable_profiler: true
+    enable_profiler: true    
     formats:
         jsonld: ['application/ld+json']
     docs_formats:

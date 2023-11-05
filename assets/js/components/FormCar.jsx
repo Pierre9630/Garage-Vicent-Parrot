@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
+import Button from 'react-bootstrap/Button';
 
 export default function FormCar(props) {
 
@@ -83,6 +84,9 @@ export default function FormCar(props) {
         min={500}
         max={100000}
       />
+      <Typography id="price-range-slider" gutterBottom>
+        Fourchette des Kilomètres
+      </Typography>
       <Slider
         value={filters.kilometersRange}
         onChange={handleKilometersChange}
@@ -93,6 +97,9 @@ export default function FormCar(props) {
         min={500}
         max={100000}
       />
+      <Typography id="price-range-slider" gutterBottom>
+        Fourchette des années
+      </Typography>
       <Slider
         value={filters.yearRange}
         onChange={handleYearChange}
@@ -104,17 +111,13 @@ export default function FormCar(props) {
         max={2040}
       />         
       <Button
-      variant="contained"
-      sx={{
-        bgcolor: '#262526',
-        boxShadow: 1,
-        borderRadius: 2,
-        p: 2,
-        minWidth: 80,
-      }}
+      variant="primary"
+      
       onClick={handleSubmitChange}     
       >Rechercher</Button>
     </div>
+
+    
   )
 }
 

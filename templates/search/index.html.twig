@@ -3,6 +3,13 @@
 {% block body %}
 
 <div id="app" ></div> {# Point d'entrée React #}
+<script>
+    {% if app.request.server.get('SERVER_NAME') == 'localhost' %}
+        var apiEndpoint = 'http://localhost:8000'; // Remplacez le port par le port sur lequel votre application Symfony s'exécute localement
+    {% else %}
+        var apiEndpoint = "{{ app.request.schemeAndHttpHost }}";
+    {% endif %}
+</script>
 
 {% endblock %}
 

@@ -19,7 +19,7 @@ use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 //#[UniqueEntity(fields: ['reference'])]
 #[UniqueEntity(fields: ['reference'],message: 'Ce titre ou reference existe déjà !')]
-#[ApiResource] //(paginationMaximumItemsPerPage: 4)
+#[ApiResource()] //(paginationMaximumItemsPerPage: 4)
 #[ApiFilter(SearchFilter::class, properties: ['offer_title' => 'partial', 'reference' => 'exact'])]
 #[ApiFilter(RangeFilter::class, properties: ['car.price','car.kilometers','car.year'])]
 //#[ApiFilter(SearchFilter::class, properties: ["id"=>"partial"])]

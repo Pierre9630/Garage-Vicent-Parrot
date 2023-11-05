@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import CardCar from './CardCar';
 import FormCar from './FormCar';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export default function App() {
   const [listCar, setListCar] = useState([]);
+  const [othersLinkParam, setApiEnpoint] = useState("/api/offers?"); 
   const [searchString, setSearchString] = useState({
-    link: "http://127.0.0.1:8000/api/offers?",
+    link: apiEndpoint + othersLinkParam,
     offer_title: '',
     reference: '',
     price: 0,
@@ -48,8 +50,23 @@ export default function App() {
 
   return (
     <div>
-      <FormCar onSubmit={getData} />
-      {listCar.map(offer => (<CardCar offer={offer} key={offer.id} />))}
+      <Container>
+        <Row>
+          <Col mb={2}>
+            <FormCar onSubmit={getData} />
+          </Col>
+          
+        </Row>
+      </Container>
+      
+      <Container>
+        <Row md={3} xs={1} >
+        
+          {listCar.map(offer => (<Col mb={3} className="mb-1" key={offer.id}><CardCar offer={offer}  /></Col>))}
+        
+        </Row>
+      </Container>
+      
     </div>
   )
 }
