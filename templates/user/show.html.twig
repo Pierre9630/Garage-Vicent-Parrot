@@ -23,8 +23,10 @@
     </table>
 
     <a href="{{ path('app_user_index') }}">Revenir à la liste des Utilisateurs</a>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+    {% set AdminRole = "ROLE_ADMIN" %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>    
 
     {{ include('user/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}
+    {% endif %}
 {% endblock %}

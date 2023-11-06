@@ -67,8 +67,9 @@ class UserController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher,OpeningHourRepository $oh): Response
-    {
+    public function edit(Request $request, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher,OpeningHourRepository $oh): Response
+    {        
+        $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -87,7 +88,7 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
-            'openingHours'=>$oh,
+            'openingHours'=>$oh->findAll(),
         ]);
     }
 

@@ -47,8 +47,10 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         #- { path: ^/profile, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/api, roles: ROLE_ADMIN }
         - { path: ^/services/new, roles: ROLE_ADMIN }
         - { path: ^/services/edit, roles: ROLE_ADMIN }
+        - { path: ^/users/new, roles: ROLE_ADMIN }        
         - { path: ^/services, roles: ROLE_USER }
         - { path: ^/images, roles: ROLE_USER }
         - { path: ^/contact, roles: ROLE_USER }

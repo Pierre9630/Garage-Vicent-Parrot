@@ -28,6 +28,15 @@ class TestimonialRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findApprovedTestimonials()
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.isApproved = :approved')
+            ->setParameter('approved', 1)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Testimonials[] Returns an array of Testimonials objects
 //     */

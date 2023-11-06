@@ -13,13 +13,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
-
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 
 
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 //#[UniqueEntity(fields: ['reference'])]
 #[UniqueEntity(fields: ['reference'],message: 'Ce titre ou reference existe déjà !')]
-#[ApiResource()] //(paginationMaximumItemsPerPage: 4)
+#[ApiResource(operations: [new Get(), new GetCollection()])] //(paginationMaximumItemsPerPage: 4) security:"is_granted('ROLE_ADMIN')"
 #[ApiFilter(SearchFilter::class, properties: ['offer_title' => 'partial', 'reference' => 'exact'])]
 #[ApiFilter(RangeFilter::class, properties: ['car.price','car.kilometers','car.year'])]
 //#[ApiFilter(SearchFilter::class, properties: ["id"=>"partial"])]

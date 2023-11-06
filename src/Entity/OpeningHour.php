@@ -36,7 +36,7 @@ class OpeningHour
     private ?\DateTimeInterface $afternoonClose = null;
 
     #[ORM\Column(length: 11, nullable: true)]
-    private ?string $dayOfWeek = null;
+    private ?string $dayOfWeek = null;   
 
     public function __toString()
     {
@@ -106,4 +106,5 @@ class OpeningHour
 
         return $this;
     }
+   
 }

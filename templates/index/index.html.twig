@@ -9,7 +9,7 @@
     {{ form_end(form) }}#}
   <style>
     .intro-container {
-            background-image: url('{{ asset('assets/images/GarageIntro.jfif') }}');
+            background-image: url('{{ asset('assets/Images/GarageIntro.jfif') }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -124,6 +124,33 @@
 <div class="margin-divider"></div>
 
 {% include 'services/orview.html.twig'%}
+
+<div class="container">
+    <h2>Avis des clients</h2>
+    <div class="row">
+        {% for testimonial in testimonials %}
+            {% if testimonial.isApproved %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text lead">{{ testimonial.message }}</p>
+                        <p class="card-text">
+                            <strong>Note : 
+                                <span class="badge badge-primary">{{ testimonial.note }}/5</span>
+                            </strong>
+                        </p>
+                        <p class="card-text">Posté par {{ testimonial.name }} {{ testimonial.lastname }}</p>
+                        <p class="card-text">Date de publication : {{ testimonial.createdAt|date('d/m/Y H:i') }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+
 
 {% include 'index/iframe.html.twig' %}
 

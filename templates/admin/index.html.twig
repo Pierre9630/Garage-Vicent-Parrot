@@ -3,8 +3,8 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-    <h2>Logged User : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }}{{ app.user.Lastname }}{% endif %}</h2>
+    <h1>Espace Administration</h1>
+    <h2>Utilisateur Connecté : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }}{{ app.user.Lastname }}{% endif %}</h2>
     <table class="table">
         <thead>
         <tr>
@@ -30,7 +30,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Pas d'utilisateurs</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -38,7 +38,7 @@
     {%  if knp_pagination_render(users) %}
     <label>Changer de Page : </label>{{ knp_pagination_render(users)}}<br>
     {% endif %}
-    <a href="{{ path('app_admin_new') }}">Create new Users</a>
+    <a href="{{ path('app_admin_new') }}">Créer un nouvel utilisateur</a>
     <h1>Admins</h1>
     <table class="table">
         <thead>
@@ -46,7 +46,7 @@
             <th>Id</th>
             <th>Email</th>
             <th>Roles</th>
-            <th>Password</th>
+            <th>Mot de passe</th>
             <th>actions</th>
         </tr>
         </thead>

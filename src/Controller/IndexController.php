@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Car;
 use App\Entity\Contact;
 use App\Entity\Offer;
+use App\Entity\Testimonial;
 use App\Entity\OpeningHour;
 use App\Form\ContactType;
 use App\Form\OfferType;
@@ -17,6 +18,7 @@ use App\Repository\CarRepository;
 use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
+use App\Repository\TestimonialRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 //use http\Env\Request;
@@ -35,10 +37,10 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator,
-        ServiceRepository $sr, OpeningHourRepository $oh): Response
+        ServiceRepository $sr, TestimonialRepository $tr, OpeningHourRepository $oh): Response
     {
 
-        $offers = new Offer();
+        $offers = new Offer();        
         $searchType = $this->createForm(OfferType::class,$offers);
         $repository = $entityManager->getRepository(Offer::class);
         $searchType->handleRequest($req);
@@ -59,7 +61,8 @@ class IndexController extends AbstractController
             'offers' => $repository->findBy(['isExposed' => true]),
             'form' => $searchType->createView(),
             'openingHours' => $oh->findAll(),
-            'services'=>$sr->findAll()
+            'services'=>$sr->findAll(),
+            'testimonials'=> $tr->findApprovedTestimonials()
         ]);
 
     }

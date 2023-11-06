@@ -124,7 +124,7 @@ class CarFixtures extends Fixture //implements DependentFixtureInterface
         '2023-10-27 10:00:00'
 
     ];
-    const REFERENCES = [
+    const REFERENCE = [
         'C230925001',
         'C230926001',
         'C230927001',
