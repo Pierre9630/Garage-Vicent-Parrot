@@ -41,11 +41,15 @@
         <h4>Horaires</h4>
         {% for openHour in openingHours %}
             <h5>{{ trans_day_hash[openHour.dayofweek|trans] }}</h5>
-            {% if openHour is not same as null %}
+            {% if openHour.morningOpen is not null and openHour.morningClose is not null %}
                 {{ openHour.morningOpen|date('H:i') }} - {{ openHour.morningClose|date('H:i')}}
+            {% else %}
+                fermé (matin)
+            {% endif %}
+            {% if openHour.afternoonOpen is not null and openHour.afternoonClose is not null %}
                 {{ openHour.afternoonOpen|date('H:i') }} - {{ openHour.afternoonClose|date('H:i')}}
             {% else %}
-                fermé
+                fermé (après-midi)
             {% endif %}
         {% endfor %}
     </p>

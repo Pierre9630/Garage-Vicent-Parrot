@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/opening/hours')]
+#[Route('/openinghours')]
 class OpeningHourController extends AbstractController
 {
     #[Route('/', name: 'app_opening_hours_index', methods: ['GET'])]

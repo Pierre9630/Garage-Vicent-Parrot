@@ -5,8 +5,8 @@
 {% block body %}
     <h1>Creer un nouvel Employé</h1>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Ajouter'}) }}
+    {{ include('user/_form.html.twig') }} {# , {'button_label': 'Ajouter'} #}
 
-    <a href="{{ path('app_user_index') }}">Retour à l'interface des Utilisateurs</a>
+    <a href="{{ path('app_user_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
 {% endblock %}

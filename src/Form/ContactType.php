@@ -7,6 +7,7 @@ use App\Entity\Offer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,7 @@ class ContactType extends AbstractType
         $builder
             ->add('email',EmailType::class, ['label'=> "Email"])
             ->add('subject',TextType::class, ['label'=> "Sujet"])
-            ->add('message',TextType::class, ['label'=> "Message"])
+            ->add('message',TextareaType::class, ['label'=> "Message"])
             ->add('offer', EntityType::class, [
                 'class' => Offer::class,
                 'choice_label' => function ($offer) {

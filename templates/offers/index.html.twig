@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th>Reference</th>
-                <th>Offer_title</th>
-                <th>Created_at</th>
-                <th>Modified_at</th>
+                <th>Titre Annonce</th>
+                <th>Crée le </th>
+                <th>Modifié le</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,18 +23,18 @@
                 <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_offers_show', {'id': offer.id}) }}">show</a>
-                    <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>
+                    <a href="{{ path('app_offers_show', {'id': offer.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_offers_edit', {'id': offer.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                     {{ include('offers/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Pas d'Annonces</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_offers_new') }}">Create new</a>
+    <a href="{{ path('app_offers_new') }}"><i class="fa-solid fa-plus"></i></a>
 {% endblock %}

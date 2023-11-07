@@ -46,9 +46,9 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_user_new') }}">Créer un nouvel utilisateur</a>
+    <a href="{{ path('app_user_new') }}"><i class="fa-solid fa-plus"></i></a>
     {% endif %}
-    <a href="{{ path('app_index') }}">Retour sur le site</a>
+    <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     {#  {% endif %}#}
 
 {% endblock %}

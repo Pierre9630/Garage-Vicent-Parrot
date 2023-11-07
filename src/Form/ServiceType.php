@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Service;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,11 +16,11 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class)
-            ->add('description',TextareaType::class)
+            ->add('name',TextType::class,['attr' => ['class' => 'custom-input']])
+            ->add('description',TextareaType::class,['attr' => ['class' => 'custom-textarea']])
             //->add('createdAt')
             //->add('modifiedAt')
-            ->add('published')
+            ->add('published',CheckboxType::class,['attr' => ['class' => 'custom-checkbox']])
         ;
     }
 

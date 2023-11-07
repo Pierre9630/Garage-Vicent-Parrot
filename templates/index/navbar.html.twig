@@ -14,6 +14,15 @@
             <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>
             <a href="{{ path('app_index') }}" class="nav-item nav-link">Nos Services</a>
             <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link">Contact</a>
+            {% if app.user %}
+            <a href="{{ path('app_offers_index') }}">Annonces</a>
+            <a href="{{ path('app_cars_index') }}">Voitures</a>
+            <a href="{{ path('app_contact_index') }}">Demandes Contact</a>
+            <a href="{{ path('app_testimonial_index') }}">Avis</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_services_index') }}">Services</a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
     <div class="navbar-nav justify-content-end"> <!-- Les éléments à la fin de la navbar -->

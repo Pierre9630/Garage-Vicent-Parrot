@@ -3,17 +3,17 @@
 {% block title %}Cars index{% endblock %}
 
 {% block body %}
-    <h1>Cars index</h1>
+    <h1>Voitures</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Brand</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Kilometers</th>
-                <th>Price</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Année</th>
+                <th>Kilomètres</th>
+                <th>Prix</th>
                 <th>Description</th>
                 <th>actions</th>
             </tr>
@@ -35,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Pas de Voitures</td>
             </tr>
         {% endfor %}
         </tbody>
