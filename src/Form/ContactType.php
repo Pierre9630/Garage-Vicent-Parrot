@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ContactType extends AbstractType
 {
@@ -22,6 +23,7 @@ class ContactType extends AbstractType
             ->add('subject',TextType::class, ['label'=> "Sujet"])
             ->add('message',TextareaType::class, ['label'=> "Message"])
             ->add('offer', EntityType::class, [
+                'label'=>'Annonce',
                 'class' => Offer::class,
                 'choice_label' => function ($offer) {
                     $createdAtString = $offer->getCreatedAt()->format('Y-m-d H:i');
@@ -33,6 +35,18 @@ class ContactType extends AbstractType
                     return $er->createQueryBuilder('u')->orderBy('u.reference', 'DESC');
                 },
                 'choice_value' => 'id',
+            ])
+            ->add('phone',TextType::class,[
+                'label' => 'Telephone :',
+                'attr' => array(
+                    'placeholder' => 'Format 0XXXXXXXXX ou +33XXXXXXXXX !',
+                    'maxlength' => 255,
+                    'class' => 'message-input'
+                ),
+                'constraints' => new Regex([
+                    'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",
+                    'message' => "Veuillez Entrer un numéro valide ! ",
+                ])
             ])
         ;
     }

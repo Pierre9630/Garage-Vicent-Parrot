@@ -102,9 +102,9 @@
                                                     {% if app.user %}
                                                     {% if userRole in app.user.roles %}
                                                     {% if comment.isApproved is same as false %}
-                                                        <span class="text-danger">Commentaire non approuvé !</span>
+                                                        <span class="text-danger">Demande de Contact non approuvé !</span>
                                                     {% else %}
-                                                        <span class="text-success">Commentaire approuvé</span>
+                                                        <span class="text-success">Demande de Contact approuvé</span>
                                                     {% endif %}
                                                     {% endif %}
                                                     {% endif %}
@@ -137,17 +137,16 @@
                         </div>
                         {% endif %}
                         {% endif %}
-                        <div id="Form" class="mt-5">
-                            <h2>Vous voulez plus d'informations ? N'Hésitez pas à nous contacter depuis le formulaire
-                            ci dessous :</h2>
-                            <div class="card">
-                                {{ form_start(commentForm) }}
-                                {{ form_widget(commentForm) }}
-                                {#  {{ form_row(form.cars_id.model) }}#}
-                                <button class="btn">{{ button_label|default('Envoyer') }}</button>
-                                {{ form_end(commentForm) }}
-                            </div>
+                    <div id="Form" class="mt-5 text-center">
+                        <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
+                        <div class="card">
+                            {{ form_start(commentForm) }}
+                            {{ form_widget(commentForm) }}
+                            {#  {{ form_row(form.cars_id.model) }}#}
+                            <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+                            {{ form_end(commentForm) }}
                         </div>
+                    </div>
 
                     </div>
                 </div>

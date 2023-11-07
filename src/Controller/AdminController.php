@@ -39,7 +39,8 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig', [
             'users' => $pagination,
             'admins' => $userRepository->foundAdmins(),
-            'menus'=>$repository->findAll(),
+            'cars'=>$repository->findAll(),
+
             'contacts'=>$cr->findNotApproved(), //a optimiser pour ne retourner que les commentaires non approuvées !
             'testimonials'=>$tr->findNotApproved(),
             'openingHours'=>$oh->findAll(),
