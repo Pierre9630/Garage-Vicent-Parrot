@@ -4,116 +4,149 @@
 
 {% block body %}
     <section class="gradient-custom">
-        <div class="container my-5 py-5 fixed-height-carousel" >
-        <h1>  {{ offer.offertitle }}</h1>
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                {%for image in offer.images %}
-
-                    {% if loop.first %}
-                        <div class="img-fluid carousel-item active" {#  {% if dzdzzd == 0 alors "active" %}#}>
-                            <img class=" img-fluid  d-block w-100 " src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
-                        </div>
-                    {% elseif loop.last %}
-                        <div class="img-fluid carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
-                            <img class=" img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
-                        </div>
-                    {% else %}
-                        <div class="img-fluid carousel-item" {#  {% if dzdzzd == 0 alors "active" %}#}>
-                            <img class="img-fluid  d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
-                        </div>
-                    {% endif %}
-                {% endfor %}
+        <div class="container my-5 py-5 fixed-height-carousel">
+            <h1>{{ offer.offertitle }}</h1>
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in offer.images %}
+                        {% if loop.first %}
+                            <div class="img-fluid carousel-item active">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                            </div>
+                        {% elseif loop.last %}
+                            <div class="img-fluid carousel-item">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                            </div>
+                        {% else %}
+                            <div class="img-fluid carousel-item">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-        <table class="table">
-            <tbody>
-            <tr>
-                <th>Reference</th>
-                <td>{{ offer.reference }}</td>
-            </tr>
-            <tr>
-                <th>Titre de l'annonce</th>
-                <td>{{ offer.offerTitle }}</td>
-            </tr>
-            <tr>
-                <th>Marque</th>
-                <td>{{ offer.car.Brand }}</td>
-            </tr>
-            <tr>
-                <th>Modèle</th>
-                <td>{{ offer.car.Model }}</td>
-            </tr>
-            <tr>
-                <th>Puissance  Dyn</th>
-                <td>{{ offer.car.Power }} CV</td>
-            </tr>
-            <tr>
-                <th>Nombre Portes</th>
-                <td>{{ offer.car.Doors }}</td>
-            </tr>
-            <tr>
-                <th>Annonce Crée le </th>
-                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Annonce Modifié le</th>
-                <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            </tbody>
-        </table>
-        <section class="gradient-custom">
-            <div class="container my-5 py-5">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-12 col-lg-10 col-xl-8">
-                        {% set userRole = "ROLE_USER" %}
-                        {% if app.user %}
-                        {% if userRole in app.user.roles %}
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <h4 class="text-center mb-4 pb-2">Section des commentaires imbriqués</h4>
-                                <div class="row">
-                                    <div class="col">
-                                        {% for comment in offer.contacts %}
-                                        {#  {% if comment.isApproved is same as true %}#}
-                                            <div class="d-flex align-items-start mb-4">
-                                                {#  <img class="rounded-circle shadow-1-strong me-3"
+
+            <!-- Informations essentielles sous forme de cartes carrées -->
+            <div class="row">
+                <div class="col-md-3 pt-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Prix</h5>
+                            <p class="card-text">{{ offer.car.price }} €</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 pt-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Énergie</h5>
+                            <p class="card-text">{{ offer.car.typefuel }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 pt-3">
+                    <div class = "card">
+                    <div class="card-body">
+                        <h5 class="card-title">Puissance</h5>
+                        <p class="card-text">{{ offer.car.Power }} CV</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 pt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de Portes</h5>
+                        <p class="card-text">{{ offer.car.Doors }}</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="pt-3"></div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Reference</th>
+                        <td>{{ offer.reference }}</td>
+                    </tr>
+                    <tr>
+                        <th>Titre de l'annonce</th>
+                        <td>{{ offer.offerTitle }}</td>
+                    </tr>
+                    <tr>
+                        <th>Marque</th>
+                        <td>{{ offer.car.Brand }}</td>
+                    </tr>
+                    <tr>
+                        <th>Modèle</th>
+                        <td>{{ offer.car.Model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Annonce Crée le </th>
+                        <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Annonce Modifié le</th>
+                        <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <!-- Le reste de votre code ici -->
+
+    </section>
+
+    <section class="gradient-custom">
+        <div class="container my-5 py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    {% set userRole = "ROLE_USER" %}
+                    {% if app.user %}
+                    {% if userRole in app.user.roles %}
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="text-center mb-4 pb-2">Demandes de contact</h4>
+                            <div class="row">
+                                <div class="col">
+                                    {% for comment in offer.contacts %}
+                                    {#  {% if comment.isApproved is same as true %}#}
+                                    <div class="d-flex align-items-start mb-4">
+                                        {#  <img class="rounded-circle shadow-1-strong me-3"
                                                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="65"
                                                      height="65" />#}
-                                                <div class="flex-grow-1">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-1">
-                                                            {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
-                                                        </p>
-                                                        <a href="#Form"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
-                                                    </div>
-                                                    <p class="small mb-0">
-                                                        {{ comment.message }}
-                                                    </p>
+                                        <div class="flex-grow-1">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-1">
+                                                    {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
+                                                </p>
+                                                <a href="#Form"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                            </div>
+                                            <p class="small mb-0">
+                                                {{ comment.message }}
+                                            </p>
 
-                                                    {% if app.user %}
-                                                    {% if userRole in app.user.roles %}
+                                            {% if app.user %}
+                                                {% if userRole in app.user.roles %}
                                                     {% if comment.isApproved is same as false %}
                                                         <span class="text-danger">Demande de Contact non approuvé !</span>
                                                     {% else %}
                                                         <span class="text-success">Demande de Contact approuvé</span>
                                                     {% endif %}
-                                                    {% endif %}
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            {# Si vous souhaitez afficher les réponses, décommentez cette partie #}
-                                            {% if comment.hasreply is defined %}
-                                                <div class="d-flex align-items-start ml-5">
-                                                    {#  <img class="rounded-circle shadow-1-strong me-3"
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {# Si vous souhaitez afficher les réponses, décommentez cette partie #}
+                                    {#{% if comment.hasreply is defined %}
+                                    <div class="d-flex align-items-start ml-5">#}
+                                        {#  <img class="rounded-circle shadow-1-strong me-3"
                                                          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
                                                          width="65" height="65" />
                                                     <div class="flex-grow-1">
@@ -125,33 +158,34 @@
                                                         <p class="small mb-0">
                                                             {{ comment.replyMessage }}
                                                         </p>#}
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-                                          {#{% endif %}#}
-                                            {# Fin de la partie réponses #}
-                                        {% endfor %}
-                                    </div>
+                                        {#</div>
                                 </div>
+                                {% endif %}#}
+                                {#{% endif %}#}
+                                {# Fin de la partie réponses #}
+                                {% endfor %}
                             </div>
                         </div>
-                        {% endif %}
-                        {% endif %}
-                    <div id="Form" class="mt-5 text-center">
-                        <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
-                        <div class="card">
-                            {{ form_start(commentForm) }}
-                            {{ form_widget(commentForm) }}
-                            {#  {{ form_row(form.cars_id.model) }}#}
-                            <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
-                            {{ form_end(commentForm) }}
-                        </div>
-                    </div>
-
                     </div>
                 </div>
+                {% endif %}
+                {% endif %}
+                <div id="Form" class="mt-5 text-center">
+                    <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
+                    <div class="card">
+                        {{ form_start(commentForm) }}
+                        {{ form_widget(commentForm) }}
+                        {#  {{ form_row(form.cars_id.model) }}#}
+                        <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+                        {{ form_end(commentForm) }}
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
+
+    </section>
+
 
         {#  <section class="gradient-custom">
             <div class="container my-5 py-5">
@@ -204,23 +238,17 @@
                                                 {#  {% endif %} #}
 
 
-                                                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     {#  <div class="contact">
                         <div class="aff-com">
 
                     </div></section>#}
-    </section>
+
         <a href="{{ path('app_offers_index') }}">back to list</a>
 
         <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>
 
         {{ include('offers/_delete_form.html.twig') }}
-    </div>
+
 
 {% endblock %}

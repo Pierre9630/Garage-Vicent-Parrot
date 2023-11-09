@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information Garage{% endblock %}
+
+{% block body %}
+    <h1>Informations Garage</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Telephone Garage</th>
+                <th>Adresse</th>
+                <th>Ville</th>
+                <th>Email Garage</th>
+                <th>Active ?</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for information in information %}
+            <tr>
+
+                <td>{{ information.corpPhone }}</td>
+                <td>{{ information.address }}</td>
+                <td>{{ information.city }}</td>
+                <td>{{ information.corpEmail }}</td>
+                <td>{{ information.active }}</td>
+                <td>
+                    <a href="{{ path('app_information_show', {'id': information.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_information_edit', {'id': information.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas d'informations sur le Garage</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_information_new') }}"><i class="fa-solid fa-plus"></i></a>
+{% endblock %}

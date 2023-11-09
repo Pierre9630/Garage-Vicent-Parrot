@@ -15,6 +15,7 @@ use App\Repository\CarRepository;
 //use App\Service\UploadPhoto;
 //use Carbon\Carbon;
 //se Carbon\Doctrine\DateTimeType;
+use App\Repository\InformationRepository;
 use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
@@ -37,7 +38,7 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator,
-        ServiceRepository $sr, TestimonialRepository $tr, OpeningHourRepository $oh): Response
+        ServiceRepository $sr, TestimonialRepository $tr, OpeningHourRepository $oh, InformationRepository $ir): Response
     {
 
         $offers = new Offer();        
@@ -60,9 +61,10 @@ class IndexController extends AbstractController
             //'cars' => $repository->findAll(),
             'offers' => $repository->findBy(['isExposed' => true]),
             'form' => $searchType->createView(),
-            'openingHours' => $oh->findAll(),
             'services'=>$sr->findAll(),
-            'testimonials'=> $tr->findApprovedTestimonials()
+            'testimonials'=> $tr->findApprovedTestimonials(),
+            'information' => $ir->findActiveInformation(),
+            'openingHours' => $oh->findAll(),
         ]);
 
     }

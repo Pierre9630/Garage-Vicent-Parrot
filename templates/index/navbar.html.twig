@@ -21,6 +21,7 @@
             <a href="{{ path('app_testimonial_index') }}">Avis</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_services_index') }}">Services</a>
+                    <a href="{{ path('app_information_index') }}">Information</a>
                 {% endif %}
             {% endif %}
         </div>

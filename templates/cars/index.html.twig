@@ -29,8 +29,9 @@
                 <td>{{ car.price }}</td>
                 <td>{{ car.description }}</td>
                 <td>
-                    <a href="{{ path('app_cars_show', {'id': car.id}) }}">show</a>
-                    <a href="{{ path('app_cars_edit', {'id': car.id}) }}">edit</a>
+                    <a href="{{ path('app_cars_show', {'id': car.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_cars_edit', {'id': car.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+
                 </td>
             </tr>
         {% else %}
@@ -41,5 +42,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_cars_new') }}">Create new</a>
+    <a href="{{ path('app_cars_new') }}"><i class="fa-solid fa-plus"></i></a>
 {% endblock %}

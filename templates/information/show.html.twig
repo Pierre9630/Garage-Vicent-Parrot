@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Information{% endblock %}
+
+{% block body %}
+    <h1>Information</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ information.id }}</td>
+            </tr>
+            <tr>
+                <th>Corp_phone</th>
+                <td>{{ information.corpPhone }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ information.address }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ information.city }}</td>
+            </tr>
+            <tr>
+                <th>Corp_email</th>
+                <td>{{ information.corpEmail }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_information_index') }}">back to list</a>
+
+    <a href="{{ path('app_information_edit', {'id': information.id}) }}">edit</a>
+
+    {{ include('information/_delete_form.html.twig') }}
+{% endblock %}
