@@ -3,13 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Car;
-use App\Entity\Image;
-use App\Entity\OpeningHour;
 use App\Form\CarType;
 use App\Repository\CarRepository;
-
-use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
+use App\Service\DataService;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,13 +17,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cars')]
 class CarController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_cars_index', methods: ['GET'])]
     public function index(CarRepository $carsRepository, OpeningHourRepository $oh): Response
     {
 
         return $this->render('cars/index.html.twig', [
             'cars' => $carsRepository->findAll(),
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -50,7 +54,8 @@ class CarController extends AbstractController
         return $this->render('cars/new.html.twig', [
             'car' => $car,
             'form' => $form,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -59,7 +64,8 @@ class CarController extends AbstractController
     {
         return $this->render('cars/show.html.twig', [
             'car' => $car,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -79,7 +85,8 @@ class CarController extends AbstractController
         return $this->render('cars/edit.html.twig', [
             'car' => $car,
             'form' => $form,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 

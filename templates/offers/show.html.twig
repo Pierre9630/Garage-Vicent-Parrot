@@ -243,12 +243,24 @@
                         <div class="aff-com">
 
                     </div></section>#}
+    {% set userRole = "ROLE_USER" %}
+    {% if app.user %}
+    {% if userRole in app.user.roles %}
 
-        <a href="{{ path('app_offers_index') }}">back to list</a>
 
-        <a href="{{ path('app_offers_edit', {'id': offer.id}) }}">edit</a>
+        <a href="{{ path('app_offers_edit', {'id': offer.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
         {{ include('offers/_delete_form.html.twig') }}
-
-
+    {% endif %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <a href="javascript:void(0);" onclick="goBack();"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 {% endblock %}

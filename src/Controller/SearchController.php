@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Offer;
+
 use App\Repository\OpeningHourRepository;
+use App\Service\DataService;
 use App\Service\SearchService;
-use Doctrine\ORM\EntityManagerInterface;
+
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SearchController extends AbstractController
 {
+    private $dataService;
+
     private SearchService $searchService;
 
-    public function __construct(SearchService $searchService)
+    public function __construct(SearchService $searchService,DataService $dataService)
     {
         $this->searchService = $searchService;
+        $this->dataService = $dataService;
     }
     /*private EntityManagerInterface $entityManager;
 
@@ -73,7 +77,8 @@ class SearchController extends AbstractController
         //dd($searchResults);
         return $this->render('search/index.html.twig', [
             'results' => $pagination,
-            'openingHours'=>$oh->FindAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
             //'minPrice'=>$minPrice,
             //'maxPrice'=>$maxPrice,
         ]);

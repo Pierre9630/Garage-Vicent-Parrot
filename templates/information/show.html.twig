@@ -30,9 +30,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_information_index') }}">back to list</a>
+    <a href="{{ path('app_information_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
-    <a href="{{ path('app_information_edit', {'id': information.id}) }}">edit</a>
+    <a href="{{ path('app_information_edit', {'id': information.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
     {{ include('information/_delete_form.html.twig') }}
 {% endblock %}

@@ -20,23 +20,35 @@ export default function CardCar(props) {
 
     return (
         <div>
-            
-            <Card style={{  }}>
-                <ImageCarousel imageList={images}/>
+
+            <Card style={{}}>
+                <ImageCarousel imageList={images} />
                 <Card.Body>
-                    <Card.Link href={`/offers/show/${offer.id}`}>{offer.offer_title}</Card.Link>
-                    <Card.Text>Marque Modèle : </Card.Text>
-                    <Card.Text>{car.brand}  {car.model}</Card.Text>
-                    <Card.Text> Nombre Portes : </Card.Text>
-                    <Card.Text>{car.doors}</Card.Text>
-                    <Card.Text> Energie : </Card.Text>
-                    <Card.Text>{car.fuel}</Card.Text>
-                    <Card.Text> Kilomètres : </Card.Text>
-                    <Card.Text>{car.kilometers}km</Card.Text>
-                    <Card.Text> Prix : </Card.Text>
-                    <Card.Text>{car.price}€</Card.Text>
+                    <Card.Link href={`/offers/show/${offer.id}`} className="font-weight-bold">
+                        {offer.offer_title}
+                    </Card.Link>
+                    <Card.Text>
+                        <span className="font-weight-bold" style={{ fontSize: '1.2em' }}>{car.brand}</span> {car.model}
+                    </Card.Text>
+                    <div className="car-details">
+                        <div>
+                            <strong>Nombre Portes:</strong> {car.doors}
+                        </div>
+                        <div>
+                            <strong>Energie:</strong> {car.fuel}
+                        </div>
+                        <div>
+                            <strong>Kilomètres:</strong> {car.kilometers}km
+                        </div>
+                        <div>
+                            <strong>Prix:</strong> {car.price}€
+                        </div>
+                    </div>
                 </Card.Body>
             </Card>
+
+
+
             {/*<div className="card-container h-70">
                 <div className="row">
                     <div className="col-md-3 mb-4">

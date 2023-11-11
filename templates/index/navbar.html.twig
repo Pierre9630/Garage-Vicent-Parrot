@@ -12,8 +12,8 @@
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <div class="navbar-nav mr-auto"> <!-- Les éléments au début de la navbar -->
             <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>
-            <a href="{{ path('app_index') }}" class="nav-item nav-link">Nos Services</a>
-            <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link">Contact</a>
+            <a href="{{ path('app_search_index') }}" class="nav-item nav-link">Véhicules d'occasion</a>
+            <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link">Votre Avis</a>
             {% if app.user %}
             <a href="{{ path('app_offers_index') }}">Annonces</a>
             <a href="{{ path('app_cars_index') }}">Voitures</a>

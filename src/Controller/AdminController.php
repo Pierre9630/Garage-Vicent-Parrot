@@ -7,9 +7,11 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AdminType;
 use App\Repository\ContactRepository;
+use App\Repository\InformationRepository;
 use App\Repository\OpeningHourRepository;
 use App\Repository\TestimonialRepository;
 use App\Repository\UserRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -25,9 +27,15 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_admin_index')]
     public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator, ContactRepository $cr
-    , OpeningHourRepository $oh, TestimonialRepository $tr): Response
+    , OpeningHourRepository $oh, TestimonialRepository $tr, InformationRepository $ir): Response
     {
         $repository = $entityManager->getRepository(Offer::class);
         //$users = $userRepository->findAll();
@@ -38,16 +46,15 @@ class AdminController extends AbstractController
         );
         return $this->render('admin/index.html.twig', [
             'users' => $pagination,
-            'admins' => $userRepository->foundAdmins(),
             'cars'=>$repository->findAll(),
-
             'contacts'=>$cr->findNotApproved(), //a optimiser pour ne retourner que les commentaires non approuvées !
             'testimonials'=>$tr->findNotApproved(),
-            'openingHours'=>$oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
     #[Route('/new', name: 'app_admin_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, OpeningHourRepository $oh ): Response
+    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, OpeningHourRepository $oh, InformationRepository $ir ): Response
     {
         $admin = new User();
         $form = $this->createForm(AdminType::class, $admin);
@@ -70,7 +77,8 @@ class AdminController extends AbstractController
         return $this->render('admin/new.html.twig', [
             'user' => $admin,
             'form' => $form,
-            'openingHours'=>$oh,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -79,12 +87,13 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/show.html.twig', [
             'user' => $admin,
-            'openingHours'=>$oh,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $admin, UserRepository $userRepository): Response
+    public function edit(Request $request, User $admin, UserRepository $userRepository, InformationRepository $ir): Response
     {
         $form = $this->createForm(UserType::class, $admin);
         $form->handleRequest($request);
@@ -98,6 +107,8 @@ class AdminController extends AbstractController
         return $this->render('admin/edit.html.twig', [
             'user' => $admin,
             'form' => $form,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -112,14 +123,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard', name: 'app_admin_dash', methods: ['POST'])]
-    public function dash(Request $request, User $admin, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function dash(Request $request, User $admin, InformationRepository $ir, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $repository = $entityManager->getRepository(Offer::class);
 
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),
-            'admins' => $userRepository->foundAdmins(),
-            'menus'=>$repository->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 

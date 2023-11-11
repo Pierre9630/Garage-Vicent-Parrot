@@ -6,6 +6,7 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/services')]
 class ServiceController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_services_index', methods: ['GET'])]
     public function index(ServiceRepository $servicesRepository, OpeningHourRepository $oh): Response
     {
         return $this->render('services/index.html.twig', [
             'services' => $servicesRepository->findAll(),
-            'openingHours'=>$oh,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -42,7 +50,8 @@ class ServiceController extends AbstractController
         return $this->render('services/new.html.twig', [
             'service' => $service,
             'form' => $form,
-            'openingHours'=>$oh,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -69,6 +78,8 @@ class ServiceController extends AbstractController
         return $this->render('services/edit.html.twig', [
             'service' => $service,
             'form' => $form,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 

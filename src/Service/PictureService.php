@@ -123,20 +123,21 @@ class PictureService
         return $fichier;
     }*/
 
-    public function delete(string $fichier, ?string $folder = '', ?int $width = 250, ?int $height = 250)
+    public function delete(string $file, ?string $folder = '', ?int $width = 250, ?int $height = 250)
     {
-        if($fichier !== 'default.webp'){
+        if($file !== 'default.webp'){
             $success = false;
+            //Obtenir le path du dossier défini dans services.yaml
             $path = $this->params->get('images_directory') . $folder;
 
-            $mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
+            //$mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
 
-            if(file_exists($mini)){
+            /*if(file_exists($mini)){
                 unlink($mini);
                 $success = true;
-            }
+            }*/
 
-            $original = $path . '/' . $fichier;
+            $original = $path . '/' . $file;
 
             if(file_exists($original)){
                 unlink($original);

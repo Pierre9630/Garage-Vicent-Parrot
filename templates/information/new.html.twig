@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Information{% endblock %}
+{% block title %}Nouvelles Coordonnées de Garage{% endblock %}
 
 {% block body %}
-    <h1>Create new Information</h1>
+    <h1>Nouvelles Coordonnées de Garage</h1>
 
     {{ include('information/_form.html.twig') }}
 
-    <a href="{{ path('app_information_index') }}">back to list</a>
+    <a href="{{ path('app_information_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 {% endblock %}

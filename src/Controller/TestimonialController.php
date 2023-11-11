@@ -5,13 +5,10 @@ namespace App\Controller;
 
 use App\Entity\Testimonial;
 use App\Form\TestimonialType;
-use App\Repository\OpeningHourRepository;
 use App\Repository\TestimonialRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,12 +17,19 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/testimonial')]
 class TestimonialController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_testimonial_index', methods: ['GET'])]
-    public function index(TestimonialRepository $testimonialRepository, OpeningHourRepository $oh): Response
+    public function index(TestimonialRepository $testimonialRepository): Response
     {
         return $this->render('testimonial/index.html.twig', [
             'testimonials' => $testimonialRepository->findAll(),
-            'openingHours'=>$oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -33,7 +37,7 @@ class TestimonialController extends AbstractController
      * @throws \Exception
      */
     #[Route('/new', name: 'app_testimonial_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,OpeningHourRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $testimonial = new Testimonial();
         $form = $this->createForm(TestimonialType::class, $testimonial);
@@ -43,13 +47,16 @@ class TestimonialController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $acceptConditions = $form->get('conditions')->getData();
 
-            // Vérifiez si la case a été cochée
+            // Vérifier si la case a été cochée
             if ($acceptConditions === true) {
-                // Case cochée, poursuivez avec la logique de votre choix
+                // Case cochée
+                $session = $request->getSession();
                 $testimonial->SetCreatedAt(new \DateTimeImmutable());
                 $entityManager->persist($testimonial);
                 $entityManager->flush();
+                $session->getFlashBag()->add('success', 'Hello world');
 
+                //$this->addFlash('success', 'Avis Ajouté !');
                 return $this->redirectToRoute('app_testimonial_index_sucess', [], Response::HTTP_SEE_OTHER);
             } else {
                 throw new \Exception('La case "J\'accepte les conditions générales" doit être cochée.');
@@ -60,7 +67,8 @@ class TestimonialController extends AbstractController
         return $this->render('testimonial/new.html.twig', [
             'testimonial' => $testimonial,
             'form' => $form,
-            "openingHours"=>$oh,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -72,16 +80,17 @@ class TestimonialController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_testimonial_show', methods: ['GET'])]
-    public function show(Testimonial $testimonial,OpeningHourRepository $oh): Response
+    public function show(Testimonial $testimonial): Response
     {
         return $this->render('testimonial/show.html.twig', [
             'testimonial' => $testimonial,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_testimonial_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Testimonial $testimonial, EntityManagerInterface $entityManager, OpeningHourRepository $oh): Response
+    public function edit(Request $request, Testimonial $testimonial, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TestimonialType::class, $testimonial);
         $form->handleRequest($request);
@@ -95,7 +104,8 @@ class TestimonialController extends AbstractController
         return $this->render('testimonial/edit.html.twig', [
             'testimonial' => $testimonial,
             'form' => $form,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -114,22 +124,20 @@ class TestimonialController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function approve(string $id, EntityManagerInterface $entityManager, TestimonialRepository $tr): Response
     {
-        // Récupérez le commentaire à partir de son ID
+
         $testimonial = $tr->find($id);
 
-        // Vérifiez si le commentaire existe
+        // Vérifier si le commentaire existe
         if (!$testimonial) {
             throw $this->createNotFoundException('Le commentaire n\'existe pas.');
         }
 
-        // Marquez le commentaire comme approuvé (vous devez avoir une propriété "approved" dans votre entité Contact)
+        // Marquer le commentaire comme approuvé
         $testimonial->setIsApproved(true);
 
-        // Enregistrez les modifications dans la base de données
+        // Enregistrer les modifications dans la base de données
         $entityManager->flush();
 
-        // Redirigez l'utilisateur vers la page précédente ou une autre page de votre choix
-        // Dans cet exemple, nous redirigeons simplement vers la page d'accueil
         return $this->redirectToRoute('app_admin_index');
     }
 }

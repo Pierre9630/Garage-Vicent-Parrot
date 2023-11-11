@@ -20,6 +20,7 @@ use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\TestimonialRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 //use http\Env\Request;
@@ -36,6 +37,12 @@ use Symfony\Component\Form\FormTypeInterface;
 
 class IndexController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_index')]
     public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator,
         ServiceRepository $sr, TestimonialRepository $tr, OpeningHourRepository $oh, InformationRepository $ir): Response
@@ -63,8 +70,8 @@ class IndexController extends AbstractController
             'form' => $searchType->createView(),
             'services'=>$sr->findAll(),
             'testimonials'=> $tr->findApprovedTestimonials(),
-            'information' => $ir->findActiveInformation(),
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
 
     }

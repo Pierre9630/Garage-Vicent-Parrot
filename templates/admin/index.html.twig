@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Page Adminstration{% endblock %}
 
 {% block body %}
-    <h1>Espace Administration</h1>
-    <h2>Utilisateur Connecté : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }}{{ app.user.Lastname }}{% endif %}</h2>
-    <table class="table">
+
+    <h1>Espace Administration Rapide</h1>
+    <h2>Utilisateur Connecté : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }} {{ app.user.Lastname }}{% endif %}</h2>
+
+    <table class="table ">
         <thead>
         <tr>
             <th>Email</th>
@@ -18,14 +20,14 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.email }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
+                <td data-label="Email du Client : ">&nbsp;{{ user.email }}</td>
+                <td data-label="Nom du Client : ">&nbsp; {{ user.firstname }}</td>
+                <td data-label="Prenom du Client : ">&nbsp; {{ user.lastname }}</td>
                 {% set AdminRole = "ROLE_ADMIN" %}
-                <td>{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %}</td>
+                <td data-label="Type : ">{% if AdminRole in user.roles  %}&nbsp;Compte Admin {% else %}&nbsp; Compte Employé {% endif %}</td>
                 <td>
-                    <a href="{{ path('app_admin_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('app_admin_show', {'id': user.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_admin_edit', {'id': user.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -35,11 +37,12 @@
         {% endfor %}
         </tbody>
     </table>
+
     {%  if knp_pagination_render(users) %}
     <label>Changer de Page : </label>{{ knp_pagination_render(users)}}<br>
     {% endif %}
-    <a href="{{ path('app_admin_new') }}">Créer un nouvel utilisateur</a>
-    <h1>Admins</h1>
+    <a href="{{ path('app_admin_new') }}"><i class="fa-solid fa-plus"></i></a>
+    {#<h1>Admins</h1>
     <table class="table">
         <thead>
         <tr>
@@ -51,7 +54,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for admin in admins %}
+          {% for admin in admins %}
             <tr>
                 <td>{{ admin.id }}</td>
                 <td>{{ admin.email }}</td>
@@ -59,8 +62,8 @@
                 <td>{% if AdminRole in admin.roles  %}Compte Admin {% else %} Compte Client {% endif %}</td>
                 <td>{{ admin.password }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': admin.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': admin.id}) }}">edit</a>
+                    <a href="{{ path('app_user_show', {'id': admin.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_user_edit', {'id': admin.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -68,7 +71,7 @@
                 <td colspan="5">Pas d'admins</td>
             </tr>
         {% endfor %}
-        </tbody>
+        </tbody>#}
 
     <section class="unapproved-comments">
         <div class="container my-5 py-5">
@@ -82,20 +85,25 @@
                                     {% for comment in contacts %}
                                         {% if not comment.isApproved %}
                                             <div class="d-flex align-items-start mb-4">
-                                                <img class="rounded-circle shadow-1-strong me-3"
-                                                     src="{#  {{ comment.avatarUrl }}#}" alt="avatar" width="65" height="65" />
+                                                {#  <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="{#  {{ comment.avatarUrl }}#}{#  " alt="avatar" width="65" height="65" />#}
                                                 <div class="flex-grow-1">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <p class="mb-1">
                                                             {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
                                                         </p>
-                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                      {#   <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>#}
                                                     </div>
                                                     <p class="small mb-0">
                                                         {{ comment.message }}
                                                     </p>
-                                                    {# Si vous souhaitez ajouter un bouton d'approbation pour ce commentaire #}
+                                                    {# Bouton d'approbation de demande de contact  #}
                                                     <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_contact_approve', {'id': comment.id}) }}">Approuver</a>
+
+                                                    <form method="post" action="{{ path('app_contact_delete', {'id': comment.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette demande?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                                        <button class="btn btn-danger btn-sm mt-2">Supprimer</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         {% endif %}
@@ -108,20 +116,26 @@
                                     {% for testimonial in testimonials %}
                                         {% if not testimonial.isApproved %}
                                             <div class="d-flex align-items-start mb-4">
-                                                <img class="rounded-circle shadow-1-strong me-3"
-                                                     src="{#  {{ comment.avatarUrl }}#}" alt="avatar" width="65" height="65" />
+                                                  {#  <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="  {{ comment.avatarUrl }}" alt="avatar" width="65" height="65" />#}
                                                 <div class="flex-grow-1">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <p class="mb-1">
                                                             {{ testimonial.name }} {{ testimonial.lastname }} <span class="small">{{ testimonial.createdAt | date('Y-m-d H:i') }}</span>
                                                         </p>
-                                                        <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                        {#<a href="#!"><i class="fas fa-reply fa-xs"></i>  <span class="small"> Répondre</span></a>#}
                                                     </div>
                                                     <p class="small mb-0">
                                                         {{ testimonial.message }}
                                                     </p>
-                                                    {# Si vous souhaitez ajouter un bouton d'approbation pour ce commentaire #}
+                                                    {# Pour Approuver un avis #}
                                                     <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_testimonial_approve', {'id': testimonial.id}) }}">Approuver</a>
+                                                    {# Pour Refuser et effacer un avis #}
+                                                    <form method="post" action="{{ path('app_testimonial_delete', {'id': testimonial.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cet Avis?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ testimonial.id) }}">
+                                                        <button class="btn btn-danger btn-sm mt-2">Supprimer</button>
+                                                    </form>
+
                                                 </div>
                                             </div>
                                         {% endif %}
@@ -137,3 +151,34 @@
 
 
 {% endblock %}
+{% block javascripts %}
+        <script>
+            document.getElementById('delete-comment-form').addEventListener('submit', function (event) {
+                // Empêcher la soumission normale du formulaire
+                event.preventDefault();
+
+                // Récupérer l'URL de l'action du formulaire
+                var url = this.action;
+
+                // Effectuer la suppression de manière asynchrone avec AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Gérer le comportement après la suppression ici
+                        alert('Commentaire supprimé avec succès!');
+
+                        // Si vous ne voulez pas de redirection, ne rien faire ici
+                    } else {
+                        // Gérer les erreurs ici si nécessaire
+                        alert('Erreur lors de la suppression du commentaire.');
+                    }
+                };
+                xhr.send();
+
+                // Si vous souhaitez effectuer une action après la suppression sans redirection,
+                // placez cette logique ici.
+            });
+        </script>
+        {% endblock %}

@@ -2,33 +2,33 @@
 
 namespace App\Controller;
 
-use App\Entity\Car;
+
 use App\Entity\Contact;
 use App\Entity\Image;
 use App\Entity\Offer;
-use App\Entity\OpeningHour;
 use App\Form\ContactShowOfferType;
-use App\Form\ContactType;
 use App\Form\OfferEditType;
 use App\Form\OfferType;
 use App\Repository\ContactRepository;
 use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\PictureService;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Service\SearchService;
 
 #[Route('/offers')]
 class OfferController extends AbstractController
 {
+    private $dataService;
 
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
 
     #[Route('/', name: 'app_offers_index', methods: ['GET'])]
     public function index(OfferRepository $offersRepository, OpeningHourRepository $oh): Response
@@ -36,7 +36,8 @@ class OfferController extends AbstractController
 
         return $this->render('offers/index.html.twig', [
             'offers' => $offersRepository->findAll(),
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -93,7 +94,8 @@ class OfferController extends AbstractController
         return $this->render('offers/new.html.twig', [
             'offer' => $offer,
             'form' => $form,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -110,20 +112,20 @@ class OfferController extends AbstractController
 
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            // Associez le commentaire à l'offre en cours de visualisation
+            // Associer le commentaire à l'offre en cours de visualisation
             $comment->setOffer($offer);
             $comment->setCreatedAt(new \DateTimeImmutable());
 
-            // Validez et persistez le commentaire dans la base de données
+            // Valider et persister le commentaire dans la base de données
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            // Redirigez l'utilisateur vers la page de l'offre après l'ajout du commentaire
+            // Rediriger l'utilisateur vers la page de l'offre après l'ajout du commentaire
             return $this->redirectToRoute('app_offers_show', ['id' => $offer->getId()]);
         }
         //$approvedContacts = $contactsRepository->findApprovedContactsForOffer($offer);
 
-        // Ajoutez les commentaires approuvés à l'objet Offer
+        // Ajouter les commentaires approuvés à l'objet Offer
         //$offer->setApprovedContacts($approvedContacts);
         /*$criteria = [
             'offer' => $offer, // Filtrer par l'offre spécifique
@@ -139,12 +141,13 @@ class OfferController extends AbstractController
             ->getSQL();
             //->getResult();
 */
-// Utilisez le var_dump ou un autre moyen pour afficher la requête SQL
+// Utiliser le var_dump ou un autre moyen pour afficher la requête SQL
         //dd($debugSql);
 
         return $this->render('offers/show.html.twig', [
             'offer' => $offer,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
             'approvedComments' => $approvedComments,
             'commentForm' => $commentForm->createView(),
             //'comments' => $cr->findApprovedComments(),
@@ -183,7 +186,7 @@ class OfferController extends AbstractController
                 return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
             }
 
-            // S'il n'y a pas d'images, vous pouvez simplement appeler flush ici
+
             $entityManager->flush();
             $this->addFlash("success", "Annonce modifiée avec succès !");
             return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
@@ -192,14 +195,21 @@ class OfferController extends AbstractController
         return $this->render('offers/edit.html.twig', [
             'offer' => $offer,
             'form' => $form,
-            'openingHours' => $oh->findAll(),
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
     #[Route('/delete/{id}', name: 'app_offers_delete', methods: ['POST'])]
-    public function delete(Request $request, Offer $offer, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Offer $offer, EntityManagerInterface $entityManager,PictureService $pictureService): Response
     {
         if ($this->isCsrfTokenValid('delete' . $offer->getId(), $request->request->get('_token'))) {
+            $images = $offer->getImages();
+            // Supprimer chaque image associée
+            foreach ($images as $image) {
+                $pictureService->delete($image);
+            }
+
             $entityManager->remove($offer);
             $entityManager->flush();
         }

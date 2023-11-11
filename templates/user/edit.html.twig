@@ -7,7 +7,7 @@
 
     {{ include('user/_form.html.twig', {'button_label': 'Changer'}) }}
 
-    <a href="{{ path('app_user_index') }}">Revenir à la liste des Utilisateurs</a>
+    <a href="{{ path('app_user_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
     {{ include('user/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}
 {% endblock %}

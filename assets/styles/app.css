@@ -1,4 +1,4 @@
-@media (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
     .fixed-height-carousel {
         max-height: 350vh;
         height: auto;
@@ -6,7 +6,27 @@
         position: relative;
     }
 }
+@media (max-width: 700px) {
+    .table thead {
+        display: none;
+    }
 
+    .table tr {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .table td {
+        display: block;
+        text-align: left;
+    }
+
+    .table td:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+}
 body {
     background-color: lightgray;
 }

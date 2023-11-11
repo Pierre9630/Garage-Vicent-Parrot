@@ -1,4 +1,9 @@
-<form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-    <button class="btn"><i class="fas fa-trash"></i></button>
-</form>
+{% if user.id is defined and user.id is not empty %}
+    <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+        <button class="btn"><i class="fas fa-trash"></i></button>
+    </form>
+{% else %}
+    {# Si l'id n'est pas valide #}
+    <p class="error">Identificateur(ID) de l'utilisateur non valide ! </p>
+{% endif %}

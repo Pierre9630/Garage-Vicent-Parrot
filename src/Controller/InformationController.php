@@ -6,6 +6,7 @@ use App\Entity\Information;
 use App\Form\InformationType;
 use App\Repository\InformationRepository;
 use App\Repository\OpeningHourRepository;
+use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/information')]
 class InformationController extends AbstractController
 {
+    private $dataService;
+
+    public function __construct(DataService $dataService)
+    {
+        $this->dataService = $dataService;
+    }
     #[Route('/', name: 'app_information_index', methods: ['GET'])]
     public function index(InformationRepository $informationRepository,  OpeningHourRepository $oh): Response
     {
         return $this->render('information/index.html.twig', [
-            'information' => $informationRepository->findAll(),
-            'openingHours'=>$oh->findAll()
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $informationRepository->findALl(),
         ]);
     }
 
@@ -46,9 +53,9 @@ class InformationController extends AbstractController
         }
 
         return $this->render('information/new.html.twig', [
-            'information' => $information,
             'form' => $form,
-            'openingHours' => $oh->findAll()
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -56,8 +63,8 @@ class InformationController extends AbstractController
     public function show(Information $information, OpeningHourRepository $oh): Response
     {
         return $this->render('information/show.html.twig', [
-            'information' => $information,
-            'openingHours'=>$oh->findAll()
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -68,11 +75,11 @@ class InformationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $active = $form->get('active')->getData(); // Vérifiez si la case "active" a été cochée
+            $active = $form->get('active')->getData(); // Vérifier si la case active a été cochée
             $id = $form->get('id')->getData();
             // Active ou désactive la ligne en fonction de la case cochée
             if ($active) {
-                $information = $informationRepository->find($id); // Remplacez $id par l'ID de l'information que vous souhaitez activer.
+                $information = $informationRepository->find($id);
                 $informationRepository->setActiveInformation($information);
 
             } else {
@@ -84,9 +91,9 @@ class InformationController extends AbstractController
         }
 
         return $this->render('information/edit.html.twig', [
-            'information' => $information,
             'form' => $form,
-            'openingHours'=>$oh->findAll()
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 

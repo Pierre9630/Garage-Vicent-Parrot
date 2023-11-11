@@ -1,18 +1,28 @@
-
-<section class="">
-    <h3> Nos Services </h3>
-    <figure class="container-flex">
-        <img src="" alt="Réparation et Services Garage Vincent Parrot"/>
-        <p class=""> Des pièces originales garanties par les constructeurs. Une réparation à l'écoute et d'une fiabilité certifié constructeur. Notre équipe est composé de profesionnels passionnées et experimentés
-        dans la réparation, la maintenance automobile ainsi que la carosserie</p>
-        <ul class="">
-            {% for service in services %}
-                {% if service.ispublished is same as true %}
-                <li>{{ service.name }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <p>N’hésitez pas à nous<a href="{{ path('app_contact_new') }}">contacter</a>si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre à toutes vos questions et vous fournir les reinseignements dont vous avez besoin.
-        </p>
-    </figure>
+<style>
+    .services-image{
+        background-image: url('{{ asset('assets/Images/Services.jpg') }}');
+    }
+</style>
+<section class="container-fluid">
+    <p class="mark"> Nos Services </p>
+    <div class="row">
+        <div class="col-md-6">
+            <figure>
+                <img src="{{ asset('assets/Images/Services.jpg') }}" alt="Image Services" class="img-fluid"/>
+            </figure>
+        </div>
+        <div class="col-md-6">
+            <p class="">
+                Des pièces originales garanties par les constructeurs. Une réparation à l'écoute et d'une fiabilité certifiée constructeur. Notre équipe est composée de professionnels passionnés et expérimentés dans la réparation, la maintenance automobile ainsi que la carrosserie
+            </p>
+            <ul>
+                {% for service in services %}
+                    {% if service.ispublished is same as true %}
+                        <li>{{ service.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p>N’hésitez pas à nous <a href="{{ path('app_contact_new') }}">contacter</a> si vous souhaitez obtenir plus d’informations. Notre équipe se tient à votre disposition pour répondre à toutes vos questions et vous fournir les renseignements dont vous avez besoin.</p>
+        </div>
+    </div>
 </section>

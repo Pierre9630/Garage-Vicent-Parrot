@@ -10,15 +10,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\DataService;
 
 #[Route('/openinghours')]
 class OpeningHourController extends AbstractController
 {
-    #[Route('/', name: 'app_opening_hours_index', methods: ['GET'])]
-    public function index(OpeningHourRepository $openingHoursRepository): Response
+    private $dataService;
+
+    public function __construct(DataService $dataService)
     {
+        $this->dataService = $dataService;
+    }
+    #[Route('/', name: 'app_opening_hours_index', methods: ['GET'])]
+    public function index(OpeningHourRepository $or): Response
+    {
+
         return $this->render('opening_hours/index.html.twig', [
-            'openingHours' => $openingHoursRepository->findAll(),
+            'openingHours' => $or->findAll(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -46,7 +55,8 @@ class OpeningHourController extends AbstractController
     public function show(OpeningHour $openingHour): Response
     {
         return $this->render('opening_hours/show.html.twig', [
-            'openingHours' => $openingHour,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
@@ -69,10 +79,10 @@ class OpeningHourController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $openingHours = $form->getData(); // Obtenir l'objet OpeningHours complet
             $selectedDayOfWeek = $openingHours->getDayOfWeek(); // Obtenir le jour de la semaine sélectionné sous forme de chaîne
-             // Récupérez la valeur de dayOfWeek en anglais
+             // Récupérer la valeur de dayOfWeek en anglais
             $englishDay = $openingHour->getDayOfWeek();
 
-        // Traduisez la valeur en français à partir du tableau de traduction
+        // Traduire la valeur en français à partir du tableau de traduction
             $frenchDay = $WeekDayTrans[$englishDay];
 
 
@@ -82,7 +92,8 @@ class OpeningHourController extends AbstractController
         }
 
         return $this->render('opening_hours/edit.html.twig', [
-            'openingHours' => $openingHour,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
             'form' => $form,
 
         ]);
