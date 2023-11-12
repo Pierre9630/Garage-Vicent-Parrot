@@ -1,8 +1,5 @@
-{{ form_start(form) }}
-<div>
-    <label for="opening_hours_dayOfWeek">Jour de la semaine</label>
+{{ form_start(form, {'attr': {'class': 'custom-form'}}) }}
 
-</div>
 {{ form_widget(form) }}
 
     <button class="btn"><i class="fa-solid fa-floppy-disk"></i> {#{{ button_label|default('Enregistrer') }}#}</button>

@@ -19,15 +19,40 @@ class CarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('brand',TextType::class)
-            ->add('model',TextType::class)
-            ->add('year')
-            ->add('doors', IntegerType::class)
-            ->add('power', IntegerType::class)
-            ->add('kilometers', IntegerType::class)
-            ->add('price',MoneyType::class)
-            ->add('description', TextareaType::class)
-            ->add('typeFuel',TextType::class)
+            ->add('brand',TextType::class, [
+                'label' => 'Marque',
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('model',TextType::class, [
+                'label' => 'Modèle',
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('year',IntegerType::class, [
+                'label' => 'Année',
+                'attr' => ['class' => 'custom-input'],
+                'min' => date('Y') - 100,
+                'max' => date('Y') + 10,
+            ])
+            ->add('doors', IntegerType::class, [
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('power', IntegerType::class, [
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('kilometers', IntegerType::class, [
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('price',MoneyType::class, [
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'attr' => ['class' => 'custom-input'],
+            ])
+            ->add('typeFuel',TextType::class, [
+                'label' => 'Energie',
+                'attr' => ['class' => 'custom-input'],
+            ])
             /*->add('images', FileType::class, [
                 'label' => false,
                 'multiple' => true,

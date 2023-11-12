@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Testimonial;
 
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -62,7 +64,10 @@ class TestimonialType extends AbstractType
                     'message' => 'Vous devez accepter les conditions générales.',
                 ]),
             ])
-
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'testimonial',
+            ])
         ;
     }
 

@@ -29,17 +29,21 @@ class OfferType extends AbstractType
                 'disabled' => true, // Rend le champ en lecture seule
             ])*/
             ->add('offer_title', TextType::class,[
-                'label' => "Titre"
+                'label' => "Titre",
+                'attr' => ['class' => 'custom-input'],
+
             ])
             //->add('car', CarsType::class)
             ->add('isExposed',CheckboxType::class, [
                 'label' => "Afficher en Exposition ?",
                 'required' => false,
                 'data' => false,
+                'attr' => ['class' => 'custom-checkbox'],
             ])
             ->add('car', EntityType::class, [
                 'label' => "Voiture",
                 'class' => Car::class,
+                'attr' => ['class' => 'custom-dropdown'],
                 'choice_label' => function ($car) {
                     return $car->getReference() . ' - ' . $car->getBrand() . ' ' . $car->getModel() . ' ' . $car->getYear();
                 },

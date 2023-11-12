@@ -111,15 +111,12 @@ a{
 
 .custom-input,
 .custom-textarea {
+
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.custom-textarea {
-    height: 150px; /* Ajustez la hauteur selon vos besoins */
 }
 
 .custom-rating {
@@ -128,5 +125,10 @@ a{
 
 .custom-condition {
     margin-top: 10px;
+}
+
+.custom-checkbox {
+    transform: scale(1.2);
+    margin: 5px 0;
 }
 

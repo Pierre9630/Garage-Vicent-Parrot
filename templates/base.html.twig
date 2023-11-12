@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Bienvenue chez VParrot!{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css"{#  "{{ asset('node_modules/nouislider/dist/nouislider.css') }}"#} rel="stylesheet">
@@ -22,13 +22,11 @@
 
 <body>
 
+
+
 {% include 'index/navbar.html.twig' %}
 
 {% block body %}
-
-    <h1>test</h1>
-    {{ dump(app.session.flashbag.all) }}
-
     {% for message in app.session.flashbag.get('success') %}
         <div class="alert alert-success" role="alert">
             {{ message }}

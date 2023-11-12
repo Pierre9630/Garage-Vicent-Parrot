@@ -170,16 +170,27 @@
                 </div>
                 {% endif %}
                 {% endif %}
-                <div id="Form" class="mt-5 text-center">
+                    {# <div id="Form" class="mt-5 text-center">
                     <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
                     <div class="card">
                         {{ form_start(commentForm) }}
                         {{ form_widget(commentForm) }}
-                        {#  {{ form_row(form.cars_id.model) }}#}
+                            <div class="a personnaliser">
+                            {{ form_row(commentForm.contact.email) }}
+                            </div>
                         <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
                         {{ form_end(commentForm) }}
                     </div>
-                </div>
+                </div> #}
+                    <div id="Form" class="mt-5 text-center">
+                        <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
+                        <div class="card rounded p-3 border border-primary">
+                            {{ form_start(commentForm) }}
+                            {{ form_widget(commentForm) }}
+                            <button class="btn btn-primary mt-2">{{ button_label|default('Envoyer') }}</button>
+                            {{ form_end(commentForm) }}
+                        </div>
+                    </div>
 
             </div>
         </div>

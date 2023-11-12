@@ -141,7 +141,7 @@ class OfferController extends AbstractController
             ->getSQL();
             //->getResult();
 */
-// Utiliser le var_dump ou un autre moyen pour afficher la requête SQL
+// Utiliser le var_dump ou un autre moyen pour afficher la requête DQL
         //dd($debugSql);
 
         return $this->render('offers/show.html.twig', [

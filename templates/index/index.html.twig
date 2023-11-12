@@ -3,6 +3,7 @@
 {% block title %}Bienvenue sur VParrot ! {% endblock %}
 
 {% block body %}
+    {{ parent() }}
     {#  {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Rechercher') }}</button>
@@ -51,6 +52,8 @@
 
 </style>
 
+
+
 <div class="example-wrapper">
     <div class="intro-container">
         <div class="intro-message">
@@ -72,7 +75,7 @@
 
 
     <div class="container-fluid">
-    <p class="mark">Nos Véhicules </p>
+    <p class="mark">Nos Véhicules à la une</p>
     <div class="row">
         
         {% for offer in offers %}

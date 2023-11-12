@@ -9,6 +9,7 @@ use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
 use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +25,16 @@ class CarController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_cars_index', methods: ['GET'])]
-    public function index(CarRepository $carsRepository, OpeningHourRepository $oh): Response
+    public function index(CarRepository $carsRepository, OpeningHourRepository $oh, Request $request,PaginatorInterface $paginator): Response
     {
 
+        $pagination = $paginator->paginate(
+            $carsRepository->paginateCars(),
+            $request->query->get('page',1),
+            15 //nombre voitures par page
+        );
         return $this->render('cars/index.html.twig', [
-            'cars' => $carsRepository->findAll(),
+            'cars' => $pagination,
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);

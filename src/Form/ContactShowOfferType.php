@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -16,20 +17,28 @@ class ContactShowOfferType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'Email :'
+                'label' => 'Email :',
+                'attr' => [
+                    'class' => 'form-control my-2',
+                    'placeholder' => 'sous forme test@domaine.com',
+                ],
             ])
             ->add('subject', TextType::class,[
                 'label' => 'Sujet : ',
                 'attr' => array(
+                    'class' => 'form-control my-2',
                     'placeholder' => 'Maximum 88 Caractères !',
                     'maxlength' => 88
                 )
             ])
-            ->add('message',TextType::class,[
+            ->add('message',TextareaType::class,[
                 'label' => 'Message :',
                 'attr' => array(
+                    'class' => 'form-control my-2 w-100',
                     'placeholder' => 'Maximum 255 Caractères !',
-                    'maxlength' => 255
+                    'maxlength' => 255,
+                    'rows' => 5,
+
                 )
             ])
             ->add('phone',TextType::class,[
@@ -37,7 +46,7 @@ class ContactShowOfferType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Format 0XXXXXXXXX ou +33XXXXXXXXX !',
                     'maxlength' => 255,
-                    'class' => 'message-input'
+                    'class' => 'form-control my-2'
                 ),
                 'constraints' => new Regex([
                     'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",

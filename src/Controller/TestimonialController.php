@@ -54,7 +54,7 @@ class TestimonialController extends AbstractController
                 $testimonial->SetCreatedAt(new \DateTimeImmutable());
                 $entityManager->persist($testimonial);
                 $entityManager->flush();
-                $session->getFlashBag()->add('success', 'Hello world');
+                $session->getFlashBag()->add('success', 'Avis Envoyée');
 
                 //$this->addFlash('success', 'Avis Ajouté !');
                 return $this->redirectToRoute('app_testimonial_index_sucess', [], Response::HTTP_SEE_OTHER);

@@ -2,7 +2,7 @@
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <div class="my-custom-class-for-errors">
+    <div class="error-message">
         {{ form_errors(form) }}
     </div>
     <button class="btn"><i class="fa-solid fa-floppy-disk"></i>{#{{ button_label|default('Save') }}#}</button>

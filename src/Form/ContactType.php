@@ -19,12 +19,19 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',EmailType::class, ['label'=> "Email"])
-            ->add('subject',TextType::class, ['label'=> "Sujet"])
-            ->add('message',TextareaType::class, ['label'=> "Message"])
+            ->add('email', EmailType::class, [
+                'label' => "Email",
+                'attr' => ['class' => 'custom-input']
+            ])
+            ->add('subject',TextType::class, [
+                'label' => "Sujet",
+                'attr'=> ['class' => 'custom-input']])
+            ->add('message',TextareaType::class, ['label'=> "Message",
+                'attr'=> ['class' => 'custom-textarea']])
             ->add('offer', EntityType::class, [
                 'label'=>'Annonce',
                 'class' => Offer::class,
+                'attr'=> ['class' => 'custom-input'],
                 'choice_label' => function ($offer) {
                     $createdAtString = $offer->getCreatedAt()->format('Y-m-d H:i');
                     return $offer->getReference() . ' - ' . $offer->getOfferTitle() . ' ' . $createdAtString;
@@ -37,11 +44,11 @@ class ContactType extends AbstractType
                 'choice_value' => 'id',
             ])
             ->add('phone',TextType::class,[
-                'label' => 'Telephone :',
+                'label' => 'Telephone',
                 'attr' => array(
                     'placeholder' => 'Format 0XXXXXXXXX ou +33XXXXXXXXX !',
                     'maxlength' => 255,
-                    'class' => 'message-input'
+                    'class' => 'custom-input'
                 ),
                 'constraints' => new Regex([
                     'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",
