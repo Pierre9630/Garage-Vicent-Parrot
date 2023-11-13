@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comptes Utilisateurs{% endblock %}
+{% block title %}Espace Employé{% endblock %}
 {# https://stackoverflow.com/questions/7680917/how-do-i-get-the-entity-that-represents-the-current-user-in-symfony2 #}
 {% block body %}
 
@@ -52,43 +52,107 @@
     <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     </section>
     {#  {% endif %}#}
+    <section class="unapproved-comments">
+        <div class="container my-5 py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="text-center mb-4 pb-2">Demandes de Contact non approuvés</h4>
+                            <div class="row">
+                                <div class="col">
+                                    {% for comment in contacts %}
+                                        {% if not comment.isApproved %}
+                                            <div class="d-flex align-items-start mb-4">
+                                                {#  <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="{#  {{ comment.avatarUrl }}#}{#  " alt="avatar" width="65" height="65" />#}
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
+                                                        </p>
+                                                        {#   <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>#}
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                        {{ comment.message }}
+                                                    </p>
+                                                    {# Bouton d'approbation de demande de contact  #}
+                                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_contact_approve', {'id': comment.id}) }}">Approuver</a>
 
+                                                    <form method="post" action="{{ path('app_contact_delete', {'id': comment.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette demande?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                                        <button class="btn btn-danger btn-sm mt-2">Supprimer</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <h4 class="text-center mb-4 pb-2">Avis non approuvés</h4>
+                            <div class="row">
+                                <div class="col">
+                                    {% for testimonial in testimonials %}
+                                        {% if not testimonial.isApproved %}
+                                            <div class="d-flex align-items-start mb-4">
+                                                {#  <img class="rounded-circle shadow-1-strong me-3"
+                                                     src="  {{ comment.avatarUrl }}" alt="avatar" width="65" height="65" />#}
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-1">
+                                                            {{ testimonial.name }} {{ testimonial.lastname }} <span class="small">{{ testimonial.createdAt | date('Y-m-d H:i') }}</span>
+                                                        </p>
+                                                        {#<a href="#!"><i class="fas fa-reply fa-xs"></i>  <span class="small"> Répondre</span></a>#}
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                        {{ testimonial.message }}
+                                                    </p>
+                                                    {# Pour Approuver un avis #}
+                                                    <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_testimonial_approve', {'id': testimonial.id}) }}">Approuver</a>
+                                                    {# Pour Refuser et effacer un avis #}
+                                                    <form method="post" action="{{ path('app_testimonial_delete', {'id': testimonial.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cet Avis?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ testimonial.id) }}">
+                                                        <button class="btn btn-danger btn-sm mt-2">Supprimer</button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
-{#
-{% block body %}
-    <h1>User index</h1>
-    <h2>Logged User : {% if app.user.username is defined and app.user.username is not null %}{{ app.user.username }}{% endif %}</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>Password</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : ''  }}</td>
-                <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path('app_user_new') }}">Create new Users</a>
+{% block javascripts %}
+    <script>
+        document.getElementById('delete-comment-form').addEventListener('submit', function (event) {
 
-#}
+            event.preventDefault();
+
+            var url = this.action;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+
+                    alert('Commentaire supprimé avec succès!');
+
+
+                } else {
+
+                    alert('Erreur lors de la suppression du commentaire.');
+                }
+            };
+            xhr.send();
+        });
+    </script>
+{% endblock %}
 
 

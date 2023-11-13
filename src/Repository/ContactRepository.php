@@ -56,7 +56,11 @@ class ContactRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    public function paginateContacts(){
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'ASC')
+            ->getQuery();
+    }
 //    /**
 //     * @return Contact[] Returns an array of Contact objects
 //     */

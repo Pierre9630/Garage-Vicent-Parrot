@@ -35,6 +35,8 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {%  if knp_pagination_render(offers) %}
+        <label>Changer de Page : </label>{{ knp_pagination_render(offers)}}<br>
+    {% endif %}
     <a href="{{ path('app_offers_new') }}"><i class="fa-solid fa-plus"></i></a>
 {% endblock %}

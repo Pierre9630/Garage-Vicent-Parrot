@@ -2,8 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Information;
 use App\Entity\Offer;
+use App\Entity\OpeningHour;
+use App\Entity\Service;
 use App\Entity\User;
+use App\Form\InformationType;
+use App\Form\OpeningHourType;
+use App\Form\ServiceType;
 use App\Form\UserType;
 use App\Form\AdminType;
 use App\Repository\ContactRepository;
@@ -34,21 +40,36 @@ class AdminController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_admin_index')]
-    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator, ContactRepository $cr
-    , OpeningHourRepository $oh, TestimonialRepository $tr, InformationRepository $ir): Response
-    {
-        $repository = $entityManager->getRepository(Offer::class);
-        //$users = $userRepository->findAll();
+    public function index(
+        UserRepository $userRepository,
+        Request $request,
+        PaginatorInterface $paginator,
+        ContactRepository $cr,
+        TestimonialRepository $tr,
+        FormHandler $formHandler, // Supposons que vous ayez un service pour gérer les formulaires
+    ): Response {
+        $openingHourForm = $this->createForm(OpeningHourType::class);
+        $serviceForm = $this->createForm(ServiceType::class);
+        $informationForm = $this->createForm(InformationType::class);
+
+        $formHandler->handleServiceForm($serviceForm, $request);
+        $formHandler->handleOpeningHourForm($openingHourForm, $request);
+        $formHandler->handleInformationForm($informationForm, $request);
+
         $pagination = $paginator->paginate(
             $userRepository->paginateUsers(),
-            $request->query->get('page',1),
-            25 //number of users per page
+            $request->query->get('page', 1),
+            25 // nombre d'utilisateurs par page
         );
+
         return $this->render('admin/index.html.twig', [
             'users' => $pagination,
-            'cars'=>$repository->findAll(),
-            'contacts'=>$cr->findNotApproved(), //a optimiser pour ne retourner que les commentaires non approuvées !
+            //'cars'=>$repository->findAll(),
+            'contacts'=>$cr->findNotApproved(),
             'testimonials'=>$tr->findNotApproved(),
+            'openingHourForm' => $openingHourForm->createView(),
+            'serviceForm' => $serviceForm->createView(),
+            'informationForm' => $informationForm->createView(),
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);
@@ -93,15 +114,22 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $admin, UserRepository $userRepository, InformationRepository $ir): Response
+    public function edit(Request $request, User $admin, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $admin->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $admin,
+                    $form->get('password')->getData()
+                )
+            );
+
             $userRepository->save($admin, true);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/edit.html.twig', [

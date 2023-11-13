@@ -12,29 +12,29 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
     const Emails = [
-        'John@thebest.us',
-        'Kath@vodafone.de',
-        'Aziz@gmail.ly',
-        'Vlad@runet.ru',
+        'kevinlacombe@orange.fr',
+        'claradupuis@orange.fr',
+        'marieparrot@orange.fr',
+        'tifainedupond@orange.fr',
     ];
     const Pass = [
-        'America!',
-        'Deutschland!',
-        'Libia!',
-        'Russia!',
+        'Kevin',
+        'Clara!',
+        'Marie!',
+        'Tifaine!',
     ];
     const FirstNames = [
-        'Doe',
-        'Neu',
-        'Abdel',
-        'Poutine',
+        'Lacombe',
+        'Dupuis',
+        'Parrot',
+        'Dupond',
     ];
 
     const LastNames = [
-        'John',
-        'Katherine',
-        'Aziz',
-        'Vladmir',
+        'Kevin',
+        'Clara',
+        'Marie',
+        'Tifaine',
     ];
 
     /*const PhoneNumbers = [

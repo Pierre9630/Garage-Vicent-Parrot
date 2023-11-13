@@ -29,7 +29,7 @@
     <div class="navbar-nav justify-content-end"> <!-- Les éléments à la fin de la navbar -->
         {% if app.user %}
             <div class="nav-item user-nav col-lg-6 ml-1">
-                <a class="user" href="{{ path("app_user_index") }}">{{ app.user.lastname }}</a>
+                <a class="user" href="{% if is_granted('ROLE_ADMIN') %}{{ path("app_admin_index") }}{% else %}{{ path("app_user_index") }}{% endif %}">{{ app.user.lastname }}</a>
             </div>
             <div class="nav-item">
                 <a class="nav-link" href="{{ path("app_logout") }}">Déconnexion</a>

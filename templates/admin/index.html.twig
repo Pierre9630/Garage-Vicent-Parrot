@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>Espace Administration Rapide</h1>
+    <h1 class="mb-3">Espace Administration Rapide</h1>
     <h2>Utilisateur Connecté : {% if app.user.Firstname is defined and app.user.Firstname is not null %}{{ app.user.Firstname }} {{ app.user.Lastname }}{% endif %}</h2>
 
     <table class="table ">
@@ -148,37 +148,48 @@
             </div>
         </div>
     </section>
+    <h3>Ajouter/Modifier les horaires d'ouverture</h3>
+    {{ form_start(openingHourForm) }}
+    {{ form_widget(openingHourForm) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(openingHourForm) }}
 
+    <h3>Ajouter/Modifier les services</h3>
+    {{ form_start(serviceForm) }}
+    {{ form_widget(serviceForm) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(serviceForm) }}
+
+    <h3>Ajouter/Modifier les informations du Garage</h3>
+    {{ form_start(informationForm) }}
+    {{ form_widget(informationForm) }}
+    <button type="submit">Enregistrer</button>
+    {{ form_end(informationForm) }}
 
 {% endblock %}
 {% block javascripts %}
         <script>
             document.getElementById('delete-comment-form').addEventListener('submit', function (event) {
-                // Empêcher la soumission normale du formulaire
+
                 event.preventDefault();
 
-                // Récupérer l'URL de l'action du formulaire
                 var url = this.action;
 
-                // Effectuer la suppression de manière asynchrone avec AJAX
                 var xhr = new XMLHttpRequest();
                 xhr.open('DELETE', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        // Gérer le comportement après la suppression ici
+
                         alert('Commentaire supprimé avec succès!');
 
-                        // Si vous ne voulez pas de redirection, ne rien faire ici
+
                     } else {
-                        // Gérer les erreurs ici si nécessaire
+
                         alert('Erreur lors de la suppression du commentaire.');
                     }
                 };
                 xhr.send();
-
-                // Si vous souhaitez effectuer une action après la suppression sans redirection,
-                // placez cette logique ici.
             });
         </script>
         {% endblock %}

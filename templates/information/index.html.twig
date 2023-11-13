@@ -24,7 +24,7 @@
                 <td>{{ information.address }}</td>
                 <td>{{ information.city }}</td>
                 <td>{{ information.corpEmail }}</td>
-                <td>{{ information.active }}</td>
+                <td>{% if information.active is same as true %}Oui{% else %}Non{% endif %}</td>
                 <td>
                     <a href="{{ path('app_information_show', {'id': information.id}) }}"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{ path('app_information_edit', {'id': information.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>

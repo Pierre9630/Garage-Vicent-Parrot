@@ -9,7 +9,9 @@ use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,11 +27,16 @@ class ContactController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_contact_index', methods: ['GET'])]
-    public function index(ContactRepository $contactRepository): Response
+    public function index(Request $request,ContactRepository $contactRepository,PaginatorInterface $paginator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        $pagination = $paginator->paginate(
+            $contactRepository->paginateContacts(),
+            $request->query->get('page',1),
+            15 //nombre voitures par page
+        );
         return $this->render('contact/index.html.twig', [
-            'contacts' => $contactRepository->findAll(),
+            'contacts' => $pagination,
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);
@@ -47,12 +54,12 @@ class ContactController extends AbstractController
             // Obtenez l'objet Contacts depuis le formulaire
             // Obtenez le nom du champ correct à partir de votre formulaire
             $offer = $contact->getOffer();
-            if($this->isGranted('ROLE_ADMIN')){
+            if($this->isGranted('ROLE_USER')){ // si un employée envoie la demande alors c'est approuvé
                 $contact->setIsApproved(true);
             }
             if ($offer !== null) {
                 $offerReference = $offer->getReference();
-
+                $session = $request->getSession();
                 // Obtenir la valeur saisie dans le champ "referenceToAdd" du formulaire
                 $subjectToAdd = $form->get('subject')->getData();
 
@@ -67,14 +74,12 @@ class ContactController extends AbstractController
                 // Enregistrer les modifications en base de données
                 $entityManager->persist($contact);
                 $entityManager->flush();
-                $this->addFlash('success', 'Avis Envoyé !');
+                $session->getFlashBag()->add('success', 'Demande de contact Envoyée');
+                //$this->addFlash('success', 'Demande de Contact Envoyé!');
             }
 
-
-
-
-
-            return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
+            //dd('test');
+            return $this->redirectToRoute('app_contact_index_sucess', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('contact/new.html.twig', [
@@ -84,9 +89,14 @@ class ContactController extends AbstractController
             'information' => $this->dataService->getActiveInformation(),
         ]);
     }
+    #[Route('/sucess', name: 'app_contact_index_sucess', methods: ['GET'])]
+    public function sucess(){
 
+        return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
+
+    }
     #[Route('/{id}', name: 'app_contact_show', methods: ['GET'])]
-    public function show(Contact $contact,OpeningHourRepository $oh): Response
+    public function show(Contact $contact): Response
     {
         return $this->render('contact/show.html.twig', [
             'contact' => $contact,
@@ -117,7 +127,7 @@ class ContactController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_contact_delete', methods: ['POST'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_USER")]
     public function delete(Request $request, Contact $contact, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
@@ -130,11 +140,11 @@ class ContactController extends AbstractController
 
     #[Route("/contact/approve/{id}", name: "app_contact_approve", methods: ["GET","POST"])]
     #[IsGranted("ROLE_USER")]
-    public function approve(string $id, EntityManagerInterface $entityManager, ContactRepository $cr): Response
+    public function approve(string $id,Request $request, EntityManagerInterface $entityManager, ContactRepository $cr): RedirectResponse
     {
         // Récupérer le commentaire à partir de son ID
         $contact = $cr->find($id);
-
+        $referer = $request->headers->get('referer');
         // Vérifier si le commentaire existe
         if (!$contact) {
             throw $this->createNotFoundException('Le commentaire n\'existe pas.');
@@ -147,7 +157,7 @@ class ContactController extends AbstractController
         $entityManager->flush();
 
         // Rediriger l'utilisateur vers la page précédente ou un autre page
-        return $this->redirectToRoute('app_admin_index');
+        return new RedirectResponse($referer);
     }
 
 }

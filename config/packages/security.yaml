@@ -53,11 +53,14 @@ security:
         - { path: ^/users/new, roles: ROLE_ADMIN }        
         - { path: ^/services, roles: ROLE_USER }
         - { path: ^/images, roles: ROLE_USER }
+        - { path: ^/contact/new, roles: PUBLIC_ACCESS }
+        - { path: ^/contact/sucess, roles: PUBLIC_ACCESS }
         - { path: ^/contact, roles: ROLE_USER }
         - { path: ^/cars, roles: ROLE_USER }
         - { path: ^/offers/show, roles: PUBLIC_ACCESS }
         - { path: ^/offers, roles: ROLE_USER }
         - { path: ^/testimonial/new, roles: PUBLIC_ACCESS}
+        - { path: ^/testimonial/sucess, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial, roles : ROLE_USER}
 
         #- { path: ^/user/new, roles: ROLE_ADMIN }

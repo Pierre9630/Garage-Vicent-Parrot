@@ -21,18 +21,25 @@ class InformationType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Format 0XXXXXXXXX ou +33XXXXXXXXX !',
                     'maxlength' => 255,
-                    'class' => 'message-input'
+                    'class' => 'custom-input'
                 ),
                 'constraints' => new Regex([
                     'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",
                     'message' => "Veuillez Entrer un numéro valide ! ",
                 ])
             ])
-            ->add('address', TextType::class, ['label'=> "Addresse"])
-            ->add('city', TextType::class, ['label'=> "Ville"])
-            ->add('corp_email',EmailType::class, ['label'=> "Email"])
+            ->add('address', TextType::class, ['label'=> "Addresse",
+                'attr' => ['class' => 'custom-input'],
+                ])
+            ->add('city', TextType::class, ['label'=> "Ville",
+                'attr' => ['class' => 'custom-input']
+                ])
+            ->add('corp_email',EmailType::class, ['label'=> "Email",
+            'attr' => ['class' => 'custom-input']
+            ])
             ->add('active', CheckboxType::class, [
                 'required' => false,
+                'attr' => ['class' => 'custom-checkbox'],
             ])
         ;
     }

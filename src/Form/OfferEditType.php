@@ -26,10 +26,12 @@ class OfferEditType extends AbstractType
         $builder
             ->add('reference', TextType::class, [
                 'disabled' => true, // Rend le champ en lecture seule
+                'attr' => ['class' => 'custom-input'],
             ])
             ->add('isExposed', ChoiceType::class, [
                 'label' => "Afficher en Exposition ?",
                 'required' => false,
+                'attr' => ['class' => 'custom-checkbox'],
                 'choices' => [
                     'Oui' => true,
                     'Non' => false,

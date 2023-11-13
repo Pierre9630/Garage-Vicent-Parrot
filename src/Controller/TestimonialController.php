@@ -9,6 +9,7 @@ use App\Repository\TestimonialRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -120,13 +121,13 @@ class TestimonialController extends AbstractController
         return $this->redirectToRoute('app_testimonial_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route("/contact/approve/{id}", name: "app_testimonial_approve", methods: ["GET","POST"])]
+    #[Route("/approve/{id}", name: "app_testimonial_approve", methods: ["GET","POST"])]
     #[IsGranted("ROLE_USER")]
-    public function approve(string $id, EntityManagerInterface $entityManager, TestimonialRepository $tr): Response
+    public function approve(string $id,Request $request, EntityManagerInterface $entityManager, TestimonialRepository $tr): RedirectResponse
     {
 
         $testimonial = $tr->find($id);
-
+        $referer = $request->headers->get('referer');
         // Vérifier si le commentaire existe
         if (!$testimonial) {
             throw $this->createNotFoundException('Le commentaire n\'existe pas.');
@@ -138,6 +139,6 @@ class TestimonialController extends AbstractController
         // Enregistrer les modifications dans la base de données
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_admin_index');
+        return new RedirectResponse($referer);
     }
 }

@@ -30,8 +30,8 @@ class CarType extends AbstractType
             ->add('year',IntegerType::class, [
                 'label' => 'Année',
                 'attr' => ['class' => 'custom-input'],
-                'min' => date('Y') - 100,
-                'max' => date('Y') + 10,
+                /*'min' => date('Y') - 100,
+                'max' => date('Y') + 10,*/
             ])
             ->add('doors', IntegerType::class, [
                 'attr' => ['class' => 'custom-input'],

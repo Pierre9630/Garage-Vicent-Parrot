@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\ContactRepository;
 use App\Repository\OpeningHourRepository;
+use App\Repository\TestimonialRepository;
 use App\Repository\UserRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,10 +27,13 @@ class UserController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $usersRepository,OpeningHourRepository $oh): Response
+    public function index(UserRepository $usersRepository,OpeningHourRepository $oh, ContactRepository $cr,
+                          TestimonialRepository $tr): Response
     {
         return $this->render('user/index.html.twig', [
             'users' => $usersRepository->findAll(),
+            'contacts'=>$cr->findNotApproved(),
+            'testimonials'=>$tr->findNotApproved(),
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);
@@ -77,9 +82,8 @@ class UserController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function edit(Request $request, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher,OpeningHourRepository $oh): Response
-    {        
-        $user = new User();
+    public function edit(Request $request, User $user, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher): Response
+    {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -90,7 +94,8 @@ class UserController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $entityManager->flush();
+
+            $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }

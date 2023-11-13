@@ -14,6 +14,7 @@ use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,11 +32,15 @@ class OfferController extends AbstractController
     }
 
     #[Route('/', name: 'app_offers_index', methods: ['GET'])]
-    public function index(OfferRepository $offersRepository, OpeningHourRepository $oh): Response
+    public function index(Request $request,OfferRepository $offersRepository, OpeningHourRepository $oh,PaginatorInterface $paginator): Response
     {
-
+        $pagination = $paginator->paginate(
+            $offersRepository->paginateOffers(),
+            $request->query->get('page',1),
+            15 //nombre voitures par page
+        );
         return $this->render('offers/index.html.twig', [
-            'offers' => $offersRepository->findAll(),
+            'offers' => $pagination,
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);

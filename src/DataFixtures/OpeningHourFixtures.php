@@ -56,6 +56,14 @@ class OpeningHourFixtures extends Fixture
         $openinghours->setAfternoonClose(\DateTime::createFromFormat('H:i','18:00'));
         $manager->persist($openinghours);
 
+        $openinghours = new OpeningHour();
+        $openinghours->setDayOfWeek('Saturday');
+        /*$openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
+        $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
+        $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
+        $openinghours->setAfternoonClose(\DateTime::createFromFormat('H:i','18:00'));*/
+        $manager->persist($openinghours);
+
         $manager->flush();
     }
 }
