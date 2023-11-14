@@ -8,9 +8,16 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OpeningHourType extends AbstractType
 {
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $jourSemaineTraduction = [
@@ -30,7 +37,9 @@ class OpeningHourType extends AbstractType
             ->add('dayOfWeek',EntityType::class, [
                 'class' => OpeningHour::class,
                 'label' => "Jour de la semaine",
-                'choice_label' => 'dayOfWeek',
+                'choice_label' => function ($dayOfWeek) {
+                    return $this->translator->trans(strtolower($dayOfWeek));
+                },
                 'multiple' => false,
                 'expanded' => false,
                 'query_builder' => function (EntityRepository $er) {

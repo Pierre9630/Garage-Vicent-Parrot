@@ -8,39 +8,47 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ car.id }}</td>
+                <th>Réference</th>
+                <td>{{ car.reference }}</td>
             </tr>
             <tr>
-                <th>Brand</th>
+                <th>Marque</th>
                 <td>{{ car.brand }}</td>
             </tr>
             <tr>
-                <th>Model</th>
+                <th>Modele</th>
                 <td>{{ car.model }}</td>
             </tr>
             <tr>
-                <th>Year</th>
+                <th>Année</th>
                 <td>{{ car.year }}</td>
             </tr>
             <tr>
-                <th>Kilometers</th>
+                <th>Kilometres</th>
                 <td>{{ car.kilometers }}</td>
             </tr>
             <tr>
-                <th>Price</th>
+                <th>Prix</th>
                 <td>{{ car.price }}</td>
             </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ car.description }}</td>
             </tr>
+            <tr>
+                <th>Crée le</th>
+                <td>{{ car.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Modifié le</th>
+                <td>{{ car.modifiedAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_cars_index') }}">back to list</a>
+    <a href="{{ path('app_cars_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
-    <a href="{{ path('app_cars_edit', {'id': car.id}) }}">edit</a>
+    <a href="{{ path('app_cars_edit', {'id': car.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
     {{ include('cars/_delete_form.html.twig') }}
 {% endblock %}

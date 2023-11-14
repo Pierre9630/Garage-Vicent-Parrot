@@ -15,7 +15,7 @@ class OpeningHourFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Monday');
+        $openinghours->setDayOfWeek('monday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
@@ -25,7 +25,7 @@ class OpeningHourFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Tuesday');
+        $openinghours->setDayOfWeek('tuesday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
@@ -33,7 +33,7 @@ class OpeningHourFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Wednesday');
+        $openinghours->setDayOfWeek('wednesday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         //$openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
@@ -41,7 +41,7 @@ class OpeningHourFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Thursday');
+        $openinghours->setDayOfWeek('thursday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
@@ -49,7 +49,7 @@ class OpeningHourFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Friday');
+        $openinghours->setDayOfWeek('friday');
         $openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
@@ -57,7 +57,15 @@ class OpeningHourFixtures extends Fixture
         $manager->persist($openinghours);
 
         $openinghours = new OpeningHour();
-        $openinghours->setDayOfWeek('Saturday');
+        $openinghours->setDayOfWeek('saturday');
+        /*$openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
+        $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
+        $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));
+        $openinghours->setAfternoonClose(\DateTime::createFromFormat('H:i','18:00'));*/
+        $manager->persist($openinghours);
+
+        $openinghours = new OpeningHour();
+        $openinghours->setDayOfWeek('sunday');
         /*$openinghours->setMorningOpen(\DateTime::createFromFormat('H:i','08:30'));
         $openinghours->setMorningClose(\DateTime::createFromFormat('H:i','12:00'));
         $openinghours->setAfternoonOpen(\DateTime::createFromFormat('H:i','14:30'));

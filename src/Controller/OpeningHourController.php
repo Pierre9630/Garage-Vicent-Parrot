@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\OpeningHour;
+use App\Form\OpeningHourEditType;
 use App\Form\OpeningHourType;
 use App\Repository\OpeningHourRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +22,7 @@ class OpeningHourController extends AbstractController
     {
         $this->dataService = $dataService;
     }
-    #[Route('/', name: 'app_opening_hours_index', methods: ['GET'])]
+    #[Route('/', name: 'app_openinghours_index', methods: ['GET'])]
     public function index(OpeningHourRepository $or): Response
     {
 
@@ -51,21 +52,22 @@ class OpeningHourController extends AbstractController
         ]);
     }*/
 
-    #[Route('/{id}', name: 'app_opening_hours_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_openinghours_show', methods: ['GET'])]
     public function show(OpeningHour $openingHour): Response
     {
+
         return $this->render('opening_hours/show.html.twig', [
-            'openingHours' => $this->dataService->getOpeningHours(),
+            'openingHours' => $openingHour,
             'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_opening_hours_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_openinghours_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, OpeningHour $openingHour, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(OpeningHourType::class, $openingHour);
+        $form = $this->createForm(OpeningHourEditType::class, $openingHour);
         $form->handleRequest($request);
-        $WeekDayTrans = [
+        /*$WeekDayTrans = [
             'Monday' => 'Lundi',
             'Tuesday' => 'Mardi',
             'Wednesday' => 'Mercredi',
@@ -73,7 +75,7 @@ class OpeningHourController extends AbstractController
             'Friday' => 'Vendredi',
             'Saturday' => 'Samedi',
             'Sunday' => 'Dimanche',
-        ];
+        ];*/
         
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -83,16 +85,16 @@ class OpeningHourController extends AbstractController
             $englishDay = $openingHour->getDayOfWeek();
 
         // Traduire la valeur en français à partir du tableau de traduction
-            $frenchDay = $WeekDayTrans[$englishDay];
+            //$frenchDay = $WeekDayTrans[$englishDay];
 
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_opening_hours_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_openinghours_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('opening_hours/edit.html.twig', [
-            'openingHours' => $this->dataService->getOpeningHours(),
+            'openingHours' => $openingHour,
             'information' => $this->dataService->getActiveInformation(),
             'form' => $form,
 

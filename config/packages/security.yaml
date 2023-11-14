@@ -26,6 +26,8 @@ security:
                 always_use_default_target_path: true
             logout:
                 path: app_logout
+
+
                 # where to redirect after logout
                 # target: app_any_route
 
@@ -59,6 +61,7 @@ security:
         - { path: ^/cars, roles: ROLE_USER }
         - { path: ^/offers/show, roles: PUBLIC_ACCESS }
         - { path: ^/offers, roles: ROLE_USER }
+        - { path: ^/openinghours, roles: ROLE_ADMIN }
         - { path: ^/testimonial/new, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial/sucess, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial, roles : ROLE_USER}

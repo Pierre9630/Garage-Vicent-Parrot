@@ -13,9 +13,8 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {# L'utilisateur est connecté en tant qu'utilisateur non anonyme #}
         <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
-    {% else %}
-        {# L'utilisateur n'est pas connecté ou est anonyme #}
-
+    {% else%}
+        <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     {% endif %}
 
 

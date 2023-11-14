@@ -28,7 +28,7 @@ class Contact
     private ?string $message = null;
 
     #[ORM\ManyToOne(inversedBy: 'contacts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Offer $offer = null;
 
     #[ORM\Column]

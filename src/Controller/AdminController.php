@@ -43,25 +43,54 @@ class AdminController extends AbstractController
     public function index(
         UserRepository $userRepository,
         Request $request,
+        EntityManagerInterface $entityManager,
         PaginatorInterface $paginator,
         ContactRepository $cr,
-        TestimonialRepository $tr,
-        FormHandler $formHandler, // Supposons que vous ayez un service pour gérer les formulaires
+        TestimonialRepository $tr
     ): Response {
-        $openingHourForm = $this->createForm(OpeningHourType::class);
-        $serviceForm = $this->createForm(ServiceType::class);
-        $informationForm = $this->createForm(InformationType::class);
+        // Création des instances de vos entités
+        $repository = $entityManager->getRepository(Offer::class);
+        $openingHour = new OpeningHour();
+        $service = new Service();
+        $information = new Information();
 
-        $formHandler->handleServiceForm($serviceForm, $request);
-        $formHandler->handleOpeningHourForm($openingHourForm, $request);
-        $formHandler->handleInformationForm($informationForm, $request);
+        // Création des formulaires associés
+        $openingHourForm = $this->createForm(OpeningHourType::class, $openingHour);
+        $serviceForm = $this->createForm(ServiceType::class, $service);
+        $informationForm = $this->createForm(InformationType::class, $information);
 
+        // Traitement du formulaire OpeningHour
+        $openingHourForm->handleRequest($request);
+        if ($openingHourForm->isSubmitted() && $openingHourForm->isValid()) {
+            //$entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($openingHour);
+            $entityManager->flush();
+            // Ajoutez d'autres actions ou redirection si nécessaire
+        }
+
+        // Traitement du formulaire Service
+        $serviceForm->handleRequest($request);
+        if ($serviceForm->isSubmitted() && $serviceForm->isValid()) {
+            //$entityManager = $this->getDoctrine()->getManager();
+            $service->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->persist($service);
+            $entityManager->flush();
+            // Ajoutez d'autres actions ou redirection si nécessaire
+        }
+
+        // Traitement du formulaire Information
+        $informationForm->handleRequest($request);
+        if ($informationForm->isSubmitted() && $informationForm->isValid()) {
+            //$entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($information);
+            $entityManager->flush();
+            // Ajoutez d'autres actions ou redirection si nécessaire
+        }
         $pagination = $paginator->paginate(
             $userRepository->paginateUsers(),
-            $request->query->get('page', 1),
-            25 // nombre d'utilisateurs par page
+            $request->query->get('page',1),
+            25
         );
-
         return $this->render('admin/index.html.twig', [
             'users' => $pagination,
             //'cars'=>$repository->findAll(),

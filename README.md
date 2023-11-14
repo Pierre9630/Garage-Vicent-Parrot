@@ -20,7 +20,7 @@ composer install
 1. Créez un utilisateur MySQL (optionnel si vous n'en avez pas déjà un) :
 
 ```sql
-CREATE USER 'vparrot'@'localhost' IDENTIFIED BY '2C5rbvC6m3B3hA';
+CREATE USER 'vparrot'@'localhost' IDENTIFIED BY 'lemotdepasse';
 ```
 
 2. Créez une base de données MySQL :

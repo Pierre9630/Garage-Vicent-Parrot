@@ -8,35 +8,31 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ openingHours.id }}</td>
-            </tr>
-            <tr>
                 <th>MorningOpen</th>
-                <td>{{ openingHours.morningOpen ? openingHours.morningOpen|date('H:i:s') : '' }}</td>
+                <td>{{ openingHours.morningOpen ? openingHours.morningOpen|date('H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>MorningClose</th>
-                <td>{{ openingHours.morningClose ? openingHours.morningClose|date('H:i:s') : '' }}</td>
+                <td>{{ openingHours.morningClose ? openingHours.morningClose|date('H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>AfternoonOpen</th>
-                <td>{{ openingHours.afternoonOpen ? openingHours.afternoonOpen|date('H:i:s') : '' }}</td>
+                <td>{{ openingHours.afternoonOpen ? openingHours.afternoonOpen|date('H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>AfternoonClose</th>
-                <td>{{ openingHours.afternoonClose ? openingHours.afternoonClose|date('H:i:s') : '' }}</td>
+                <td>{{ openingHours.afternoonClose ? openingHours.afternoonClose|date('H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>DayOfWeek</th>
-                <td>{{ openingHours.dayOfWeek }}</td>
+                <td>{{ openingHours.dayOfWeek | trans }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_opening_hours_index') }}">back to list</a>
+    <a href="{{ path('app_openinghours_index') }}">back to list</a>
 
-    <a href="{{ path('app_opening_hours_edit', {'id': openingHours.id}) }}">edit</a>
+    <a href="{{ path('app_openinghours_edit', {'id': openingHours.id}) }}">edit</a>
 
 
 {% endblock %}

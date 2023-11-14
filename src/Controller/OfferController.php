@@ -118,15 +118,16 @@ class OfferController extends AbstractController
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             // Associer le commentaire à l'offre en cours de visualisation
+            $session = $request->getSession();
             $comment->setOffer($offer);
             $comment->setCreatedAt(new \DateTimeImmutable());
 
             // Valider et persister le commentaire dans la base de données
             $entityManager->persist($comment);
             $entityManager->flush();
-
+            $session->getFlashBag()->add('success', 'Demande de contact Envoyée');
             // Rediriger l'utilisateur vers la page de l'offre après l'ajout du commentaire
-            return $this->redirectToRoute('app_offers_show', ['id' => $offer->getId()]);
+            return $this->redirectToRoute('app_index', ['id' => $offer->getId()]); //app_offers_show
         }
         //$approvedContacts = $contactsRepository->findApprovedContactsForOffer($offer);
 

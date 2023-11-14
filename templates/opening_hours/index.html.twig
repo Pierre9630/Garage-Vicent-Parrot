@@ -25,10 +25,10 @@
                 <td>{{ openingHour.morningClose ? openingHour.morningClose|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.afternoonOpen ? openingHour.afternoonOpen|date('H:i:s') : '' }}</td>
                 <td>{{ openingHour.afternoonClose ? openingHour.afternoonClose|date('H:i:s') : '' }}</td>
-                <td>{{ openingHour.dayOfWeek }}</td>
+                <td>{{ openingHour.dayOfWeek | trans }}</td>
                 <td>
-                    <a href="{{ path('app_opening_hours_show', {'id': openingHour.id}) }}"><i class="fa-solid fa-eye"></i></a>
-                    <a href="{{ path('app_opening_hours_edit', {'id': openingHour.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{{ path('app_openinghours_show', {'id': openingHour.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a href="{{ path('app_openinghours_edit', {'id': openingHour.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
                 </td>
             </tr>

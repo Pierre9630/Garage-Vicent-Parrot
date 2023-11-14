@@ -14,6 +14,7 @@
                 <th>Note</th>
                 <th>Message</th>
                 <th>Approuvé</th>
+                <th>Crée le </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                 <td>{{ testimonial.note }}</td>
                 <td>{{ testimonial.message }}</td>
                 <td>{% if testimonial.isApproved is same as true %}Oui{% else %} Non{% endif %}</td>
+                <td>{{ testimonial.createdAt ? testimonial.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_testimonial_show', {'id': testimonial.id}) }}"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{ path('app_testimonial_edit', {'id': testimonial.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>

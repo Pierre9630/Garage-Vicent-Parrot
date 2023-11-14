@@ -6,6 +6,9 @@
     <h1>Créer une nouvelle Demande de Contact</h1>
 
     {{ include('contact/_form.html.twig') }}
-
+    {% if is_granted('ROLE_USER') %}
     <a href="{{ path('app_contact_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    {% else%}
+    <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    {% endif %}
 {% endblock %}
