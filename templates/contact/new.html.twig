@@ -12,3 +12,18 @@
     <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     {% endif %}
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var generalInquiryCheckbox = document.getElementById('{{ form.vars.id }}_isGeneralInquiry');
+            var offerField = document.querySelector('.offer-field');
+
+            generalInquiryCheckbox.addEventListener('change', function () {
+                offerField.disabled = generalInquiryCheckbox.checked;
+            });
+
+            offerField.disabled = generalInquiryCheckbox.checked;
+        });
+    </script>
+{% endblock %}

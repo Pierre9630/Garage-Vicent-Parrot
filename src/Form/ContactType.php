@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Entity\Offer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -28,10 +29,15 @@ class ContactType extends AbstractType
                 'attr'=> ['class' => 'custom-input']])
             ->add('message',TextareaType::class, ['label'=> "Message",
                 'attr'=> ['class' => 'custom-textarea']])
+            ->add('isGeneralInquiry', CheckboxType::class, [
+                'label' => 'Demande générale (non liée à un véhicule)',
+                'required' => false,
+                'attr' => ['class' => 'custom-checkbox'],
+            ])
             ->add('offer', EntityType::class, [
                 'label'=>'Annonce',
                 'class' => Offer::class,
-                'attr'=> ['class' => 'custom-input'],
+                'attr'=> ['class' => 'custom-input offer-field'],
                 'choice_label' => function ($offer) {
                     $createdAtString = $offer->getCreatedAt()->format('Y-m-d H:i');
                     return $offer->getReference() . ' - ' . $offer->getOfferTitle() . ' ' . $createdAtString;

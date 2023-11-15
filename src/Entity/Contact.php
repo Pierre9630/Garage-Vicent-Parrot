@@ -43,6 +43,9 @@ class Contact
     #[ORM\Column(length: 13)]
     private ?string $phone = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isGeneralInquiry = null;
+
     /*#[ORM\ManyToOne(inversedBy: 'contact_id')]
     private ?Cars $cars_id = null;*/
 
@@ -148,6 +151,18 @@ class Contact
     public function setPhone(string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function isIsGeneralInquiry(): ?bool
+    {
+        return $this->isGeneralInquiry;
+    }
+
+    public function setIsGeneralInquiry(?bool $isGeneralInquiry): static
+    {
+        $this->isGeneralInquiry = $isGeneralInquiry;
 
         return $this;
     }

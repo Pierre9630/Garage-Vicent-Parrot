@@ -114,6 +114,16 @@ class TestimonialController extends AbstractController
     public function delete(Request $request, Testimonial $testimonial, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$testimonial->getId(), $request->request->get('_token'))) {
+            if ($this->isGranted('ROLE_ADMIN')) {
+                // Si c'est un admin, redirection vers l'index admin
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                // Si c'est un utilisateur, retour à la page précédente s'il existe
+                $referer = $request->headers->get('referer');
+                if ($referer) {
+                    return $this->redirect($referer);
+                }
+            }
             $entityManager->remove($testimonial);
             $entityManager->flush();
         }

@@ -54,6 +54,13 @@ class ContactController extends AbstractController
             // Obtenez l'objet Contacts depuis le formulaire
             // Obtenez le nom du champ correct à partir de votre formulaire
             $offer = $contact->getOffer();
+            // Vérifier si la case à cocher isGeneralInquiry est cochée
+            $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
+
+            // Mettre à jour l'offre associée à null si la case est cochée
+            if ($isGeneralInquiry) {
+                $contact->setOffer(null);
+            }
             if($this->isGranted('ROLE_USER')){ // si un employée envoie la demande alors c'est approuvé
                 $contact->setIsApproved(true);
             }
@@ -69,15 +76,16 @@ class ContactController extends AbstractController
                 // Mettre à jour l'objet Contacts (propriété subject) avec la référence de l'annonce en début de sujet
                 $contact->setSubject($newSubject);
 
-                $contact->setCreatedAt(new \DateTimeImmutable());
 
-                // Enregistrer les modifications en base de données
-                $entityManager->persist($contact);
-                $entityManager->flush();
-                $session->getFlashBag()->add('success', 'Demande de contact Envoyée');
+
+
                 //$this->addFlash('success', 'Demande de Contact Envoyé!');
             }
-
+            // Enregistrer les modifications en base de données
+            $contact->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->persist($contact);
+            $entityManager->flush();
+            $session->getFlashBag()->add('success', 'Demande de contact Envoyée');
             //dd('test');
             return $this->redirectToRoute('app_contact_index_sucess', [], Response::HTTP_SEE_OTHER);
         }
@@ -131,6 +139,16 @@ class ContactController extends AbstractController
     public function delete(Request $request, Contact $contact, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+            if ($this->isGranted('ROLE_ADMIN')) {
+                // Si c'est un admin, redirection vers l'index admin
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                // Si c'est un utilisateur, retour à la page précédente s'il existe
+                $referer = $request->headers->get('referer');
+                if ($referer) {
+                    return $this->redirect($referer);
+                }
+            }
             $entityManager->remove($contact);
             $entityManager->flush();
         }

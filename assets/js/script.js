@@ -9,4 +9,3 @@
         starWidth: '20px'
     });
 });*/
-console.log('test');
