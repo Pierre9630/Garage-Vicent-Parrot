@@ -8,7 +8,9 @@ import Button from 'react-bootstrap/Button';
 
 export default function FormCar(props) {
 
-  let { onSubmit } = props; 
+  let { onSubmit } = props;
+    let { maxprice = 150000 } = {};
+    let { maxkilometers = 400000 } = {};
 
   useEffect(() => {
     console.log(onSubmit); 
@@ -16,8 +18,8 @@ export default function FormCar(props) {
 
   const [filters, setFilter] = useState({
     title: "",
-    priceRange: [0,1000000],
-    kilometersRange:[0,1000000],
+    priceRange: [0,maxprice],
+    kilometersRange:[0,maxkilometers],
     yearRange:[1900,2040],
     reference:""
   })
@@ -72,7 +74,7 @@ export default function FormCar(props) {
       onChange={handleReferenceChange}
       />
       <Typography id="price-range-slider" gutterBottom>
-        Fourchette des prix
+        Fourchette des prix (en €)
       </Typography>
       <Slider
         value={filters.priceRange}
@@ -80,12 +82,12 @@ export default function FormCar(props) {
         //onChangeCommitted={handleSubmitChange}
         valueLabelDisplay="auto"
         aria-labelledby="price-range-slider"
-        step={500}
+        step={1000}
         min={500}
-        max={100000}
+        max={maxprice}
       />
       <Typography id="price-range-slider" gutterBottom>
-        Fourchette des Kilomètres
+        Fourchette des Kilomètres (en km)
       </Typography>
       <Slider
         value={filters.kilometersRange}
@@ -95,7 +97,7 @@ export default function FormCar(props) {
         aria-labelledby="kilometers-range-slider"
         step={10000}
         min={500}
-        max={100000}
+        max={maxkilometers}
       />
       <Typography id="price-range-slider" gutterBottom>
         Fourchette des années

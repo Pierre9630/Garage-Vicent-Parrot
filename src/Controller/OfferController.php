@@ -213,7 +213,7 @@ class OfferController extends AbstractController
             $images = $offer->getImages();
             // Supprimer chaque image associée
             foreach ($images as $image) {
-                $pictureService->delete($image);
+                $pictureService->delete($image->getName());
             }
 
             $entityManager->remove($offer);

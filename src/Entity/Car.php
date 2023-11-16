@@ -41,6 +41,7 @@ class Car
     private ?int $power = null;
 
     #[ORM\Column]
+    #[Assert\Range(min:0,max: 1000000,notInRangeMessage: "La valeur doit être comprise entre {{ min }} et {{ max }}.")]
     private ?int $kilometers = null;
 
     #[ORM\Column]

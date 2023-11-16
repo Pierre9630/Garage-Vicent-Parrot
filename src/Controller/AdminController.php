@@ -8,6 +8,8 @@ use App\Entity\OpeningHour;
 use App\Entity\Service;
 use App\Entity\User;
 use App\Form\InformationType;
+use App\Form\OpeningHourEditAdminType;
+use App\Form\OpeningHourEditType;
 use App\Form\OpeningHourType;
 use App\Form\ServiceType;
 use App\Form\UserType;
@@ -44,6 +46,7 @@ class AdminController extends AbstractController
         UserRepository $userRepository,
         Request $request,
         EntityManagerInterface $entityManager,
+        OpeningHourRepository $or,
         PaginatorInterface $paginator,
         ContactRepository $cr,
         TestimonialRepository $tr
@@ -55,15 +58,30 @@ class AdminController extends AbstractController
         $information = new Information();
 
         // Création des formulaires associés
-        $openingHourForm = $this->createForm(OpeningHourType::class, $openingHour);
+        $openingHourForm = $this->createForm(OpeningHourEditAdminType::class, $openingHour);
         $serviceForm = $this->createForm(ServiceType::class, $service);
         $informationForm = $this->createForm(InformationType::class, $information);
 
         // Traitement du formulaire OpeningHour
         $openingHourForm->handleRequest($request);
-        if ($openingHourForm->isSubmitted() && $openingHourForm->isValid()) {
-            //$entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($openingHour);
+        /*if ($openingHourForm->isSubmitted() && $openingHourForm->isValid()) {
+            $openingHourData = $openingHourForm->getData();
+
+            // Vérifiez si un objet OpeningHour similaire existe déjà
+            $existingOpeningHour = $or->findOneBy(['dayOfWeek' => $openingHourData->getDayOfWeek()]);
+
+            if ($existingOpeningHour) {
+                // Si oui, mettez à jour l'objet existant au lieu de créer un nouveau
+                $existingOpeningHour->setMorningOpen($openingHourData->getMorningOpen());
+                $existingOpeningHour->setMorningClose($openingHourData->getMorningClose());
+                $existingOpeningHour->setAfternoonOpen($openingHourData->getAfternoonOpen());
+                $existingOpeningHour->setAfternoonClose($openingHourData->getAfternoonClose());
+                $entityManager->persist($existingOpeningHour);
+            } else {
+                // Si non, persistez le nouvel objet OpeningHour
+                $entityManager->persist($openingHourData);
+            }
+
             $entityManager->flush();
             // Ajoutez d'autres actions ou redirection si nécessaire
         }
@@ -85,7 +103,7 @@ class AdminController extends AbstractController
             $entityManager->persist($information);
             $entityManager->flush();
             // Ajoutez d'autres actions ou redirection si nécessaire
-        }
+        }*/
         $pagination = $paginator->paginate(
             $userRepository->paginateUsers(),
             $request->query->get('page',1),

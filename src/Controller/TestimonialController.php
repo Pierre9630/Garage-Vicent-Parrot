@@ -116,16 +116,19 @@ class TestimonialController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$testimonial->getId(), $request->request->get('_token'))) {
             if ($this->isGranted('ROLE_ADMIN')) {
                 // Si c'est un admin, redirection vers l'index admin
+                $entityManager->remove($testimonial);
+                $entityManager->flush();
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
                 // Si c'est un utilisateur, retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
+                    $entityManager->remove($testimonial);
+                    $entityManager->flush();
                     return $this->redirect($referer);
                 }
             }
-            $entityManager->remove($testimonial);
-            $entityManager->flush();
+
         }
 
         return $this->redirectToRoute('app_testimonial_index', [], Response::HTTP_SEE_OTHER);

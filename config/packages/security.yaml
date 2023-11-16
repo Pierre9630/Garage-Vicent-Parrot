@@ -62,6 +62,7 @@ security:
         - { path: ^/offers/show, roles: PUBLIC_ACCESS }
         - { path: ^/offers, roles: ROLE_USER }
         - { path: ^/openinghours, roles: ROLE_ADMIN }
+        - { path: ^/information, roles: ROLE_ADMIN }
         - { path: ^/testimonial/new, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial/sucess, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial, roles : ROLE_USER}

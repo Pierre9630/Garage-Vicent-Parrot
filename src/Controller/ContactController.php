@@ -138,19 +138,26 @@ class ContactController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function delete(Request $request, Contact $contact, EntityManagerInterface $entityManager): Response
     {
+        //dd($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token')));
         if ($this->isCsrfTokenValid('delete'.$contact->getId(), $request->request->get('_token'))) {
+
+
             if ($this->isGranted('ROLE_ADMIN')) {
+                $entityManager->remove($contact);
+                $entityManager->flush();
                 // Si c'est un admin, redirection vers l'index admin
+
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
                 // Si c'est un utilisateur, retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
+                    $entityManager->remove($contact);
+                    $entityManager->flush();
                     return $this->redirect($referer);
                 }
             }
-            $entityManager->remove($contact);
-            $entityManager->flush();
+
         }
 
         return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);

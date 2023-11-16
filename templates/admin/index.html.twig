@@ -148,12 +148,9 @@
             </div>
         </div>
     </section>
-    <h3>Modifier les horaires d'ouverture</h3>
+    {#  <h3>Modifier les horaires d'ouverture</h3>
 
-    {{ form_start(openingHourForm) }}
-    {{ form_widget(openingHourForm) }}
-    <button type="submit">Enregistrer</button>
-    {{ form_end(openingHourForm) }}
+    {% include 'opening_hours/editadmin.html.twig' with {'form': openingHourForm} %}
 
     <h3>Ajouter/Modifier les services</h3>
     {{ form_start(serviceForm) }}
@@ -166,7 +163,7 @@
   {{ form_start(informationForm) }}
     {{ form_widget(informationForm) }}
     <button type="submit">Enregistrer</button>
-    {{ form_end(informationForm) }}
+    {{ form_end(informationForm) }}#}
 
 {% endblock %}
 {% block javascripts %}

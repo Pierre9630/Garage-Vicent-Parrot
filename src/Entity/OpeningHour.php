@@ -36,7 +36,13 @@ class OpeningHour
     private ?\DateTimeInterface $afternoonClose = null;
 
     #[ORM\Column(length: 11, nullable: true)]
-    private ?string $dayOfWeek = null;   
+    private ?string $dayOfWeek = null;
+
+    #[ORM\Column]
+    private ?bool $nullifyMorning = null;
+
+    #[ORM\Column]
+    private ?bool $nullifyAfternoon = null;   
 
     public function __toString()
     {
@@ -103,6 +109,30 @@ class OpeningHour
     public function setDayOfWeek(?string $dayOfWeek): static
     {
         $this->dayOfWeek = $dayOfWeek;
+
+        return $this;
+    }
+
+    public function isNullifyMorning(): ?bool
+    {
+        return $this->nullifyMorning;
+    }
+
+    public function setNullifyMorning(bool $nullifyMorning): static
+    {
+        $this->nullifyMorning = $nullifyMorning;
+
+        return $this;
+    }
+
+    public function isNullifyAfternoon(): ?bool
+    {
+        return $this->nullifyAfternoon;
+    }
+
+    public function setNullifyAfternoon(bool $nullifyAfternoon): static
+    {
+        $this->nullifyAfternoon = $nullifyAfternoon;
 
         return $this;
     }

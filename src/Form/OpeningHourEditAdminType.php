@@ -6,13 +6,12 @@ use App\Entity\OpeningHour;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class OpeningHourEditType extends AbstractType
+class OpeningHourEditAdminType extends AbstractType
 {
     private $translator;
 
@@ -40,7 +39,7 @@ class OpeningHourEditType extends AbstractType
             'attr' => ['class' => 'custom-time'],
         ])
         ->add('dayOfWeek',EntityType::class, [
-            'disabled' => true,
+            'disabled' => false,
             'class' => OpeningHour::class,
             'label' => "Jour de la semaine",
             'choice_label' => function ($dayOfWeek) {
@@ -52,14 +51,6 @@ class OpeningHourEditType extends AbstractType
                 return $er->createQueryBuilder('u')->orderBy('u.dayOfWeek', 'ASC');
             },
             'choice_value' =>'dayOfWeek',
-        ])
-        ->add('nullifyMorning', CheckboxType::class, [
-            'label' => 'Nullifier les horaires du matin',
-            'required' => false,
-        ])
-        ->add('nullifyAfternoon', CheckboxType::class, [
-            'label' => 'Nullifier les horaires de l\'après-midi',
-            'required' => false,
         ])
     ;
     }

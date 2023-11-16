@@ -80,6 +80,15 @@ class OpeningHourController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $openingHours = $form->getData(); // Obtenir l'objet OpeningHours complet
+            if ($form->get('nullifyMorning')->getData()) {
+                $openingHour->setMorningOpen(null);
+                $openingHour->setMorningClose(null);
+            }
+
+            if ($form->get('nullifyAfternoon')->getData()) {
+                $openingHour->setAfternoonOpen(null);
+                $openingHour->setAfternoonClose(null);
+            }
             $selectedDayOfWeek = $openingHours->getDayOfWeek(); // Obtenir le jour de la semaine sélectionné sous forme de chaîne
              // Récupérer la valeur de dayOfWeek en anglais
             $englishDay = $openingHour->getDayOfWeek();
