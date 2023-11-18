@@ -91,12 +91,11 @@
             ]
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "php bin/console doctrine:fixtures:load --no-interaction"
+            "@auto-scripts"
+
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "php bin/console doctrine:fixtures:load --no-interaction"
+            "@auto-scripts"
         ]
     },
     "conflict": {
