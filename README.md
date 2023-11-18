@@ -15,6 +15,12 @@ cd GarageVParrot
 composer install
 ```
 
+## Rajouter dependance apache-pack
+
+```bash
+composer require symfony/apache-pack
+```
+
 ## Configuration de la Base de Données
 
 1. Créez un utilisateur MySQL (optionnel si vous n'en avez pas déjà un) :
