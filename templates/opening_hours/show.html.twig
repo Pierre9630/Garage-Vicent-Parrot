@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OpeningHours{% endblock %}
+{% block title %}Horaires{% endblock %}
 
 {% block body %}
-    <h1>OpeningHours</h1>
+    <h1>Horaires</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>MorningOpen</th>
+                <th>Ouverture Matin</th>
                 <td>{{ openingHours.morningOpen ? openingHours.morningOpen|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>MorningClose</th>
+                <th>Fermeture Matin</th>
                 <td>{{ openingHours.morningClose ? openingHours.morningClose|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>AfternoonOpen</th>
+                <th>Ouverture Après-midi</th>
                 <td>{{ openingHours.afternoonOpen ? openingHours.afternoonOpen|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>AfternoonClose</th>
+                <th>Fermeture Après-midi</th>
                 <td>{{ openingHours.afternoonClose ? openingHours.afternoonClose|date('H:i') : '' }}</td>
             </tr>
             <tr>
-                <th>DayOfWeek</th>
+                <th>Jour</th>
                 <td>{{ openingHours.dayOfWeek | trans }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_openinghours_index') }}">back to list</a>
+    <a href="{{ path('app_openinghours_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
-    <a href="{{ path('app_openinghours_edit', {'id': openingHours.id}) }}">edit</a>
+    <a href="{{ path('app_openinghours_edit', {'id': openingHours.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
 
 {% endblock %}

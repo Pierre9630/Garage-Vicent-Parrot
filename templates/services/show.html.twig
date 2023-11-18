@@ -8,11 +8,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ service.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Nom du Service</th>
                 <td>{{ service.name }}</td>
             </tr>
             <tr>
@@ -20,16 +16,16 @@
                 <td>{{ service.description }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Crée le</th>
                 <td>{{ service.createdAt ? service.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>ModifiedAt</th>
+                <th>Modifié le</th>
                 <td>{{ service.modifiedAt ? service.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Published</th>
-                <td>{{ service.published ? 'Yes' : 'No' }}</td>
+                <th>Publié ?</th>
+                <td>{{ service.published ? 'Oui' : 'Non' }}</td>
             </tr>
         </tbody>
     </table>

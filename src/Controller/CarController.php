@@ -49,10 +49,12 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $session = $request->getSession();
             $car->setReference($carRepository->generateReference());
             $car->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($car);
             $entityManager->flush();
+            $session->getFlashBag()->add('success', 'Voiture Crée');
 
             return $this->redirectToRoute('app_cars_index', [], Response::HTTP_SEE_OTHER);
         }

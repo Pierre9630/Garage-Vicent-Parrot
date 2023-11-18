@@ -16,8 +16,8 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class,['attr' => ['class' => 'custom-input']])
-            ->add('description',TextareaType::class,['attr' => ['class' => 'custom-textarea']])
+            ->add('name',TextType::class,['label' => 'Nom du Service','attr' => ['class' => 'custom-input']])
+            ->add('description',TextareaType::class,['label' => 'Description du Service','attr' => ['class' => 'custom-textarea']])
             //->add('createdAt')
             //->add('modifiedAt')
             ->add('published',CheckboxType::class,[ 'label' => 'Publier?','attr' => ['class' => 'custom-checkbox']])

@@ -19,16 +19,20 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class, [
+                'label' => 'Email',
                 'attr' => ['class' => 'custom-input'],
             ])
             //->add('roles',CollectionType::class)->setData("ROLE_USER")
             ->add('password',PasswordType::class, [
-                'attr' => ['class' => 'custom-input'],
+                'label' => 'Mot de passe',
+                'attr' => ['class' => 'custom-input','placeholder' => "Minimum 12 caractères 1 Lettre Majuscule 1 Chiffre 1 caractère spécial"],
             ])
             ->add('firstname',TextType::class, [
+                'label' => 'Nom',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('lastname',TextType::class, [
+                'label' => 'Prenom',
                 'attr' => ['class' => 'custom-input'],
             ])
         ;

@@ -2,7 +2,7 @@
     .fixed-height-carousel {
         max-height: 350vh;
         height: auto;
-        overflow: hidden; /* Pour cacher le contenu dépassant de la hauteur fixe */
+        overflow: hidden; /* Cacher le contenu dépassant de la hauteur fixe */
         position: relative;
     }
 }
@@ -33,7 +33,7 @@ body {
 button {
     background-color: #007bff; /* Couleur de fond du bouton */
     color: #fff; /* Couleur du texte du bouton */
-    border: none; /* Supprimer la bordure du bouton */
+    border: none; /* Supprime la bordure du bouton */
     padding: 10px 20px; /* Espacement interne du bouton */
     text-align: center; /* Alignement du texte au centre */
     text-decoration: none; /* Supprimer la décoration du texte */
@@ -100,7 +100,7 @@ a{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Ajustez la hauteur selon vos besoins */
+    height: 100vh; /* Ajuste la hauteur selon vos besoins */
 }
 
 .custom-label {
@@ -108,10 +108,14 @@ a{
     margin-bottom: 5px;
     display: block;
 }
+.word-break-auto {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
 
 .custom-input,
 .custom-textarea {
-
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -130,5 +134,18 @@ a{
 .custom-checkbox {
     transform: scale(1.2);
     margin: 5px 0;
+}
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+/*.error-list {
+    list-style-type: none;
+    padding: 0;
+}*/
+
+.error-item {
+    color: red;
+    font-weight: bold;
 }
 

@@ -51,19 +51,18 @@ class AdminController extends AbstractController
         ContactRepository $cr,
         TestimonialRepository $tr
     ): Response {
-        // Création des instances de vos entités
-        $repository = $entityManager->getRepository(Offer::class);
-        $openingHour = new OpeningHour();
+
+        /*$openingHour = new OpeningHour();
         $service = new Service();
         $information = new Information();
 
         // Création des formulaires associés
         $openingHourForm = $this->createForm(OpeningHourEditAdminType::class, $openingHour);
         $serviceForm = $this->createForm(ServiceType::class, $service);
-        $informationForm = $this->createForm(InformationType::class, $information);
+        $informationForm = $this->createForm(InformationType::class, $information);*/
 
-        // Traitement du formulaire OpeningHour
-        $openingHourForm->handleRequest($request);
+        /*// Traitement du formulaire OpeningHour
+        $openingHourForm->handleRequest($request);*/
         /*if ($openingHourForm->isSubmitted() && $openingHourForm->isValid()) {
             $openingHourData = $openingHourForm->getData();
 
@@ -114,9 +113,9 @@ class AdminController extends AbstractController
             //'cars'=>$repository->findAll(),
             'contacts'=>$cr->findNotApproved(),
             'testimonials'=>$tr->findNotApproved(),
-            'openingHourForm' => $openingHourForm->createView(),
+            /*'openingHourForm' => $openingHourForm->createView(),
             'serviceForm' => $serviceForm->createView(),
-            'informationForm' => $informationForm->createView(),
+            'informationForm' => $informationForm->createView(),*/
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);

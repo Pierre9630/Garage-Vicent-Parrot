@@ -23,7 +23,7 @@ class ServiceController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_services_index', methods: ['GET'])]
-    public function index(ServiceRepository $servicesRepository, OpeningHourRepository $oh): Response
+    public function index(ServiceRepository $servicesRepository): Response
     {
         return $this->render('services/index.html.twig', [
             'services' => $servicesRepository->findAll(),
@@ -33,7 +33,7 @@ class ServiceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_services_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, OpeningHourRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $service = new Service();
         $form = $this->createForm(ServiceType::class, $service);
@@ -60,6 +60,8 @@ class ServiceController extends AbstractController
     {
         return $this->render('services/show.html.twig', [
             'service' => $service,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
         ]);
     }
 

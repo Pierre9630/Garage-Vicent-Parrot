@@ -47,12 +47,13 @@ class OfferController extends AbstractController
     }
 
     #[Route('/new', name: 'app_offers_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, OpeningHourRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
+        // On instancie la classe Offer
         $offer = new Offer();
         $offerRepository = $entityManager->getRepository(Offer::class);
         $form = $this->createForm(OfferType::class, $offer);
-        $form->handleRequest($request);
+        $form->handleRequest($request); // Gèrer de la requete à partir du form
         
         if ($form->isSubmitted() && $form->isValid()) {
             $car = $offer->getCar();
@@ -65,7 +66,6 @@ class OfferController extends AbstractController
             $offer->setReference($offerRepository->generateReference());
 
             $offer->setCreatedAt(new \DateTimeImmutable());
-            //dd($offerRepository->generateReference());
             //On rajoute les images
             $images = $form->get('images')->getData();
             foreach ($images as $image) {
@@ -78,8 +78,6 @@ class OfferController extends AbstractController
                 $img = new Image();
                 $img->setName($file);
                 $offer->addImage($img);
-
-
             }
             $entityManager->persist($offer);
             $entityManager->flush();

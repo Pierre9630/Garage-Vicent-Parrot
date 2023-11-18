@@ -7,7 +7,9 @@
 
     {{ include('offers/_form.html.twig', {'button_label': 'Update'}) }}
 
+    {{ include('offers/_delete_form.html.twig') }}
+
     <a href="{{ path('app_offers_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
-    {{ include('offers/_delete_form.html.twig') }}
+
 {% endblock %}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import CardCar from './CardCar';
 import FormCar from './FormCar';
+
 import { Col, Container, Row } from 'react-bootstrap';
 
 export default function App() {
@@ -44,7 +44,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    // Vous pouvez activer le fetch ici si nécessaire lors du chargement initial
+
     getData({ title: '', reference: '', priceRange: [0, 1000000], kilometersRange: [0, 1000000], yearRange: [0, 3000] });
   }, []);
 
@@ -66,6 +66,7 @@ export default function App() {
         
         </Row>
       </Container>
+
       
     </div>
   )

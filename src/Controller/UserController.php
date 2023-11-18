@@ -39,7 +39,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
+    /*#[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,UserPasswordHasherInterface $userPasswordHasher,OpeningHourRepository $oh): Response
     {
         $user = new User();
@@ -68,7 +68,7 @@ class UserController extends AbstractController
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);
-    }
+    }*/
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user,OpeningHourRepository $oh): Response

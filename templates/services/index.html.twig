@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Crée Le</th>
@@ -19,13 +18,12 @@
         </thead>
         <tbody>
         {% for service in services %}
-            <tr>
-                <td>{{ service.id }}</td>
+            <tr class="word-break-auto">
                 <td>{{ service.name }}</td>
                 <td>{{ service.description }}</td>
                 <td>{{ service.createdAt ? service.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ service.modifiedAt ? service.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ service.published ? 'Yes' : 'No' }}</td>
+                <td>{{ service.published ? 'Oui' : 'Non' }}</td>
                 <td>
                     <a href="{{ path('app_services_show', {'id': service.id}) }}"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{ path('app_services_edit', {'id': service.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>

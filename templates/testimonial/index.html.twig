@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         {% for testimonial in testimonials %}
-            <tr>
+            <tr class="word-break-auto">
 
                 <td>{{ testimonial.name }}</td>
                 <td>{{ testimonial.lastname }}</td>
@@ -43,3 +43,4 @@
 
     <a href="{{ path('app_testimonial_new') }}"><i class="fa-solid fa-plus"></i></a>
 {% endblock %}
+

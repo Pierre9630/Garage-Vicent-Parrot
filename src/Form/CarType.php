@@ -34,15 +34,19 @@ class CarType extends AbstractType
                 'max' => date('Y') + 10,*/
             ])
             ->add('doors', IntegerType::class, [
+                'label' => 'Nombre Portes',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('power', IntegerType::class, [
+                'label' => 'Puissance',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('kilometers', IntegerType::class, [
+                'label' => 'Kilometres',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('price',MoneyType::class, [
+                'label' => 'Prix',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('description', TextareaType::class, [

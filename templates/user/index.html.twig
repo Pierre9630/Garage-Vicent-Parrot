@@ -24,7 +24,7 @@
                 {#  <td>{% if user.id is defined %}{{ user.id }}{% endif %}</td>#}
                 <td>{% if user.email is defined %}  {{ user.email }} {% endif %}</td>
 
-                <td>{% if user.roles is defined %}{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Client {% endif %} {% endif %}{# {{ user.roles ? user.roles|json_encode : '' }} #}</td>
+                <td>{% if user.roles is defined %}{% if AdminRole in user.roles  %}Compte Admin {% else %} Compte Employé {% endif %} {% endif %}{# {{ user.roles ? user.roles|json_encode : '' }} #}</td>
                 {% if is_granted('ROLE_ADMIN') %}
                     <td><a href="{% if user.id is defined %}
                 {{ path('app_user_edit', {'id': user.id}) }}{% endif %}">Changer de Mot de Passe</a></td>
@@ -45,9 +45,9 @@
         {% endfor %}
         </tbody>
     </table>
-    {% if is_granted('ROLE_ADMIN') %}
+    {#  {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('app_user_new') }}"><i class="fa-solid fa-plus"></i></a>
-    {% endif %}
+    {% endif %}#}
     <section class="mt-3">
     <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     </section>
@@ -68,12 +68,12 @@
                                                      src="{#  {{ comment.avatarUrl }}#}{#  " alt="avatar" width="65" height="65" />#}
                                                 <div class="flex-grow-1">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-1">
+                                                        <p class="mb-1 word-break-auto">
                                                             {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
                                                         </p>
                                                         {#   <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>#}
                                                     </div>
-                                                    <p class="small mb-0">
+                                                    <p class="small mb-0 word-break-auto">
                                                         {{ comment.message }}
                                                     </p>
                                                     {# Bouton d'approbation de demande de contact  #}
@@ -99,12 +99,12 @@
                                                      src="  {{ comment.avatarUrl }}" alt="avatar" width="65" height="65" />#}
                                                 <div class="flex-grow-1">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="mb-1">
+                                                        <p class="mb-1 word-break-auto">
                                                             {{ testimonial.name }} {{ testimonial.lastname }} <span class="small">{{ testimonial.createdAt | date('Y-m-d H:i') }}</span>
                                                         </p>
                                                         {#<a href="#!"><i class="fas fa-reply fa-xs"></i>  <span class="small"> Répondre</span></a>#}
                                                     </div>
-                                                    <p class="small mb-0">
+                                                    <p class="small mb-0 word-break-auto">
                                                         {{ testimonial.message }}
                                                     </p>
                                                     {# Pour Approuver un avis #}

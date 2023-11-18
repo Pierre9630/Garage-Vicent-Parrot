@@ -9,7 +9,7 @@ use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,13 +22,25 @@ class TestimonialType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,[
+                'label' => 'Nom',
                 'attr' => ['class' => 'custom-input']
             ])
             ->add('lastname', TextType::class, [
+                'label' => 'Prenom',
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('message', TextareaType::class, [
-                'attr' => ['class' => 'custom-textarea'],
+                'label' => 'Message',
+                'attr' => [
+                    'class' => 'custom-textarea word-break-auto',
+                    'placeholder' => "Maximum 255 caractères (lettres)",
+                ],
+                'constraints' => [
+                    new Assert\Length([
+                        'max' => 255,
+                        'maxMessage' => 'Le message ne peut pas dépasser {{ limit }} caractères.',
+                    ]),
+                ],
             ])
             /*->add('note', ChoiceType::class, [
                 'label' => 'Note',

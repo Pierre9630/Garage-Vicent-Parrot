@@ -30,7 +30,7 @@ class Testimonial
     #[ORM\Column (length: 100)]
     private ?string $phone = null;*/
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT,length: 255)]
     private ?string $message = null;
 
     #[ORM\Column]
