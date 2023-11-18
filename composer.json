@@ -86,8 +86,8 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "install-dev-dependencies": [
-                "composer install --no-dev",
-                "php bin/console doctrine:fixtures:load --no-interaction"
+                "composer install --no-dev"
+
             ]
         },
         "post-install-cmd": [
