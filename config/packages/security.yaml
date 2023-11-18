@@ -46,10 +46,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        #- { path: ^/profile, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        #- { path: ^/api, roles: ROLE_ADMIN }
         - { path: ^/services/new, roles: ROLE_ADMIN }
         - { path: ^/services/edit, roles: ROLE_ADMIN }
         - { path: ^/users/new, roles: ROLE_ADMIN }        
@@ -66,12 +63,7 @@ security:
         - { path: ^/testimonial/new, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial/sucess, roles: PUBLIC_ACCESS}
         - { path: ^/testimonial, roles : ROLE_USER}
-
-        #- { path: ^/user/new, roles: ROLE_ADMIN }
         - { path: ^/users, roles: ROLE_USER }
-        #- { path: ^/nosservices, roles: PUBLIC_ACCESS }
-        #- { path: ^/rechercher, roles: PUBLIC_ACCESS }
-        - { path: ^/nouscontacter, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:

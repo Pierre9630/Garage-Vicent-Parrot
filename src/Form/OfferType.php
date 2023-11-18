@@ -38,7 +38,7 @@ class OfferType extends AbstractType
                 'label' => "Afficher en Exposition ?",
                 'required' => false,
                 'data' => false,
-                'attr' => ['class' => 'custom-checkbox'],
+                'attr' => ['class' => ''],
             ])
             ->add('car', EntityType::class, [
                 'label' => "Voiture",

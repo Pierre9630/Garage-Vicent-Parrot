@@ -30,6 +30,16 @@
 body {
     background-color: lightgray;
 }
+form {
+    width: clamp(320px,60vw,768px);
+    margin-inline: auto;
+}
+form .form-check{
+    padding-left: 0;
+}
+form .form-check input{
+    margin-right: 1.5rem;
+}
 button {
     background-color: #007bff; /* Couleur de fond du bouton */
     color: #fff; /* Couleur du texte du bouton */
@@ -131,10 +141,10 @@ a{
     margin-top: 10px;
 }
 
-.custom-checkbox {
+/*.custom-checkbox {
     transform: scale(1.2);
     margin: 5px 0;
-}
+}*/
 .alert-success {
     background-color: #dff0d8;
     border-color: #d6e9c6;

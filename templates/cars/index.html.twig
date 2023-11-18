@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Marque</th>
                 <th>Modèle</th>
                 <th>Année</th>
@@ -20,8 +19,7 @@
         </thead>
         <tbody>
         {% for car in cars %}
-            <tr>
-                <td>{{ car.id }}</td>
+            <tr class="word-break-auto">
                 <td>{{ car.brand }}</td>
                 <td>{{ car.model }}</td>
                 <td>{{ car.year }}</td>

@@ -11,21 +11,25 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AdminFixtures extends Fixture
 {
     const Emails = [
-        'Ptuner@Ptuner.com',
-        'PierreAdmin@admin.com',
+        'ptuner@ptuner.com',
+        'pierreAdmin@admin.com',
+        'vparrot@orange.fr'
     ];
     const Pass = [
-        'test44',
-        'test44',
+        'Test44!',
+        'Test44!',
+        'Vincent68@'
     ];
     const FirstNames = [
         'Pierre',
         'Pierre',
+        'Parrot'
     ];
 
     const LastNames = [
         'Pierre',
         'Pierre',
+        'Vincent'
     ];
 
     public function __construct(UserPasswordHasherInterface $hasher)

@@ -17,7 +17,7 @@
         </thead>
         <tbody>
         {% for offer in offers %}
-            <tr>
+            <tr class="word-break-auto">
                 <td>{{ offer.reference }}</td>
                 <td>{{ offer.offerTitle }}</td>
                 <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>

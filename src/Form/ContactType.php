@@ -32,7 +32,7 @@ class ContactType extends AbstractType
             ->add('isGeneralInquiry', CheckboxType::class, [
                 'label' => 'Demande générale (non liée à un véhicule)',
                 'required' => false,
-                'attr' => ['class' => 'custom-checkbox'],
+                'attr' => ['class' => ''],
             ])
             ->add('offer', EntityType::class, [
                 'label'=>'Annonce',

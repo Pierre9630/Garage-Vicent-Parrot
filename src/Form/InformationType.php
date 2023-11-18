@@ -39,7 +39,7 @@ class InformationType extends AbstractType
             ])
             ->add('active', CheckboxType::class, [
                 'required' => false,
-                'attr' => ['class' => 'custom-checkbox'],
+                'attr' => ['class' => ''],
             ])
         ;
     }

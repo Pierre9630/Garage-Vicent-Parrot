@@ -21,29 +21,29 @@ class CarType extends AbstractType
         $builder
             ->add('brand',TextType::class, [
                 'label' => 'Marque',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('model',TextType::class, [
                 'label' => 'Modèle',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('year',IntegerType::class, [
                 'label' => 'Année',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
                 /*'min' => date('Y') - 100,
                 'max' => date('Y') + 10,*/
             ])
             ->add('doors', IntegerType::class, [
                 'label' => 'Nombre Portes',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('power', IntegerType::class, [
                 'label' => 'Puissance',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('kilometers', IntegerType::class, [
                 'label' => 'Kilometres',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('price',MoneyType::class, [
                 'label' => 'Prix',
@@ -51,11 +51,11 @@ class CarType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             ->add('typeFuel',TextType::class, [
                 'label' => 'Energie',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input word-break-auto'],
             ])
             /*->add('images', FileType::class, [
                 'label' => false,

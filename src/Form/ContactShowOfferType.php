@@ -34,7 +34,7 @@ class ContactShowOfferType extends AbstractType
             ->add('message',TextareaType::class,[
                 'label' => 'Message :',
                 'attr' => array(
-                    'class' => 'form-control my-2 w-100',
+                    'class' => 'form-control my-2 w-100 ',
                     'placeholder' => 'Maximum 255 Caractères !',
                     'maxlength' => 255,
                     'rows' => 5,

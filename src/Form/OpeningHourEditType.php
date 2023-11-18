@@ -54,11 +54,11 @@ class OpeningHourEditType extends AbstractType
             'choice_value' =>'dayOfWeek',
         ])
         ->add('nullifyMorning', CheckboxType::class, [
-            'label' => 'Nullifier les horaires du matin',
+            'label' => 'Fermer le matin',
             'required' => false,
         ])
         ->add('nullifyAfternoon', CheckboxType::class, [
-            'label' => 'Nullifier les horaires de l\'après-midi',
+            'label' => 'Fermer l\'après-midi',
             'required' => false,
         ])
     ;
