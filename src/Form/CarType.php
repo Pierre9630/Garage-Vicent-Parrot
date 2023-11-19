@@ -4,15 +4,13 @@ namespace App\Form;
 
 use App\Entity\Car;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\All;
-use Symfony\Component\Validator\Constraints\Image;
+
 
 class CarType extends AbstractType
 {
@@ -52,6 +50,7 @@ class CarType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => ['class' => 'custom-input word-break-auto'],
+                'required' => false, // Rend le champ non obligatoire
             ])
             ->add('typeFuel',TextType::class, [
                 'label' => 'Energie',

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\OpeningHour;
 use App\Form\OpeningHourEditType;
-use App\Form\OpeningHourType;
 use App\Repository\OpeningHourRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

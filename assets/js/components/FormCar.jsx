@@ -51,13 +51,13 @@ export default function FormCar(props) {
 
   const handleTitleChange = (event) => {
     
-    const newValue = event.target.value; // Obtenez la nouvelle valeur du champ de texte
+    const newValue = event.target.value; // nouvelle valeur champ de texte
     setFilter({ ...filters, title: newValue });
   }; 
 
   const handleReferenceChange = (event) => {
     
-    const newValue = event.target.value; // Obtenez la nouvelle valeur du champ de texte
+    const newValue = event.target.value; // nouvelle valeur du champ de texte
     setFilter({ ...filters, reference: newValue });
   }; 
 

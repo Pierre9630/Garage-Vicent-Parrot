@@ -46,27 +46,6 @@ export default function CardCar(props) {
                     </div>
                 </Card.Body>
             </Card>
-
-
-
-            {/*<div className="card-container h-70">
-                <div className="row">
-                    <div className="col-md-3 mb-4">
-                        <div className="card border">
-                            <ImageCarousel imageList={images}/>                       
-                                                                
-                        </div>
-                            <div className="card-body">
-                                <h3 className="card-title">
-                                    <a href=""> {offer.offer_title}</a>
-                                </h3>
-                                <h4 className="card-title"> {car.brand}  {car.model} </h4>
-                                <h5 className="card-kilometers">  {car.kilometers}km</h5>
-                                <h5 className="card-price">  {car.price}€</h5>
-                            </div>
-                        </div>
-                    </div>
-    </div>*/}
     </div>
         
     )

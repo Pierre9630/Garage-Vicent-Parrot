@@ -25,7 +25,7 @@ class CarController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_cars_index', methods: ['GET'])]
-    public function index(CarRepository $carsRepository, OpeningHourRepository $oh, Request $request,PaginatorInterface $paginator): Response
+    public function index(CarRepository $carsRepository, Request $request,PaginatorInterface $paginator): Response
     {
 
         $pagination = $paginator->paginate(
@@ -41,7 +41,7 @@ class CarController extends AbstractController
     }
 
     #[Route('/new', name: 'app_cars_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,OpeningHourRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $car = new Car();
         $carRepository = $entityManager->getRepository(Car::class);
@@ -78,7 +78,7 @@ class CarController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_cars_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Car $car, EntityManagerInterface $entityManager, PictureService $pictureService, OpeningHourRepository $oh): Response
+    public function edit(Request $request, Car $car, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);

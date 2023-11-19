@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ class SecurityController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils,OpeningHourRepository $oh): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');

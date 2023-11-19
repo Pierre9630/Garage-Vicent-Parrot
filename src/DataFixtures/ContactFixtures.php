@@ -2,14 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Contact;
-use App\Entity\Offers;
-use App\Repository\OffersRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Generator as Faker;
-use Faker\Factory;
+
 
 
 

@@ -2,16 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Information;
 use App\Entity\Offer;
-use App\Entity\OpeningHour;
-use App\Entity\Service;
 use App\Entity\User;
-use App\Form\InformationType;
-use App\Form\OpeningHourEditAdminType;
-use App\Form\OpeningHourEditType;
-use App\Form\OpeningHourType;
-use App\Form\ServiceType;
 use App\Form\UserType;
 use App\Form\AdminType;
 use App\Repository\ContactRepository;
@@ -20,9 +12,7 @@ use App\Repository\OpeningHourRepository;
 use App\Repository\TestimonialRepository;
 use App\Repository\UserRepository;
 use App\Service\DataService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

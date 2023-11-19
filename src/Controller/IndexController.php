@@ -2,37 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Car;
-use App\Entity\Contact;
 use App\Entity\Offer;
-use App\Entity\Testimonial;
-use App\Entity\OpeningHour;
-use App\Form\ContactType;
 use App\Form\OfferType;
-use App\Form\SearchType;
-//use App\Model\CarsData;
-use App\Repository\CarRepository;
-//use App\Service\UploadPhoto;
-//use Carbon\Carbon;
-//se Carbon\Doctrine\DateTimeType;
 use App\Repository\InformationRepository;
-use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\TestimonialRepository;
 use App\Service\DataService;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-//use http\Env\Request;
 use Knp\Component\Pager\PaginatorInterface;
-//use Spatie\OpeningHours\OpeningHours;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-//use App\Service\ResSlots;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormTypeInterface;
+
 
 
 class IndexController extends AbstractController
@@ -44,8 +27,8 @@ class IndexController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_index')]
-    public function index(EntityManagerInterface $entityManager,Request $req,PaginatorInterface $paginator,
-        ServiceRepository $sr, TestimonialRepository $tr, OpeningHourRepository $oh, InformationRepository $ir): Response
+    public function index(EntityManagerInterface $entityManager,Request $req,
+        ServiceRepository $sr, TestimonialRepository $tr): Response
     {
 
         $offers = new Offer();        

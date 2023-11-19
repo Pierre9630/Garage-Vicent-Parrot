@@ -31,7 +31,7 @@ body {
     background-color: lightgray;
 }
 form {
-    width: clamp(320px,60vw,768px);
+    width: clamp(320px,60vw,768px); /* Ajuster la taille du formulaire en fonction de l'espace disponible*/
     margin-inline: auto;
 }
 form .form-check{
@@ -51,6 +51,9 @@ button {
     font-size: 16px; /* Taille de la police du texte */
     margin: 5px 2px; /* Marge extérieure du bouton */
     cursor: pointer; /* Curseur pointeur au survol */
+}
+i {
+    font-size: 24px !important;
 }
 
 a{
@@ -92,7 +95,7 @@ a{
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%); /*Translater en vertical*/
 }
 .carousel-control-prev {
     left: 10px;
@@ -110,7 +113,7 @@ a{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Ajuste la hauteur selon vos besoins */
+    height: 100vh; /* Ajuste la hauteur */
 }
 
 .custom-label {

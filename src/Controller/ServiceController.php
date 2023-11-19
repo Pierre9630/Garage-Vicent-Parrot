@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Service;
 use App\Form\ServiceType;
-use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;

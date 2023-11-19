@@ -78,7 +78,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         // $product = new Product();
         // $manager->persist($product);
         /*
-        $user = new User(); //Pensez bien à ajouter le use App\Entity\User en haut du fichier !
+        $user = new User();
         $user->setUsername('John');
         */
         //$this->hashPassword->$user->setPassword('test');

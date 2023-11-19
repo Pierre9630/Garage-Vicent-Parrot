@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 
-use App\Repository\OpeningHourRepository;
+
 use App\Service\DataService;
 use App\Service\SearchService;
-
 use Knp\Component\Pager\PaginatorInterface;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +32,7 @@ class SearchController extends AbstractController
         $this->entityManager = $entityManager;
     }*/
     #[Route('/search', name: 'app_search_index', methods: ['GET','POST'])]
-    public function search(Request $request,OpeningHourRepository $oh,PaginatorInterface $paginator ): Response
+    public function search(Request $request,PaginatorInterface $paginator ): Response
     {
         /*$keyword = $request->query->get('keyword', '');
         $minPrice = $request->query->get('minPrice', 0);
