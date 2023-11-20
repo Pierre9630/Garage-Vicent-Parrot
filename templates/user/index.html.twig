@@ -4,7 +4,7 @@
 {# https://stackoverflow.com/questions/7680917/how-do-i-get-the-entity-that-represents-the-current-user-in-symfony2 #}
 {% block body %}
 
-    <h1>{% if app.user.firstname is defined %}{{ app.user.firstname }} {{ app.user.lastname }}{% else %}Je ne sais pas comment vous vous êtes retrouvé ici! {% endif %}</h1>
+    <h1 class="text-center m-3">{% if app.user.firstname is defined %}{{ app.user.firstname }} {{ app.user.lastname }}{% else %}Je ne sais pas comment vous vous êtes retrouvé ici! {% endif %}</h1>
     {% set AdminRole = "ROLE_ADMIN" %}
     {% if is_granted('ROLE_ADMIN') %}Admin{% else %} Employé {% endif %}
     <table class="table">
