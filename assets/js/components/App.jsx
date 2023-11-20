@@ -24,7 +24,7 @@ export default function App() {
     if (filters.reference.trim() !== "") {
       referenceParam = `&reference=${filters.reference}`;
     }
-
+    // Création d'un nouvel objet newSearchString en utilisant l'opérateur de déstructuration pour copier les propriétés de l'objet searchString
     const newSearchString = {
       ...searchString,
       offer_title: `offer_title=${filters.title}`,
@@ -35,11 +35,14 @@ export default function App() {
     };
 
     setSearchString(newSearchString);
-
+    // Construction de l'URL de requête en utilisant les propriétés de l'objet newSearchString
     let response = await fetch(`${newSearchString.link}${newSearchString.offer_title}${newSearchString.reference}${newSearchString.price}${newSearchString.kilometers}${newSearchString.year}`);
+    // Récupération des données au format JSON à partir de la réponse
     let data = await response.json();
+    // Mise à jour de l'état de la variable listCar avec la propriété "hydra:member" des données
     setListCar(data["hydra:member"]);
 
+    // Retour des données "hydra:member"
     return data["hydra:member"];
   }
 
