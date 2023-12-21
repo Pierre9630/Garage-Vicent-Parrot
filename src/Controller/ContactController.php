@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/contact')]
-class ContactController extends AbstractController
+class   ContactController extends AbstractController
 {
     private $dataService;
 
