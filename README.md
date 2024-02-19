@@ -60,6 +60,13 @@ npm install
 npm run dev
 ```
 
+## Deinstaller les dépendences (et des dépendences associées) pouvant empêcher le bon fonctionnement local
+
+```bash
+composer remove nelmio/cors-bundle --update-with-dependencies
+composer remove karser/karser-recaptcha3-bundle --update-with-dependencies
+```
+
 ## Lancement du Serveur Symfony
 
 Pour lancer le serveur Symfony en mode détaché :

@@ -7,7 +7,7 @@
 
     {{ include('testimonial/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i><span class="sr-only">Retour</span></a>
 
     {{ include('testimonial/_delete_form.html.twig') }}
 {% endblock %}

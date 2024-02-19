@@ -24,7 +24,7 @@ class InformationType extends AbstractType
                     'class' => 'custom-input'
                 ),
                 'constraints' => new Regex([
-                    'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",
+                    'pattern' => "/^(\+33|0033|0)(1|2|3|4|5|6|7|9)[0-9]{8}$/",
                     'message' => "Veuillez Entrer un numéro valide ! ",
                 ])
             ])

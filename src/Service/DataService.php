@@ -9,21 +9,18 @@ use App\Repository\InformationRepository;
 
 class DataService
 {
-    private $openingHourRepository;
-    private $informationRepository;
 
-    public function __construct(OpeningHourRepository $openingHourRepository, InformationRepository $informationRepository)
+    public function __construct(private readonly OpeningHourRepository $openingHourRepository, private readonly InformationRepository $informationRepository)
     {
-        $this->openingHourRepository = $openingHourRepository;
-        $this->informationRepository = $informationRepository;
+
     }
 
-    public function getOpeningHours()
+    public function getOpeningHours(): array
     {
         return $this->openingHourRepository->findAll();
     }
 
-    public function getActiveInformation()
+    public function getActiveInformation(): ?\App\Entity\Information
     {
         return $this->informationRepository->findActiveInformation();
     }

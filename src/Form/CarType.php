@@ -27,25 +27,33 @@ class CarType extends AbstractType
             ])
             ->add('year',IntegerType::class, [
                 'label' => 'Année',
-                'attr' => ['class' => 'custom-input word-break-auto'],
+                'attr' => ['class' => 'custom-input word-break-auto','min' => 1900,'max' => date('Y')],
                 /*'min' => date('Y') - 100,
                 'max' => date('Y') + 10,*/
             ])
             ->add('doors', IntegerType::class, [
                 'label' => 'Nombre Portes',
-                'attr' => ['class' => 'custom-input word-break-auto'],
+                'attr' => ['class' => 'custom-input word-break-auto','min' => 0,'max' => 10],
+                /*'min' => 0,
+                'max' => 50*/
             ])
             ->add('power', IntegerType::class, [
                 'label' => 'Puissance',
-                'attr' => ['class' => 'custom-input word-break-auto'],
+                'attr' => ['class' => 'custom-input word-break-auto','min' => 0,'max' => 10000],
+                /*'min' => 0,
+                'max' => 2000*/
             ])
             ->add('kilometers', IntegerType::class, [
                 'label' => 'Kilometres',
-                'attr' => ['class' => 'custom-input word-break-auto'],
+                'attr' => ['class' => 'custom-input word-break-auto','min' => 0,'max' => 400000],
+                /*'min' => 0,
+                'max' => 400000*/
             ])
             ->add('price',MoneyType::class, [
                 'label' => 'Prix',
-                'attr' => ['class' => 'custom-input'],
+                'attr' => ['class' => 'custom-input','min' => 0,'max' => 1000000],
+                /*'min' => 0,
+                'max' => 1500000*/
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',

@@ -28,7 +28,7 @@
                 <h4>Contactez-nous</h4>
                 {% if information is not null %}
                     <p>
-                        <a href="{{ path('app_contact_new') }}" class="btn btn-primary">Contactez-nous</a>
+                        <a href="{{ path('app_contact_new') }}" class="btn btn-dark text-white font-weight-bold">Contactez-nous</a>
 
                     </p>
                     <p>
@@ -61,6 +61,8 @@
                     %}
                 <h4>Horaires</h4>
                 {% for openHour in openingHours %}
+                    {% if openHour.morningOpen is null and openHour.morningClose is null %}
+                    {% else %}
                     <h5>{{ trans_day_hash[openHour.dayofweek] }}</h5>
                     {% if openHour.morningOpen is not null and openHour.morningClose is not null %}
                         {{ openHour.morningOpen|date('H:i') }} - {{ openHour.morningClose|date('H:i')}}
@@ -71,6 +73,7 @@
                         {{ openHour.afternoonOpen|date('H:i') }} - {{ openHour.afternoonClose|date('H:i')}}
                     {% else %}
                         fermé (après-midi)
+                    {% endif %}
                     {% endif %}
                 {% endfor %}
                 </p>

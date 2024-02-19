@@ -20,7 +20,7 @@ export default function FormCar(props) {
     title: "",
     priceRange: [0,maxprice],
     kilometersRange:[0,maxkilometers],
-    yearRange:[1900,2040],
+    yearRange:[1900,new Date().getFullYear()],
     reference:""
   })
 
@@ -110,7 +110,7 @@ export default function FormCar(props) {
         aria-labelledby="year-range-slider"
         step={1}
         min={1900}
-        max={2040}
+        max={new Date().getFullYear()}
       />         
       <Button
       variant="primary"

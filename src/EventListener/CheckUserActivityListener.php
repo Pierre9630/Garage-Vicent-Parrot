@@ -10,16 +10,14 @@ use Symfony\Component\Security\Core\User\LastActivityInterface;
 
 class CheckUserActivityListener
 {
-    private $tokenStorage;
-    private $authorizationChecker;
 
-    public function __construct(TokenStorageInterface $tokenStorage, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(private TokenStorageInterface $tokenStorage, private AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         $user = $this->tokenStorage->getToken()->getUser();
 

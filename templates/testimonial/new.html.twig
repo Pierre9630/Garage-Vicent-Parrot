@@ -12,9 +12,9 @@
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {# L'utilisateur est connecté en tant qu'utilisateur non anonyme #}
-        <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="{{ path('app_testimonial_index') }}"><i class="fa-solid fa-arrow-left" aria-hidden="false"></i><span class="sr-only">Retour</span></a>
     {% else%}
-        <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left" aria-hidden="false"></i><span class="sr-only">Retour</span></a>
     {% endif %}
 
 

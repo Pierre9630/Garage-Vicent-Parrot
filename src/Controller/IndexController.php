@@ -38,7 +38,7 @@ class IndexController extends AbstractController
         if($searchType->isSubmitted() && $searchType->isValid()){
             //dd($cars);
             $criteria = $searchType->getData();
-            $offers = $repository->findBySearch($criteria);
+            //$offers = $repository->findBySearch($criteria);
             //dd($cars);
         }
         /*$pagination = $paginator->paginate(
