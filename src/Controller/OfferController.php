@@ -32,7 +32,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/', name: 'app_offers_index', methods: ['GET'])]
-    public function index(Request $request,OfferRepository $offersRepository, OpeningHourRepository $oh,PaginatorInterface $paginator): Response
+    public function index(Request $request,OfferRepository $offersRepository,PaginatorInterface $paginator): Response
     {
         $pagination = $paginator->paginate(
             $offersRepository->paginateOffers(),
@@ -47,7 +47,8 @@ class OfferController extends AbstractController
     }
 
     #[Route('/new', name: 'app_offers_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+                        PictureService $pictureService): Response
     {
         // On instancie la classe Offer
         $offer = new Offer();
@@ -83,16 +84,7 @@ class OfferController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
         }
-        /*$offer = new Offers();
-        $form = $this->createForm(OffersType::class, $offer);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($offer);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
-        }*/
 
         return $this->render('offers/new.html.twig', [
             'offer' => $offer,
@@ -104,7 +96,8 @@ class OfferController extends AbstractController
 
 
     #[Route('/show/{id}', name: 'app_offers_show', methods: ['GET',"POST"])]
-    public function show(Request $request,Offer $offer, OpeningHourRepository $oh, ContactRepository $cr,EntityManagerInterface $entityManager): Response
+    public function show(Request $request,Offer $offer, ContactRepository $cr,
+                         EntityManagerInterface $entityManager): Response
     {
 
         $comment = new Contact();
@@ -205,7 +198,8 @@ class OfferController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'app_offers_delete', methods: ['POST'])]
-    public function delete(Request $request, Offer $offer, EntityManagerInterface $entityManager,PictureService $pictureService): Response
+    public function delete(Request $request, Offer $offer, EntityManagerInterface $entityManager,
+                           PictureService $pictureService): Response
     {
         if ($this->isCsrfTokenValid('delete' . $offer->getId(), $request->request->get('_token'))) {
             $images = $offer->getImages();

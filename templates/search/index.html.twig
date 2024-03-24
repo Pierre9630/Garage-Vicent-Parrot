@@ -5,9 +5,9 @@
 <div id="app" ></div> {# Point d'entrée React #}
 <script>
     {% if app.request.server.get('SERVER_NAME') == 'localhost' %}
-        var apiEndpoint = 'http://localhost:8000';
+        let apiEndpoint = 'http://localhost:8000';
     {% else %}
-        var apiEndpoint = "{{ app.request.schemeAndHttpHost }}";
+        let apiEndpoint = "{{ app.request.schemeAndHttpHost }}";
     {% endif %}
 </script>
 

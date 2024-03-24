@@ -34,7 +34,7 @@ class OfferRepository extends ServiceEntityRepository
         $year = $today->format('y'); // Année sous forme de deux chiffres
 
         // Récupérez le dernier numéro de référence pour la journée actuelle
-        $lastReference = $this->getLastReferenceForToday($today);
+        $lastReference = $this->getLastReferenceForToday();
         //dump($today);
         //dd($lastReference);
         // Incrémentation du dernier numéro de référence
@@ -54,7 +54,7 @@ class OfferRepository extends ServiceEntityRepository
         $day = $date->format('d');   // Jour sous forme de deux chiffres
 
         // Récupérez le dernier numéro de référence pour la journée actuelle
-        $lastReference = $this->getLastReferenceForToday($date);
+        $lastReference = $this->getLastReferenceForToday();
         //dump($date);
 
         // Incrémentation du dernier numéro de référence

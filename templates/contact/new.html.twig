@@ -16,8 +16,8 @@
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var generalInquiryCheckbox = document.getElementById('{{ form.vars.id }}_isGeneralInquiry');
-            var offerField = document.querySelector('.offer-field');
+            let generalInquiryCheckbox = document.getElementById('{{ form.vars.id }}_isGeneralInquiry');
+            let offerField = document.querySelector('.offer-field');
 
             generalInquiryCheckbox.addEventListener('change', function () {
                 offerField.disabled = generalInquiryCheckbox.checked;

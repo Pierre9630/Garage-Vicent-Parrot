@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from 'react-bootstrap/Button';
+
+export default function FormCar(props) {
+    const { onSubmit } = props;
+    const { maxprice = 150000 } = {};
+    const { maxkilometers = 400000 } = {};
+
+    useEffect(() => {
+        console.log(onSubmit);
+    }, []);
+
+    const [filters, setFilter] = useState({
+        title: "",
+        priceRange: [0, maxprice],
+        kilometersRange: [0, maxkilometers],
+        yearRange: [1900, new Date().getFullYear()],
+        reference: ""
+    });
+
+    const handlePriceChange = (event, newValue) => {
+        setFilter({ ...filters, priceRange: newValue });
+    };
+
+    const handleKilometersChange = (event, newValue) => {
+        setFilter({ ...filters, kilometersRange: newValue });
+    };
+
+    const handleYearChange = (event, newValue) => {
+        setFilter({ ...filters, yearRange: newValue });
+    };
+
+    const handleTitleChange = (event) => {
+        const newValue = event.target.value;
+        setFilter({ ...filters, title: newValue });
+    };
+
+    const handleReferenceChange = (event) => {
+        const newValue = event.target.value;
+        setFilter({ ...filters, reference: newValue });
+    };
+
+    const handleSubmitChange = (event, newValue) => {
+        console.log("soumission ");
+        onSubmit(filters, 1);
+    };
+
+    return (
+        <div>
+            <TextField id="standard-basic" label="Titre de l'annonce" variant="standard" onChange={handleTitleChange} />
+            <TextField id="standard-basic" label="Réference de l'annonce" variant="standard" onChange={handleReferenceChange} />
+            <Typography id="price-range-slider" gutterBottom>
+                Fourchette des prix (en €)
+            </Typography>
+            <Slider
+                value={filters.priceRange}
+                onChange={handlePriceChange}
+                valueLabelDisplay="auto"
+                aria-labelledby="price-range-slider"
+                step={1000}
+                min={500}
+                max={maxprice}
+            />
+            <Typography id="price-range-slider" gutterBottom>
+                Fourchette des Kilomètres (en km)
+            </Typography>
+            <Slider
+                value={filters.kilometersRange}
+                onChange={handleKilometersChange}
+                valueLabelDisplay="auto"
+                aria-labelledby="kilometers-range-slider"
+                step={10000}
+                min={500}
+                max={maxkilometers}
+            />
+            <Typography id="price-range-slider" gutterBottom>
+                Fourchette des années
+            </Typography>
+            <Slider
+                value={filters.yearRange}
+                onChange={handleYearChange}
+                valueLabelDisplay="auto"
+                aria-labelledby="year-range-slider"
+                step={1}
+                min={1900}
+                max={new Date().getFullYear()}
+            />
+            <Button
+                variant="primary"
+                onClick={handleSubmitChange}
+            >
+                Rechercher
+            </Button>
+        </div>
+    );
+}

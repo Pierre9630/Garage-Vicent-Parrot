@@ -6,6 +6,7 @@
     <section class="gradient-custom">
         <div class="container my-5 py-5 fixed-height-carousel">
             <h1>{{ offer.offertitle }}</h1>
+            {% if offer.images is not empty %}
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     {% for image in offer.images %}
@@ -32,6 +33,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                {% endif %}
             </div>
 
             <!-- Informations essentielles sous forme de cartes carrées -->
@@ -70,7 +72,8 @@
             </div>
             </div>
             <div class="pt-3"></div>
-            <table class="table">
+            <table class="table" aria-label="tableau contenant la reference ainsi que les caractéristiques du véhicule
+            de l'offre en cours de visionnage">
                 <tbody>
                     <tr>
                         <th>Reference</th>
@@ -93,14 +96,14 @@
                         <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                     </tr>
                     <tr>
-                        <th>Annonce Modifié le</th>
+                        <th>Annonce Modifiée le</th>
                         <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
                     </tr>
                 </tbody>
             </table>
 
-        <!-- Le reste de votre code ici -->
 
+        </div>
     </section>
 
     <section class="gradient-custom">
@@ -175,7 +178,7 @@
                     <div class="card">
                         {{ form_start(commentForm) }}
                         {{ form_widget(commentForm) }}
-                            <div class="a personnaliser">
+                            <div class="a personnaliser"> 
                             {{ form_row(commentForm.contact.email) }}
                             </div>
                         <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
@@ -186,7 +189,7 @@
                         <h2 class="display-4 text-primary">Vous voulez plus d'informations ? Contactez Nous!</h2>
                         <div class="card rounded p-3 border border-primary">
                             {{ form_start(commentForm) }}
-                            {{ form_widget(commentForm, {'attr': {'style': 'width: 100%'}}) }}
+                            {{ form_widget(commentForm, {'attr': {'style': 'width: 90%'}}) }}
                             <button class="btn btn-primary mt-2">{{ button_label|default('Envoyer') }}</button>
                             {{ form_end(commentForm) }}
                         </div>
@@ -196,7 +199,6 @@
         </div>
         </div>
     </section>
-
 
         {#  <section class="gradient-custom">
             <div class="container my-5 py-5">

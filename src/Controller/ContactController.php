@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Entity\Contact;
-use App\Entity\Offer;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use App\Service\DataService;
@@ -20,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/contact')]
 class   ContactController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -48,11 +47,12 @@ class   ContactController extends AbstractController
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
-        $offer = new Offer();
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Obtenez l'objet Contacts depuis le formulaire
             // Obtenez le nom du champ correct à partir de votre formulaire
+            $session = $request->getSession();
             $offer = $contact->getOffer();
             // Vérifier si la case à cocher isGeneralInquiry est cochée
             $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
@@ -66,7 +66,7 @@ class   ContactController extends AbstractController
             }
             if ($offer !== null) {
                 $offerReference = $offer->getReference();
-                $session = $request->getSession();
+
                 // Obtenir la valeur saisie dans le champ "referenceToAdd" du formulaire
                 $subjectToAdd = $form->get('subject')->getData();
 
@@ -75,9 +75,6 @@ class   ContactController extends AbstractController
 
                 // Mettre à jour l'objet Contacts (propriété subject) avec la référence de l'annonce en début de sujet
                 $contact->setSubject($newSubject);
-
-
-
 
                 //$this->addFlash('success', 'Demande de Contact Envoyé!');
             }
@@ -98,7 +95,8 @@ class   ContactController extends AbstractController
         ]);
     }
     #[Route('/sucess', name: 'app_contact_index_sucess', methods: ['GET'])]
-    public function sucess(){
+    public function sucess():RedirectResponse
+    {
 
         return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
 
@@ -114,12 +112,19 @@ class   ContactController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'app_contact_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Contact $contact, EntityManagerInterface $entityManager,): Response
+    public function edit(Request $request, Contact $contact, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifier si la case à cocher isGeneralInquiry est cochée
+            $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
+
+            // Mettre à jour l'offre associée à null si la case est cochée
+            if ($isGeneralInquiry) {
+                $contact->setOffer(null);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
@@ -165,7 +170,8 @@ class   ContactController extends AbstractController
 
     #[Route("/contact/approve/{id}", name: "app_contact_approve", methods: ["GET","POST"])]
     #[IsGranted("ROLE_USER")]
-    public function approve(string $id,Request $request, EntityManagerInterface $entityManager, ContactRepository $cr): RedirectResponse
+    public function approve(string $id,Request $request, EntityManagerInterface $entityManager,
+                            ContactRepository $cr): RedirectResponse
     {
         // Récupérer le commentaire à partir de son ID
         $contact = $cr->find($id);

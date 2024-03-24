@@ -20,7 +20,9 @@ use ApiPlatform\Metadata\GetCollection;
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
 //#[UniqueEntity(fields: ['reference'])]
 #[UniqueEntity(fields: ['reference'],message: 'Ce titre ou reference existe déjà !')]
-#[ApiResource(operations: [new Get(), new GetCollection()])] //(paginationMaximumItemsPerPage: 4) security:"is_granted('ROLE_ADMIN')"
+
+#[ApiResource(operations: [new Get(), new GetCollection()])]
+
 #[ApiFilter(SearchFilter::class, properties: ['offer_title' => 'partial', 'reference' => 'exact'])]
 #[ApiFilter(RangeFilter::class, properties: ['car.price','car.kilometers','car.year'])]
 //#[ApiFilter(SearchFilter::class, properties: ["id"=>"partial"])]
@@ -40,15 +42,12 @@ class Offer
      * @Assert\Unique(message="La valeur {{ value }}  est déjà dans la base.")
      */
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100)] //Modifier en 10 et refaire entité
     private ?string $reference = null;
 
     #[ORM\Column(length: 100)]
     private ?string $offer_title = null;
 
-    /*#[ORM\OneToOne(inversedBy: 'offer', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Cars $car = null;*/
 
     #[ORM\OneToMany(mappedBy: 'offer', targetEntity: Image::class, orphanRemoval: true,cascade: ["persist", "remove"])]
     private Collection $images;
@@ -106,17 +105,6 @@ class Offer
         return $this;
     }
 
-    /*public function getCarId(): ?Cars
-    {
-        return $this->car;
-    }
-
-    public function setCarId(Cars $car): self
-    {
-        $this->car = $car;
-
-        return $this;
-    }*/
 
     /**
      * @return Collection<int, Image>

@@ -11,20 +11,22 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class ContactShowOfferType extends AbstractType
 {
+    protected static string $classForm = "form-control my-2";
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email :',
                 'attr' => [
-                    'class' => 'form-control my-2',
+                    'class' => self::$classForm,
                     'placeholder' => 'sous forme test@domaine.com',
                 ],
             ])
             ->add('subject', TextType::class,[
                 'label' => 'Sujet : ',
                 'attr' => array(
-                    'class' => 'form-control my-2',
+                    'class' => self::$classForm,
                     'placeholder' => 'Maximum 88 Caractères !',
                     'maxlength' => 88
                 )
@@ -44,7 +46,7 @@ class ContactShowOfferType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'Format 0XXXXXXXXX ou +33XXXXXXXXX !',
                     'maxlength' => 255,
-                    'class' => 'form-control my-2'
+                    'class' => self::$classForm
                 ),
                 'constraints' => new Regex([
                     'pattern' => "/^(\+33|0033|0)(1|2|3|4|6|7|9)[0-9]{8}$/",

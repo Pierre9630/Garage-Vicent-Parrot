@@ -11,3 +11,22 @@
 
     {{ include('contact/_delete_form.html.twig') }}
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let generalInquiryCheckbox = document.getElementById('{{ form.vars.id }}_isGeneralInquiry');
+            let offerField = document.querySelector('.offer-field');
+
+            // Décocher la case par défaut
+            generalInquiryCheckbox.checked = false;
+
+            generalInquiryCheckbox.addEventListener('change', function () {
+                offerField.disabled = generalInquiryCheckbox.checked;
+
+            });
+            console.log(offerField.enabled);
+            offerField.disabled = generalInquiryCheckbox.checked;
+        });
+    </script>
+{% endblock %}

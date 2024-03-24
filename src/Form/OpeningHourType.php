@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OpeningHourType extends AbstractType
 {
-    private $translator;
+    private TranslatorInterface $translator;
 
     public function __construct(TranslatorInterface $translator)
     {
@@ -20,7 +20,7 @@ class OpeningHourType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $jourSemaineTraduction = [
+        /*$jourSemaineTraduction = [
             'Monday' => 'Lundi',
             'Tuesday' => 'Mardi',
             'Wednesday' => 'Mercredi',
@@ -28,7 +28,7 @@ class OpeningHourType extends AbstractType
             'Friday' => 'Vendredi',
             'Saturday' => 'Samedi',
             'Sunday' => 'Dimanche',
-        ];
+        ];*/
         $builder
             ->add('morningOpen')
             ->add('morningClose')
@@ -47,7 +47,7 @@ class OpeningHourType extends AbstractType
                 },
                 'choice_value' =>'dayOfWeek',
             ])
-        ;       
+        ;
         
     }
 

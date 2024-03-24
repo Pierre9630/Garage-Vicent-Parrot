@@ -3,12 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Car;
-use App\Entity\Contact;
 use App\Entity\Offer;
-
 use Doctrine\ORM\EntityRepository;
-
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
 
 class OfferType extends AbstractType
@@ -45,7 +40,8 @@ class OfferType extends AbstractType
                 'class' => Car::class,
                 'attr' => ['class' => 'custom-dropdown'],
                 'choice_label' => function ($car) {
-                    return $car->getReference() . ' - ' . $car->getBrand() . ' ' . $car->getModel() . ' ' . $car->getYear();
+                    return $car->getReference() . ' - ' . $car->getBrand() . ' '
+                        . $car->getModel() . ' ' . $car->getYear();
                 },
                 'multiple' => false,
                 'expanded' => false,

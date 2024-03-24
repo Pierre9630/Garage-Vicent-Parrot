@@ -8,6 +8,7 @@ use App\Form\TestimonialType;
 use App\Repository\TestimonialRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,8 @@ class TestimonialController extends AbstractController
      * @throws \Exception
      */
     #[Route('/new', name: 'app_testimonial_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+                        Recaptcha3Validator $validator): Response
     {
         $testimonial = new Testimonial();
         $form = $this->createForm(TestimonialType::class, $testimonial);
@@ -46,6 +48,11 @@ class TestimonialController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $score = $validator->getLastResponse()->getScore();
+            if($score < 0.5){
+                $this->addFlash('error', 'Le score reCAPTCHA est trop bas. Veuillez réessayer.');
+                return $this->redirectToRoute('app_index');
+            }
             $acceptConditions = $form->get('conditions')->getData();
 
             // Vérifier si la case a été cochée
@@ -136,7 +143,8 @@ class TestimonialController extends AbstractController
 
     #[Route("/approve/{id}", name: "app_testimonial_approve", methods: ["GET","POST"])]
     #[IsGranted("ROLE_USER")]
-    public function approve(string $id,Request $request, EntityManagerInterface $entityManager, TestimonialRepository $tr): RedirectResponse
+    public function approve(string $id,Request $request, EntityManagerInterface $entityManager,
+                            TestimonialRepository $tr): RedirectResponse
     {
 
         $testimonial = $tr->find($id);

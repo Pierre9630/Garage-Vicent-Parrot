@@ -5,7 +5,6 @@ namespace App\Controller;
 
 
 use App\Service\DataService;
-use App\Service\SearchService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

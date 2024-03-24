@@ -35,17 +35,7 @@ class IndexController extends AbstractController
         $searchType = $this->createForm(OfferType::class,$offers);
         $repository = $entityManager->getRepository(Offer::class);
         $searchType->handleRequest($req);
-        if($searchType->isSubmitted() && $searchType->isValid()){
-            //dd($cars);
-            $criteria = $searchType->getData();
-            //$offers = $repository->findBySearch($criteria);
-            //dd($cars);
-        }
-        /*$pagination = $paginator->paginate(
-            $repository->paginateOffers(),
-            $req->query->get('page',1),
-            5
-        );*/
+
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
             //'cars' => $repository->findAll(),

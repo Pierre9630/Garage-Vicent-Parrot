@@ -16,14 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/information')]
 class InformationController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_information_index', methods: ['GET'])]
-    public function index(InformationRepository $informationRepository,  OpeningHourRepository $oh): Response
+    public function index(InformationRepository $informationRepository): Response
     {
         return $this->render('information/index.html.twig', [
             'openingHours' => $this->dataService->getOpeningHours(),
@@ -32,7 +32,8 @@ class InformationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_information_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, InformationRepository $informationRepository, OpeningHourRepository $oh): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+                        InformationRepository $informationRepository): Response
     {
         $information = new Information();
         $form = $this->createForm(InformationType::class, $information);
@@ -42,7 +43,7 @@ class InformationController extends AbstractController
             $active = $form->get('active')->getData();
 
             if ($active) {
-                $information = $informationRepository->setActiveInformation($information);
+                $information = $informationRepository->setActiveInformation($information); // A corriger !
             } else {
                 $information->setActive(false);
             }
@@ -60,7 +61,7 @@ class InformationController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_information_show', methods: ['GET'])]
-    public function show(Information $information, OpeningHourRepository $oh): Response
+    public function show(): Response
     {
         return $this->render('information/show.html.twig', [
             'openingHours' => $this->dataService->getOpeningHours(),
@@ -69,22 +70,23 @@ class InformationController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_information_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Information $information, EntityManagerInterface $entityManager, OpeningHourRepository $oh,InformationRepository $informationRepository): Response
+    public function edit(Request $request, Information $information, EntityManagerInterface $entityManager,
+                        InformationRepository $informationRepository): Response
     {
         $form = $this->createForm(InformationType::class, $information);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $active = $form->get('active')->getData(); // Vérifier si la case active a été cochée
-            $id = $form->get('id')->getData();
-            // Active ou désactive la ligne en fonction de la case cochée
-            if ($active) {
-                $information = $informationRepository->find($id);
-                $informationRepository->setActiveInformation($information);
+            // Récupérer l'objet où la case active a été cochée
+            $active = $informationRepository->findActiveInformation();
 
-            } else {
-                $information->setActive(false);
+            // Désactiver cette case active si elle existe
+            if ($active) {
+                $informationRepository->setActiveInformation($active, false);
             }
+
+            $information->setActive(true);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_information_index', [], Response::HTTP_SEE_OTHER);

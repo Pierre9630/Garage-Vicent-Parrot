@@ -59,6 +59,7 @@
                         "sunday": "Dimanche"
                     }
                     %}
+                </p>
                 <h4>Horaires</h4>
                 {% for openHour in openingHours %}
                     {% if openHour.morningOpen is null and openHour.morningClose is null %}
@@ -76,7 +77,7 @@
                     {% endif %}
                     {% endif %}
                 {% endfor %}
-                </p>
+
             </div>
             <!-- End of the column for the opening hours on the right -->
         </div>

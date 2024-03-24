@@ -75,7 +75,7 @@
 
 
     <div class="container-fluid">
-    <p class="mark">Nos Véhicules à la une</p>
+    <h3 class="mark text-center">Nos Véhicules à la une</h3>
     <div class="row">
         
         {% for offer in offers %}
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="card-body card-vehicle" style="border: 3px solid white; padding: 15px;">
-                            <!-- Ajoutez la bordure et le padding ici -->
+
                             <h3 class="card-title"><a href="{{ path('app_offers_show', {id: offer.id }) }}">{{ offer.offertitle }}</a></h3>
                             <h4 class="card-title">{{ offer.car.brand }} {{ offer.car.model }}</h4>
                             <h5 class="card-kilometers">{{ offer.car.kilometers }} km</h5>
@@ -129,7 +129,7 @@
 {% include 'services/orview.html.twig'%}
 
 <div class="container-fluid">
-    <p class="mark">Avis des clients</p>
+    <h3 class="mark text-center">Avis des clients</h3>
     <div class="row">
         {% for testimonial in testimonials %}
             {% if testimonial.isApproved %}

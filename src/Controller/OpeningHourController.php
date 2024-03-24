@@ -31,25 +31,7 @@ class OpeningHourController extends AbstractController
         ]);
     }
 
-    /*#[Route('/new', name: 'app_opening_hours_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $openingHour = new OpeningHours();
-        $form = $this->createForm(OpeningHoursType::class, $openingHour);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($openingHour);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_opening_hours_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('opening_hours/new.html.twig', [
-            'openingHours' => $openingHour,
-            'form' => $form,
-        ]);
-    }*/
 
     #[Route('/{id}', name: 'app_openinghours_show', methods: ['GET'])]
     public function show(OpeningHour $openingHour): Response
@@ -66,15 +48,7 @@ class OpeningHourController extends AbstractController
     {
         $form = $this->createForm(OpeningHourEditType::class, $openingHour);
         $form->handleRequest($request);
-        /*$WeekDayTrans = [
-            'Monday' => 'Lundi',
-            'Tuesday' => 'Mardi',
-            'Wednesday' => 'Mercredi',
-            'Thursday' => 'Jeudi',
-            'Friday' => 'Vendredi',
-            'Saturday' => 'Samedi',
-            'Sunday' => 'Dimanche',
-        ];*/
+
         
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +62,8 @@ class OpeningHourController extends AbstractController
                 $openingHour->setAfternoonOpen(null);
                 $openingHour->setAfternoonClose(null);
             }
-            $selectedDayOfWeek = $openingHours->getDayOfWeek(); // Obtenir le jour de la semaine sélectionné sous forme de chaîne
+            $selectedDayOfWeek = $openingHours->getDayOfWeek();
+            // Obtenir le jour de la semaine sélectionné sous forme de chaîne
              // Récupérer la valeur de dayOfWeek en anglais
             $englishDay = $openingHour->getDayOfWeek();
 

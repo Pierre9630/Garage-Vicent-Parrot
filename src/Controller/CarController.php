@@ -7,7 +7,6 @@ use App\Form\CarType;
 use App\Repository\CarRepository;
 use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
-use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/cars')]
 class CarController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -68,7 +67,7 @@ class CarController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_cars_show', methods: ['GET'])]
-    public function show(Car $car, OpeningHourRepository $oh): Response
+    public function show(Car $car): Response
     {
         return $this->render('cars/show.html.twig', [
             'car' => $car,

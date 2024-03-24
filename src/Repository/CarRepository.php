@@ -4,15 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Car;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
+
 
 /**
- * @extends ServiceEntityRepository<Car>
- *
  * @method Car|null find($id, $lockMode = null, $lockVersion = null)
  * @method Car|null findOneBy(array $criteria, array $orderBy = null)
  * @method Car[]    findAll()
@@ -44,7 +41,7 @@ class CarRepository extends ServiceEntityRepository
         }
     }
 
-    public function findBySearch(SearchData $searchData): PaginationInterface
+    /*public function findBySearch(SearchData $searchData): PaginationInterface
     {
         $cars = $this->createQueryBuilder('p')
             ->where('p.brand LIKE :brand')
@@ -60,9 +57,10 @@ class CarRepository extends ServiceEntityRepository
             ->orWhere('p.kilometers LIKE :kilometers')
             ->setParameter('kilometers',$searchData['kilometers']);
         return $cars->getQuery()->getResult();
-    }
+    }*/
 
-    public function paginateCars(){
+    public function paginateCars(): Query
+    {
         return $this->createQueryBuilder('a')
             ->orderBy('a.id', 'ASC')
             ->getQuery();

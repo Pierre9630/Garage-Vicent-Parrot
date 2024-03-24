@@ -16,7 +16,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue("CUSTOM")]
-    #[Assert\Uuid]    
+    #[Assert\Uuid]
     #[ORM\Column(type:"uuid", unique:true)]
     #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
     private ?string $id = null;
@@ -42,11 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-
-    public function __construct()
-    {
-
-    }
 
     public function getId(): ?string
     {

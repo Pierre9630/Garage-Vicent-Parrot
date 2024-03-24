@@ -17,7 +17,8 @@ class ServiceType extends AbstractType
     {
         $builder
             ->add('name',TextType::class,['label' => 'Nom du Service','attr' => ['class' => 'custom-input']])
-            ->add('description',TextareaType::class,['label' => 'Description du Service','attr' => ['class' => 'custom-textarea']])
+            ->add('description',TextareaType::class,['label' => 'Description du Service',
+                'attr' => ['class' => 'custom-textarea']])
             //->add('createdAt')
             //->add('modifiedAt')
             ->add('published',CheckboxType::class,[ 'label' => 'Publier?','attr' => ['class' => 'custom-checkbox']])
