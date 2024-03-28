@@ -88,7 +88,7 @@ class SearchController extends AbstractController
         $maxPrice = $request->query->get('maxPrice');
         $maxKilometers = $request->query->get('maxKilometers');
 
-        // Utilisez l'entité $offer pour effectuer la recherche en fonction des filtres
+        // Utiliser l'entité $offer pour effectuer la recherche en fonction des filtres
         $searchResults = $this->entityManager->getRepository(Offers::class)
             ->findByFilters($keyword, $minPrice, $maxPrice, $maxKilometers);
 

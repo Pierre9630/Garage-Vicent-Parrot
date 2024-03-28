@@ -76,7 +76,7 @@
                                                     <p class="small mb-0 word-break-auto">
                                                         {{ comment.message }}
                                                     </p>
-                                                    {# Bouton d'approbation de demande de contact  #}
+                                                    {# Contact request approval button Bouton d'approbation de demande de contact  #}
                                                     <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_contact_approve', {'id': comment.id}) }}">Approuver</a>
 
                                                     <form method="post" action="{{ path('app_contact_delete', {'id': comment.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cette demande?');">
@@ -107,7 +107,7 @@
                                                     <p class="small mb-0 word-break-auto">
                                                         {{ testimonial.message }}
                                                     </p>
-                                                    {# Pour Approuver un avis #}
+                                                    {# For approve a advise Pour Approuver un avis #}
                                                     <a class="btn btn-primary btn-sm mt-2" href="{{ path('app_testimonial_approve', {'id': testimonial.id}) }}">Approuver</a>
                                                     {# Pour Refuser et effacer un avis #}
                                                     <form method="post" action="{{ path('app_testimonial_delete', {'id': testimonial.id}) }}" onsubmit="return confirm('Voulez vous vraiment supprimer cet Avis?');">

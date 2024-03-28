@@ -16,9 +16,9 @@ class AdminFixtures extends Fixture
         'vparrot@orange.fr'
     ];
     const PASS = [
-        'Test44!',
-        'Test44!',
-        'Vincent68@'
+        'Test*@44450!',
+        'Test*@44450!',
+        'Vincent31000@'
     ];
     const FIRSTNAMES = [
         'Pierre',

@@ -77,10 +77,10 @@ class InformationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer l'objet où la case active a été cochée
+            // Get active object Récupérer l'objet où la case active a été cochée
             $active = $informationRepository->findActiveInformation();
 
-            // Désactiver cette case active si elle existe
+            // Uncheck active case Désactiver cette case active si elle existe
             if ($active) {
                 $informationRepository->setActiveInformation($active, false);
             }

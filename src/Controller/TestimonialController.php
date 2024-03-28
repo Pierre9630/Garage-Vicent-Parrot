@@ -55,7 +55,7 @@ class TestimonialController extends AbstractController
             }
             $acceptConditions = $form->get('conditions')->getData();
 
-            // Vérifier si la case a été cochée
+            // Is the field acceptconditions checked ? Vérifier si la case a été cochée
             if ($acceptConditions === true) {
                 // Case cochée
                 $session = $request->getSession();
@@ -127,7 +127,7 @@ class TestimonialController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
-                // Si c'est un utilisateur, retour à la page précédente s'il existe
+                // If user connected go to previous page Si c'est un utilisateur, retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
                     $entityManager->remove($testimonial);
@@ -149,15 +149,15 @@ class TestimonialController extends AbstractController
 
         $testimonial = $tr->find($id);
         $referer = $request->headers->get('referer');
-        // Vérifier si le commentaire existe
+        // Checked if comment exist Vérifier si le commentaire existe
         if (!$testimonial) {
             throw $this->createNotFoundException('Le commentaire n\'existe pas.');
         }
 
-        // Marquer le commentaire comme approuvé
+        // Set comment approved Marquer le commentaire comme approuvé
         $testimonial->setIsApproved(true);
 
-        // Enregistrer les modifications dans la base de données
+        // Save modifications in db Enregistrer les modifications dans la base de données
         $entityManager->flush();
 
         return new RedirectResponse($referer);

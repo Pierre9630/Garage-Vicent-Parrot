@@ -62,7 +62,7 @@ class Car
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\OneToOne(mappedBy: 'car', cascade: ['persist', 'remove'])]
-    private ?Offer $offer = null; // si ça merde enlever ça
+    private ?Offer $offer = null; // unset if not used si ça merde enlever ça
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modifiedAt = null;

@@ -28,9 +28,9 @@ class CarController extends AbstractController
     {
 
         $pagination = $paginator->paginate(
-            $carsRepository->paginateCars(),
+            $carsRepository->paginateCars(), //Pagniate Cars méthod Pagniation des voitures
             $request->query->get('page',1),
-            15 //nombre voitures par page
+            15 // Number of cars per page nombre voitures par page
         );
         return $this->render('cars/index.html.twig', [
             'cars' => $pagination,
@@ -49,11 +49,11 @@ class CarController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $session = $request->getSession();
-            $car->setReference($carRepository->generateReference());
-            $car->setCreatedAt(new \DateTimeImmutable());
+            $car->setReference($carRepository->generateReference()); //Use generate Reference Method Générer une référence
+            $car->setCreatedAt(new \DateTimeImmutable()); // Created At in the db Crée le
             $entityManager->persist($car);
             $entityManager->flush();
-            $session->getFlashBag()->add('success', 'Voiture Crée');
+            $session->getFlashBag()->add('success', 'Voiture Crée'); //FlashBag when finished Envoi du sucess dans la falsh bag
 
             return $this->redirectToRoute('app_cars_index', [], Response::HTTP_SEE_OTHER);
         }

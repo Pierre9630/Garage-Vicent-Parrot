@@ -58,7 +58,7 @@ class CarType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => ['class' => 'custom-input word-break-auto'],
-                'required' => false, // Rend le champ non obligatoire
+                'required' => false, // Non-obligatory field Rend le champ non obligatoire
             ])
             ->add('typeFuel',TextType::class, [
                 'label' => 'Energie',

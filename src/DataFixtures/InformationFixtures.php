@@ -13,8 +13,8 @@ class InformationFixtures extends Fixture
 
 
             $service = new Information();
-            $service->setCorpPhone('0240689887');
-            $service->setAddress('30 rue des nantais');
+            $service->setCorpPhone('0540689887');
+            $service->setAddress('30 rue des toulousains');
             $service->setCity('Nantes');
             $service->setCorpEmail('garagevparrot@orange.fr');
             $service->setActive(true);

@@ -50,11 +50,11 @@ class OfferController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager,
                         PictureService $pictureService): Response
     {
-        // On instancie la classe Offer
+        //  Instanciate class Offer Instancier la classe Offer
         $offer = new Offer();
         $offerRepository = $entityManager->getRepository(Offer::class);
         $form = $this->createForm(OfferType::class, $offer);
-        $form->handleRequest($request); // Gèrer de la requete à partir du form
+        $form->handleRequest($request); // Handle form request Gèrer de la requete à partir du form
         
         if ($form->isSubmitted() && $form->isValid()) {
             $car = $offer->getCar();
@@ -67,13 +67,13 @@ class OfferController extends AbstractController
             $offer->setReference($offerRepository->generateReference());
 
             $offer->setCreatedAt(new \DateTimeImmutable());
-            //On rajoute les images
+            //Add images On rajoute les images
             $images = $form->get('images')->getData();
             foreach ($images as $image) {
-                //définir le dossier de destination
+                // Define target folder définir le dossier de destination
                 $folder = 'cars';
 
-                //Appel du Service PictureService.php
+                // Call PictureService Appel du Service PictureService.php
                 $file = $pictureService->add($image, $folder);
 
                 $img = new Image();

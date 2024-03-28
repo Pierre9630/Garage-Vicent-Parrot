@@ -35,7 +35,7 @@ export default function CardCar(props) {
                             <strong>Nombre Portes:</strong> {car.doors}
                         </div>
                         <div>
-                            <strong>Energie:</strong> {car.fuel}
+                            <strong>Energie:</strong> {car.typeFuel}
                         </div>
                         <div>
                             <strong>Kilomètres:</strong> {car.kilometers}km

@@ -21,7 +21,7 @@ class OfferType extends AbstractType
     {
         $builder
             /*->add('reference', TextType::class, [
-                'disabled' => true, // Rend le champ en lecture seule
+                'disabled' => true, // Make field read-only Rend le champ en lecture seule
             ])*/
             ->add('offer_title', TextType::class,[
                 'label' => "Titre",

@@ -23,26 +23,26 @@ class PictureService
      */
     public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 1024, ?int $height = 768): string
     {
-        // On donne un nouveau nom à l'image
+        // Set a new name to image On donne un nouveau nom à l'image
         $fichier = md5(uniqid(rand(), true)) . '.webp';
 
-        // On récupère les infos de l'image
+        // Get image metadata size On récupère les infos de l'image
         $picture_infos = getimagesize($picture);
 
         if($picture_infos === false){
             throw new ('Format d\'image incorrect');
         }
 
-        // Déplacez l'image originale vers le dossier de destination
+        // Move original image in the target folder Déplacer l'image originale vers le dossier de destination
         $path = $this->params->get('images_directory') . $folder;
 
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }
 
-        // Déplacez l'image originale
+        // Move original image Déplacez l'image originale
         $picture->move($path, $fichier);
-
+        //return file Retourner le fichier
         return $fichier;
     }
 
@@ -51,7 +51,7 @@ class PictureService
     {
         if($file !== 'default.webp'){
             $success = false;
-            //Obtenir le path du dossier défini dans services.yaml
+            // Get folder path (in services.yml) Obtenir le path du dossier défini dans services.yaml
             $path = $this->params->get('images_directory') . $folder;
 
             $original = $path . '/' . $file;

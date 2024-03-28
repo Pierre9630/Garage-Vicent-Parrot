@@ -21,11 +21,11 @@ class CheckUserActivityListener
     {
         $user = $this->tokenStorage->getToken()->getUser();
 
-        // Vérifier le temps d'inactivité de l'utilisateur ici
-        // Si l'utilisateur est inactif depuis un certain temps, déconnectez-le
+        // Check user inactivity Vérifier le temps d'inactivité de l'utilisateur ici
+        // If user is inactive disconnect it Si l'utilisateur est inactif depuis un certain temps, déconnectez-le
 
-        // Exemple : déconnexion si l'utilisateur est inactif depuis 30 minutes
-        $inactiveTime = 30 * 60; // 30 minutes en secondes
+        // Disconnect user if inactive since 30 min déconnexion si l'utilisateur est inactif depuis 30 minutes
+        $inactiveTime = 30 * 60; // 30 min in seconds 30 minutes en secondes
         if ($user instanceof LastActivityInterface && $user->getLastActivity() < (time() - $inactiveTime)) {
             $this->authorizationChecker->denyAccess();
         }

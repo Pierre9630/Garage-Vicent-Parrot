@@ -30,9 +30,9 @@ class   ContactController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $pagination = $paginator->paginate(
-            $contactRepository->paginateContacts(),
+            $contactRepository->paginateContacts(), // Paginate Contacts request Paginer les demandes de contacts
             $request->query->get('page',1),
-            15 //nombre voitures par page
+            15 // Number contact per page nombre contacts par page
         );
         return $this->render('contact/index.html.twig', [
             'contacts' => $pagination,
@@ -50,14 +50,13 @@ class   ContactController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Obtenez l'objet Contacts depuis le formulaire
-            // Obtenez le nom du champ correct à partir de votre formulaire
+            // Get form contact object Obtenir l'objet Contacts depuis le formulaire
             $session = $request->getSession();
             $offer = $contact->getOffer();
-            // Vérifier si la case à cocher isGeneralInquiry est cochée
+            // If the field generalinquiry is checked Vérifier si la case à cocher isGeneralInquiry est cochée
             $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
 
-            // Mettre à jour l'offre associée à null si la case est cochée
+            // Make related proprety offer at null if generalinquirt is checked Mettre à jour l'offre associée à null si la case est cochée
             if ($isGeneralInquiry) {
                 $contact->setOffer(null);
             }
@@ -67,18 +66,18 @@ class   ContactController extends AbstractController
             if ($offer !== null) {
                 $offerReference = $offer->getReference();
 
-                // Obtenir la valeur saisie dans le champ "referenceToAdd" du formulaire
+                // Get the value entered in field "subject" Obtenir la valeur saisie dans le champ "subject" du formulaire
                 $subjectToAdd = $form->get('subject')->getData();
 
-                // Fusionner la référence de l'objet Offers avec la valeur du formulaire ContactsType
+                // Merge reference and subject Fusionner la référence de l'objet Offers avec la valeur du formulaire ContactsType
                 $newSubject = $offerReference . ' ' . $subjectToAdd;
 
-                // Mettre à jour l'objet Contacts (propriété subject) avec la référence de l'annonce en début de sujet
+                // Update object Contact with associated reference Mettre à jour l'objet Contacts (propriété subject) avec la référence de l'annonce en début de sujet
                 $contact->setSubject($newSubject);
 
                 //$this->addFlash('success', 'Demande de Contact Envoyé!');
             }
-            // Enregistrer les modifications en base de données
+            // Save the modifications in db Enregistrer les modifications en base de données
             $contact->setCreatedAt(new \DateTimeImmutable());
             $entityManager->persist($contact);
             $entityManager->flush();
@@ -118,10 +117,10 @@ class   ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Vérifier si la case à cocher isGeneralInquiry est cochée
+            // Check if generalinquiry is checked Vérifier si la case à cocher isGeneralInquiry est cochée
             $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
 
-            // Mettre à jour l'offre associée à null si la case est cochée
+            // Update related proprety offer at null if generalinquirt is checked  Mettre à jour l'offre associée à null si la case est cochée
             if ($isGeneralInquiry) {
                 $contact->setOffer(null);
             }
@@ -154,7 +153,7 @@ class   ContactController extends AbstractController
 
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
-                // Si c'est un utilisateur, retour à la page précédente s'il existe
+                // If a user is connected return to previous page  Si c'est un utilisateur, retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
                     $entityManager->remove($contact);
@@ -173,21 +172,21 @@ class   ContactController extends AbstractController
     public function approve(string $id,Request $request, EntityManagerInterface $entityManager,
                             ContactRepository $cr): RedirectResponse
     {
-        // Récupérer le commentaire à partir de son ID
+        // Get comment ID Récupérer le commentaire à partir de son ID
         $contact = $cr->find($id);
         $referer = $request->headers->get('referer');
-        // Vérifier si le commentaire existe
+        // Check if comment exist Vérifier si le commentaire existe
         if (!$contact) {
             throw $this->createNotFoundException('Le commentaire n\'existe pas.');
         }
 
-        // Marquer le commentaire comme approuvé
+        // Set comment approved Marquer le commentaire comme approuvé
         $contact->setIsApproved(true);
 
-        // Enregistrer les modifications dans la base de données
+        // Save modifications in db Enregistrer les modifications dans la base de données
         $entityManager->flush();
 
-        // Rediriger l'utilisateur vers la page précédente ou un autre page
+        // Redirect user/visitor to previous page Rediriger l'utilisateur/visiteur vers la page précédente ou un autre page
         return new RedirectResponse($referer);
     }
 

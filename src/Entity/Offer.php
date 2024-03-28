@@ -42,7 +42,7 @@ class Offer
      * @Assert\Unique(message="La valeur {{ value }}  est déjà dans la base.")
      */
 
-    #[ORM\Column(length: 100)] //Modifier en 10 et refaire entité
+    #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
     #[ORM\Column(length: 100)]

@@ -25,7 +25,7 @@ class OfferEditType extends AbstractType
 
         $builder
             ->add('reference', TextType::class, [
-                'disabled' => true, // Rend le champ en lecture seule
+                'disabled' => true, // Make field Read-only Rend le champ en lecture seule
                 'attr' => ['class' => 'custom-input'],
             ])
             ->add('isExposed', ChoiceType::class, [

@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,17 +19,17 @@
                 <td>{{ image.id }}</td>
                 <td>{{ image.name }}</td>
                 <td>
-                    <a href="{{ path('app_images_show', {'id': image.id}) }}">show</a>
-                    <a href="{{ path('app_images_edit', {'id': image.id}) }}">edit</a>
+                    <a href="{{ path('app_images_show', {'id': image.id}) }}">voir</a>
+                    <a href="{{ path('app_images_edit', {'id': image.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Pas d'images</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_images_new') }}">Create new</a>
+    <a href="{{ path('app_images_new') }}">Créer une nouvelle Image</a>
 {% endblock %}

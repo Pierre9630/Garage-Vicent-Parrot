@@ -23,17 +23,17 @@ class InformationRepository extends ServiceEntityRepository
 
     public function setActiveInformation(Information $information, bool $active): Information
     {
-        // Désactiver toutes les informations actives
+        // Unset all active informations Désactiver toutes les informations actives
         $this->createQueryBuilder('i')
             ->update(Information::class, 'i')
             ->set('i.active', ':active')
-            ->where('i.active = :true')// Condition pour ne mettre à jour que les informations actives
-            ->setParameter('active', false)// La nouvelle valeur du champ 'active' (false pour désactiver)
-            ->setParameter('true', true) // La valeur actuelle du champ 'active' pour la condition WHERE
+            ->where('i.active = :true')// Condition to update only active information pour ne mettre à jour que les informations actives
+            ->setParameter('active', false)// New value for active field La nouvelle valeur du champ 'active' (false pour désactiver)
+            ->setParameter('true', true) // Actual value of active field for WHERE condition La valeur actuelle du champ 'active' pour la condition WHERE
             ->getQuery()
             ->execute();
 
-        // Activer ou désactiver la ligne spécifiée
+        // Activate or deastivate specified line Activer ou désactiver la ligne spécifiée
         $information->setActive($active);
         $this->_em->persist($information);
         $this->_em->flush();

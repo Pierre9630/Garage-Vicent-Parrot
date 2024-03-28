@@ -29,18 +29,18 @@ class OfferRepository extends ServiceEntityRepository
     public function generateReference(): string
     {
         $today = new \DateTimeImmutable();
-        $month = $today->format('m'); // Mois sous forme de deux chiffres
-        $day = $today->format('d');   // Jour sous forme de deux chiffres
-        $year = $today->format('y'); // Année sous forme de deux chiffres
+        $month = $today->format('m'); // Month on 2 digit form Mois sous forme de deux chiffres
+        $day = $today->format('d');   // Day on 2 digit form Jour sous forme de deux chiffres
+        $year = $today->format('y'); // Year on 2 digit form Année sous forme de deux chiffres
 
-        // Récupérez le dernier numéro de référence pour la journée actuelle
+        // Get latest reference number Récupérez le dernier numéro de référence pour la journée actuelle
         $lastReference = $this->getLastReferenceForToday();
         //dump($today);
         //dd($lastReference);
-        // Incrémentation du dernier numéro de référence
+        // Increment latest reference number Incrémentation du dernier numéro de référence
         $incrementedReference = str_pad($lastReference + 1, 3, '0', STR_PAD_LEFT);
         //dd($incrementedReference);
-        // Créer la référence complète
+        // Create complete reference Créer la référence complète
         return "A{$year}{$month}{$day}{$incrementedReference}";
     }
 
@@ -50,17 +50,17 @@ class OfferRepository extends ServiceEntityRepository
     public function generateReferenceForDate(\DateTimeImmutable $date): string
     {
         //$today = new \DateTimeImmutable();
-        $month = $date->format('m'); // Mois sous forme de deux chiffres
-        $day = $date->format('d');   // Jour sous forme de deux chiffres
+        $month = $date->format('m'); // Month on 2 digit form Mois sous forme de deux chiffres
+        $day = $date->format('d');   // Day on 2 digit form Jour sous forme de deux chiffres
 
-        // Récupérez le dernier numéro de référence pour la journée actuelle
+        // Get latest reference number for today Récupérez le dernier numéro de référence pour la journée actuelle
         $lastReference = $this->getLastReferenceForToday();
         //dump($date);
 
-        // Incrémentation du dernier numéro de référence
+        // Increment latest reference number Incrémentation du dernier numéro de référence
         $incrementedReference = str_pad($lastReference + 1, 3, '0', STR_PAD_LEFT);
 
-        // Créez la référence complète
+        // Create complete reference Créez la référence complète
         return "A{$month}{$day}{$incrementedReference}";
     }
     /**
@@ -86,7 +86,7 @@ class OfferRepository extends ServiceEntityRepository
             return (int)$lastReference;
         }
 
-        // S'il n'y a pas de référence pour aujourd'hui retourne 0.
+        // If not reference for today return 0 S'il n'y a pas de référence pour aujourd'hui retourne 0.
         return 0;
     }
     public function paginateOffers(){
