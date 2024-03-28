@@ -27,25 +27,25 @@ export default function FormCar(props) {
   
   const handlePriceChange = (event, newValue) => {
     
-    // formulaire controllé 
+    // controlled component  formulaire controllé
     //console.log(newValue); 
-    // on modifie le state 
+    // editing the filter on modifie le state de filter
     setFilter({...filters, priceRange: newValue}); 
   };
   
   const handleKilometersChange = (event, newValue) => {
     
-    // formulaire controllé 
+    // controlled component formulaire controllé
     //console.log(newValue); 
-    // on modifie le state 
+    // editing the filter on modifie le state
     setFilter({...filters, kilometersRange: newValue}); 
   }; 
 
   const handleYearChange = (event, newValue) => {
     
-    // formulaire controllé 
+    // controlled component formulaire controllé
     console.log(newValue); 
-    // on modifie le state 
+    // editing the filter on modifie le state
     setFilter({...filters, yearRange: newValue}); 
   }; 
 
@@ -57,7 +57,7 @@ export default function FormCar(props) {
 
   const handleReferenceChange = (event) => {
     
-    const newValue = event.target.value; // nouvelle valeur du champ de texte
+    const newValue = event.target.value; // textfield new value nouvelle valeur du champ de texte
     setFilter({ ...filters, reference: newValue });
   }; 
 

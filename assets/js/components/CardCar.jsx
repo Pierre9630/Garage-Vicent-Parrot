@@ -14,9 +14,9 @@ import ImageCarousel from './ImageCarousel';
 
 //Carousel.propTypes = {children: PropTypes.node};
 export default function CardCar(props) {
-    const { offer } = props; // L'offre est dans la prop 'offer'
-    const car = offer.car; // Accéder aux propriétés de la voiture dans l'offre
-    const images = offer.images; // Accéder aux images de l'offre par la relation
+    const { offer } = props; // offer is in the prop offerL'offre est dans la prop 'offer'
+    const car = offer.car; // access to car proprety Accéder aux propriétés de la voiture dans l'offre
+    const images = offer.images; // access offer image Accéder aux images de l'offre par la relation
 
     return (
         <div>
