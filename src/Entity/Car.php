@@ -19,8 +19,6 @@ class Car
     #[Assert\Uuid]
     #[ORM\Column(type:"uuid", unique:true)]
     #[ORM\CustomIdGenerator("doctrine.uuid_generator")]
-
-
     private ?string $id = null;
 
     #[ORM\Column(length: 100)]

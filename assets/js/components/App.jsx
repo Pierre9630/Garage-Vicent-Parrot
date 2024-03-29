@@ -24,7 +24,7 @@ export default function App() {
     if (filters.reference.trim() !== "") {
       referenceParam = `&reference=${filters.reference}`;
     }
-    //Create newSearchString with destructuration
+    // Create newSearchString with destructuration
     // Création d'un nouvel objet newSearchString en utilisant l'opérateur de déstructuration pour copier les propriétés de l'objet searchString
     const newSearchString = {
       ...searchString,

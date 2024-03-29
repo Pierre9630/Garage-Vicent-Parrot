@@ -83,7 +83,7 @@ export default function FormCar(props) {
         valueLabelDisplay="auto"
         aria-labelledby="price-range-slider"
         step={1000}
-        min={500}
+        min={0}
         max={maxprice}
       />
       <Typography id="price-range-slider" gutterBottom>

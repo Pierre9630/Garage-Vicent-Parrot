@@ -5,10 +5,6 @@
         <div class="row">
             <!-- Column for the copyright -->
             <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                <p>
-                    © 2023 Copyright Garage V.Parrot
-                </p>
-
                 <a href="https://www.facebook.com" target="_blank" aria-label="lien facebook de GarageVParrot">
                     <i class="fab fa-facebook"></i>
                 </a>
@@ -20,20 +16,23 @@
                 <a href="https://www.twitter.com" target="_blank" aria-label="lien twitter de GarageVParrot">
                     <i class="fab fa-twitter"></i>
                 </a>
+                <p>
+                    © 2023 Copyright Garage V.Parrot
+                </p>
             </div>
 
 
             <!-- Column for "Contactez-nous" in the middle -->
             <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                <h4>Contactez-nous</h4>
+                <h4>Nous écrire</h4>
                 {% if information is not null %}
                     <p>
                         <a href="{{ path('app_contact_new') }}" class="btn btn-dark text-white font-weight-bold">Contactez-nous</a>
 
                     </p>
                     <p>
-                        Vous pouvez également nous envoyer un mail à l'adresse suivante {{ information.corpemail ?? '' }}
-                        ou par téléphone au {{ information.corpphone ?? '' }}.
+                        Vous pouvez également nous envoyer un <a href="mailto:{{ information.corpemail ?? '' }}">mail</a>
+                        ou nous contacter au <a href="tel:{{ information.corpphone ?? '' }}"> {{ information.corpphone ?? '' }}</a>.
                     </p>
                     <p>
                         {{ information.address ?? '' }}, {{ information.city ?? '' }}

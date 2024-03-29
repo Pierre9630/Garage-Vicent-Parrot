@@ -12,7 +12,8 @@
                 <th>Email</th>
                 <th>Sujet</th>
                 <th>Message</th>
-                <th>Réf Annonce</th>
+                <th>Réf annonce</th>
+                <th>Lien annonce</th>
                 <th>Crée le</th>
                 <th>actions</th>
             </tr>
@@ -25,11 +26,12 @@
                 <td>{{ contact.subject }}</td>
                 <td>{{ contact.message }}</td>
                 <td>{{ contact.offer.reference | default('') }}</td>
+                <td>{% if contact.offer is not null %}<a href="{{ path('app_offers_show', {id: contact.offer.id }) }}">{{ contact.offer.offertitle }}</a>{% endif %}</td>
                 <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_contact_show', {'id': contact.id}) }}"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{ path('app_contact_edit', {'id': contact.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-                    {{ include('contact/_delete_form.html.twig') }}
+                    <span class="delete-icon">{{ include('contact/_delete_form.html.twig') }}</span>
                 </td>
             </tr>
         {% else %}

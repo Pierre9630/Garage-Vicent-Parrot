@@ -5,16 +5,17 @@
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     {#  <a href="#" class="navbar-brand">Brand<b>Name</b></a>#}
-    <img src="/assets/Images/vparrot.png" width="120px" height="40px" alt="Logo Vincent parrot" >
+    <a href={{ path('app_index')}}><img src="/assets/Images/vparrot.png" width="120px" height="40px" alt="Logo Vincent parrot" ></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Collection of nav links, forms, and other content for toggling -->
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <div class="navbar-nav mr-auto"> <!-- beginning elements of navbar Les éléments au début de la navbar -->
-            <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>
+            {#  <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>#}
             <a href="{{ path('app_search_index') }}" class="nav-item nav-link">Véhicules d'occasion</a>
             <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link">Votre Avis</a>
+            <a href="{{ path('app_contact_new') }}" class="nav-item nav-link">Contact</a>
             {% if app.user %}
             <a href="{{ path('app_offers_index') }}">Annonces</a>
             <a href="{{ path('app_cars_index') }}">Voitures</a>

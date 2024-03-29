@@ -56,7 +56,7 @@
 
 
 <div class="example-wrapper">
-    <div class="intro-container">
+    <div class="intro-container" aria-label="Image Garage Vincent Parrot">
         <div class="intro-message">
             <h1>Garage Vincent Parrot !</h1>
             <p>Bienvenue sur notre site ! Découvrez notre sélection de véhicules de qualité.</p>
@@ -90,7 +90,7 @@
                                         {% if loop.first %}
                                             <div class="carousel-item active">
                                                 <img class="d-block w-100" src="{{ asset('assets/uploadscars/'~ image.name)
-                                                |imagine_filter('reduc')}}" alt="slide">
+                                                |imagine_filter('reduc')}}" alt="{{ offer.offertitle }}">
                                             </div>
                                         {% else %}
                                             <div class="carousel-item">
@@ -132,7 +132,7 @@
 <div class="container-fluid">
     <h3 class="mark text-center">Avis des clients</h3>
     <div class="row">
-        {% for testimonial in testimonials %}
+        {% for testimonial in testimonials|slice(-4) %} {# Show 4 latest approved testimonials Afficher les 4 derniers avis validés #}
             {% if testimonial.isApproved %}
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card">

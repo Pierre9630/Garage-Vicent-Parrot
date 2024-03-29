@@ -8,9 +8,19 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ contact.id }}</td>
+                <th>Réference Annonce Véhicule</th>
+                <td>{{ contact.offer.reference | default('') }}</td>
             </tr>
+            <tr>
+                <th>Titre Annonce Véhicule</th>
+                <td>{{ contact.offer.offertitle | default('') }}</td>
+            </tr>
+            {% if contact.offer is not null %}
+            <tr>
+                <th>Lien Annonce</th>
+                <td><a href="{{ path('app_offers_show', {id: contact.offer.id }) }}">{{ contact.offer.offertitle }}</a></td>
+            </tr>
+            {%endif %}
             <tr>
                 <th>Email</th>
                 <td>{{ contact.email }}</td>

@@ -111,6 +111,8 @@ class OfferController extends AbstractController
             // Associer le commentaire à l'offre en cours de visualisation
             $session = $request->getSession();
             $comment->setOffer($offer);
+            //Set offer reference on comment subject Mettre reference annonce entre crochets
+            $comment->setSubject('['.$offer->getReference().']'. ' '.$comment->getSubject());
             $comment->setCreatedAt(new \DateTimeImmutable());
 
             // Valider et persister le commentaire dans la base de données
@@ -179,7 +181,7 @@ class OfferController extends AbstractController
 
                 $entityManager->flush();
 
-                $this->addFlash("success", "Annonce modifiée avec succès !");
+                //$this->addFlash("success", "Annonce modifiée avec succès !");
                 return $this->redirectToRoute('app_offers_index', [], Response::HTTP_SEE_OTHER);
             }
 

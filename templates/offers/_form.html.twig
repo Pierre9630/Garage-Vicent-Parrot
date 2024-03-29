@@ -1,9 +1,9 @@
 {#  {{ form_start(form, {'attr': {'class': 'd-none'}}) }}#}
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    {# Ajoutez une vérification pour afficher les erreurs avec la classe CSS personnalisée #}
-    {% if form_errors(form.images) %}
+    {# Ajouter une vérification pour afficher les erreurs avec la classe CSS personnalisée #}
+    {#  {% if form_errors(form.images) %}
         <p class="error-message">{{ form_errors(form.images) }}</p>
-    {% endif %}
+    {% endif %}#}
     <button class="btn"><i class="fa-solid fa-floppy-disk"></i>{#  {{ button_label|default('Save') }}#}</button>
 {{ form_end(form) }}
