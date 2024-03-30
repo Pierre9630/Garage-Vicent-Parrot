@@ -35,8 +35,6 @@ class AdminController extends AbstractController
     public function index(
         UserRepository $userRepository,
         Request $request,
-        EntityManagerInterface $entityManager,
-        OpeningHourRepository $or,
         PaginatorInterface $paginator,
         ContactRepository $cr,
         TestimonialRepository $tr
@@ -100,18 +98,15 @@ class AdminController extends AbstractController
         );
         return $this->render('admin/index.html.twig', [
             'users' => $pagination,
-            //'cars'=>$repository->findAll(),
             'contacts'=>$cr->findNotApproved(),
             'testimonials'=>$tr->findNotApproved(),
-            /*'openingHourForm' => $openingHourForm->createView(),
-            'serviceForm' => $serviceForm->createView(),
-            'informationForm' => $informationForm->createView(),*/
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);
     }
     #[Route('/new', name: 'app_admin_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher, OpeningHourRepository $oh, InformationRepository $ir ): Response
+    public function new(Request $request, UserRepository $userRepository,UserPasswordHasherInterface
+    $userPasswordHasher ): Response
     {
         $admin = new User();
         $form = $this->createForm(AdminType::class, $admin);
@@ -150,7 +145,8 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $admin, UserRepository $userRepository,UserPasswordHasherInterface $userPasswordHasher): Response
+    public function edit(Request $request, User $admin, UserRepository $userRepository,
+                         UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $admin);
         $form->handleRequest($request);
@@ -187,9 +183,9 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard', name: 'app_admin_dash', methods: ['POST'])]
-    public function dash(Request $request, User $admin, InformationRepository $ir, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function dash( UserRepository $userRepository): Response
     {
-        $repository = $entityManager->getRepository(Offer::class);
+        //$repository = $entityManager->getRepository(Offer::class);
 
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),

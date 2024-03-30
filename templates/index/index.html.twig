@@ -53,25 +53,13 @@
 
 </style>
 
-
-
-<div class="example-wrapper">
+<div class="wrapper">
     <div class="intro-container" aria-label="Image Garage Vincent Parrot">
         <div class="intro-message">
             <h1>Garage Vincent Parrot !</h1>
             <p>Bienvenue sur notre site ! Découvrez notre sélection de véhicules de qualité.</p>
         </div>
     </div>
-    {#<div class="container">
-        <h1 class="display-4 text-center mt-5">Garage Vincent Parrot</h1>
-        <p class="lead text-center">Bienvenue sur notre site ! Découvrez notre sélection de véhicules de qualité.</p>
-
-        <div class="row mt-5">
-            <div class="col-lg-6 offset-lg-3">
-                <img src="" alt="Image de présentation" class="img-fluid rounded">
-            </div>
-        </div>
-    </div>#}
     <div class="margin-divider"></div>
 
 
@@ -144,7 +132,7 @@
                             </strong>
                         </p>
                         <p class="card-text">Posté par {{ testimonial.name }} {{ testimonial.lastname }}</p>
-                        <p class="card-text">Date de publication : {{ testimonial.createdAt|date('d/m/Y H:i') }}</p>
+                        <p class="card-text">Date et Heure de publication : {{ testimonial.createdAt|date('d/m/Y H:i') }}</p>
                     </div>
                 </div>
             </div>

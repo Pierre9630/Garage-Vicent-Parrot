@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Testimonial;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,6 +37,12 @@ class TestimonialRepository extends ServiceEntityRepository
             ->setParameter('approved', 1)
             ->getQuery()
             ->getResult();
+    }
+    public function paginateTestimonials(): Query
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'ASC')
+            ->getQuery();
     }
 //    /**
 //     * @return Testimonials[] Returns an array of Testimonials objects

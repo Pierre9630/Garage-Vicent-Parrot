@@ -9,6 +9,7 @@ use App\Repository\TestimonialRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,10 +27,17 @@ class TestimonialController extends AbstractController
         $this->dataService = $dataService;
     }
     #[Route('/', name: 'app_testimonial_index', methods: ['GET'])]
-    public function index(TestimonialRepository $testimonialRepository): Response
+    public function index(Request $request,TestimonialRepository $testimonialRepository,
+                          PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $testimonialRepository->paginateTestimonials(),
+            $request->query->get('page',1),
+            15 //Number of paginated items
+        );
         return $this->render('testimonial/index.html.twig', [
-            'testimonials' => $testimonialRepository->findAll(),
+            //'testimonials' => $testimonialRepository->findAll(),
+            'testimonials' => $pagination,
             'openingHours' => $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation(),
         ]);

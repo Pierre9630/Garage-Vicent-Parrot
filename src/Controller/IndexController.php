@@ -4,13 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\OfferType;
-use App\Repository\InformationRepository;
-use App\Repository\OpeningHourRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\TestimonialRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class IndexController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -31,7 +28,7 @@ class IndexController extends AbstractController
         ServiceRepository $sr, TestimonialRepository $tr): Response
     {
 
-        $offers = new Offer();        
+        $offers = new Offer();
         $searchType = $this->createForm(OfferType::class,$offers);
         $repository = $entityManager->getRepository(Offer::class);
         $searchType->handleRequest($req);
@@ -48,29 +45,4 @@ class IndexController extends AbstractController
         ]);
 
     }
-
-
-
-/*#[Route('/contact', name: 'app_img')]
-    public function contact(Request $req, SluggerInterface $sl,EntityManagerInterface $entityManager){
-        $contact = new Contact();
-        $searchType = $this->createForm(ContactType::class,$contact);
-        $repository = $entityManager->getRepository(Contact::class);
-        $searchType->handleRequest($req);
-        if($searchType->isSubmitted() && $searchType->isValid()){
-            //dd($cars);
-            $criteria = $searchType->getData();
-            $contact = $repository->findBySearch($criteria);
-            //dd($cars);
-        }
-
-
-        return $this->render('index/comment.html.twig',[
-
-            'contact' => $contact,
-            'form' => $searchType->createView(),
-        ]);
-    }*/
-
-
 }

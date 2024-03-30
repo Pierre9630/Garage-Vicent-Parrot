@@ -154,7 +154,8 @@ class OfferController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'app_offers_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Offer $offer, EntityManagerInterface $entityManager, PictureService $pictureService, OpeningHourRepository $oh, ContactRepository $cr): Response
+    public function edit(Request $request, Offer $offer, EntityManagerInterface $entityManager,
+                         PictureService $pictureService, OpeningHourRepository $oh, ContactRepository $cr): Response
     {
         $offer= $entityManager->getRepository(Offer::class)->find($offer->getId());
         if (!$offer) {

@@ -72,7 +72,8 @@ class   ContactController extends AbstractController
                 // Merge reference and subject Fusionner la référence de l'objet Offers avec la valeur du formulaire ContactsType
                 $newSubject = '['. $offerReference . ']' . ' ' . $subjectToAdd;
 
-                // Update object Contact with associated reference Mettre à jour l'objet Contacts (propriété subject) avec la référence de l'annonce en début de sujet
+                // Update object Contact with associated reference Mettre à jour l'objet Contacts (propriété subject)
+                // avec la référence de l'annonce en début de sujet
                 $contact->setSubject($newSubject);
 
                 //$this->addFlash('success', 'Demande de Contact Envoyé!');

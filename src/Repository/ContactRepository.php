@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Contact;
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Collection;
 
@@ -56,7 +57,8 @@ class ContactRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function paginateContacts(){
+    public function paginateContacts(): Query
+    {
         return $this->createQueryBuilder('a')
             ->orderBy('a.id', 'ASC')
             ->getQuery();

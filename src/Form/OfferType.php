@@ -67,6 +67,7 @@ class OfferType extends AbstractType
                             'minHeight'=> 768,
                             'maxHeight'=> 2160,
                             'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum',
+                            'maxHeightMessage' => 'L\'image doit faire {{ max_height }} pixels de large au maximum',
                             'mimeTypes' => ['image/gif', 'image/png', 'image/webp', 'image/jpeg'],
                             'mimeTypesMessage' => 'Veuillez télécharger une image au format TIFF, PNG, WebP ou JPEG.',
                         ])

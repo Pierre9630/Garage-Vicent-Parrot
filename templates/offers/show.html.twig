@@ -129,7 +129,7 @@
                                                 <p class="mb-1">
                                                     {{ comment.email }} <span class="small">{{ comment.createdAt | date('Y-m-d H:i') }}</span>
                                                 </p>
-                                                <a href="#Form"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>
+                                                {# <a href="#Form"><i class="fas fa-reply fa-xs"></i><span class="small"> Répondre</span></a>#}
                                             </div>
                                             <p class="small mb-0">
                                                 {{ comment.message }}
@@ -256,6 +256,7 @@
                         <div class="aff-com">
 
                     </div></section>#}
+    <div class="d-flex justify-content-md-start align-items-center mt-3 mx-2">
     {% set userRole = "ROLE_USER" %}
     {% if app.user %}
     {% if userRole in app.user.roles %}
@@ -266,9 +267,10 @@
 
     {% endif %}
     {% endif %}
-    <div class="row">
-        <div class="col-md-12">
-            <a href="javascript:void(0);" onclick="goBack();"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="javascript:void(0);" onclick="goBack();"><i class="fa-solid fa-arrow-left"></i></a>
+            </div>
         </div>
     </div>
     <script>
