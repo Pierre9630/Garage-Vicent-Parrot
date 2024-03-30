@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-//import Button from '@mui/material/Button';
 import Button from 'react-bootstrap/Button';
 
 export default function FormCar(props) {

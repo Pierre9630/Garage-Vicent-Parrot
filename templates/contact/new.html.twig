@@ -9,7 +9,7 @@
     {% if is_granted('ROLE_USER') %}
     <a href="{{ path('app_contact_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     {% else%}
-    <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+    <a aria-label="Page Précédente" href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     {% endif %}
 {% endblock %}
 {% block javascripts %}

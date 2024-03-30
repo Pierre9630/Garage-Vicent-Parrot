@@ -30,6 +30,26 @@
 body {
     background-color: lightgray;
 }
+.nav-link-search {
+    font-weight: bold;
+    color: #0000cc  !important;
+}
+.nav-link-advise {
+    font-weight: bold;
+    color: #008150 !important;
+}
+.nav-link-contact {
+    font-weight: bold;
+    color: #ce332a  !important;
+}
+.nav-link-connect {
+    font-weight: bold;
+    color: #0055aa  !important;
+}
+.nav-link-disconnect {
+    font-weight: bold;
+    color: darkred  !important;
+}
 form {
     width: clamp(320px,60vw,768px); /* Ajuster la taille du formulaire en fonction de l'espace disponible*/
     margin-inline: auto;
