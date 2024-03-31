@@ -3,7 +3,7 @@
         padding-top: 7px;
     }
 </style>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-xxl navbar-light bg-light">
     {#  <a href="#" class="navbar-brand">Brand<b>Name</b></a>#}
     <a href={{ path('app_index')}}><img src="/assets/Images/vparrot.png" width="120px" height="40px" alt="Logo Vincent parrot" ></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -13,9 +13,9 @@
     <div id="navbarCollapse" class="collapse navbar-collapse">
         <div class="navbar-nav mr-auto"> <!-- beginning elements of navbar Les éléments au début de la navbar -->
             {#  <a href="{{ path('app_index') }}" class="nav-item nav-link">Accueil</a>#}
-            <a href="{{ path('app_search_index') }}" class="nav-item nav-link nav-link-search" aria-label="Page Véhicules d'occasion">Véhicules d'occasion</a>
-            <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link nav-link-advise " aria-label="Page pour laisser son avis">Votre Avis</a>
-            <a href="{{ path('app_contact_new') }}" class="nav-item nav-link nav-link-contact" aria-label="Page pour contacter le garage">Contact</a>
+            <a href="{{ path('app_search_index') }}" class="nav-item nav-link nav-link-search ms-2" aria-label="Page Véhicules d'occasion">Véhicules d'occasion</a>
+            <a href="{{ path('app_testimonial_new') }}" class="nav-item nav-link nav-link-advise ms-2 " aria-label="Page pour laisser son avis">Votre Avis</a>
+            <a href="{{ path('app_contact_new') }}" class="nav-item nav-link nav-link-contact ms-2" aria-label="Page pour contacter le garage">Contact</a>
             {% if app.user %}
             <a href="{{ path('app_offers_index') }}">Annonces</a>
             <a href="{{ path('app_cars_index') }}">Voitures</a>
@@ -35,7 +35,7 @@
                 <a class="user" href="{% if is_granted('ROLE_ADMIN') %}{{ path("app_admin_index") }}{% else %}{{ path("app_user_index") }}{% endif %}">{{ app.user.lastname }}</a>
             </div>
             <div class="nav-item">
-                <a class="nav-link nav-link-disconnect" href="{{ path("app_logout") }}">Déconnexion</a>
+                <a class="nav-link nav-link-disconnect ml-auto " href="{{ path("app_logout") }}">Déconnexion</a>
             </div>
         {% else %}
             <div class="nav-item">

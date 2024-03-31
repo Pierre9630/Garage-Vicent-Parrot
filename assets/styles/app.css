@@ -6,7 +6,7 @@
         position: relative;
     }
 }
-@media (max-width: 1368px) {
+@media (max-width: 1850px) {
     .table thead {
         display: none;
     }
@@ -19,13 +19,23 @@
     .table td {
         display: block;
         text-align: left;
+        position: relative;
+        margin: 2rem;
+        border: 1px solid #ddd;
+
     }
 
     .table td:before {
         content: attr(data-label);
         float: left;
         font-weight: bold;
+        position: absolute;
+        top: -30px;
+        left: 0;
     }
+}
+.btn-primary {
+    background-color: #006ee5 !important;
 }
 body {
     background-color: lightgray;

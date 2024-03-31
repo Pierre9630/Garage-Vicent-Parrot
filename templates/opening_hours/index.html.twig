@@ -20,12 +20,36 @@
         <tbody>
         {% for openingHour in openingHours %}
             <tr>
-                {#<td>{{ openingHour.id }}</td>#}
-                <td>{{ openingHour.morningOpen ? openingHour.morningOpen|date('H:i:s') : '' }}</td>
-                <td>{{ openingHour.morningClose ? openingHour.morningClose|date('H:i:s') : '' }}</td>
-                <td>{{ openingHour.afternoonOpen ? openingHour.afternoonOpen|date('H:i:s') : '' }}</td>
-                <td>{{ openingHour.afternoonClose ? openingHour.afternoonClose|date('H:i:s') : '' }}</td>
-                <td>{{ openingHour.dayOfWeek | trans }}</td>
+                <td data-label="Horaires matin">
+                {% if openingHour.morningOpen is not null %}
+                    {{ openingHour.morningOpen|date('H:i:s') }}
+                {% else %}
+                    Fermé
+                {% endif %}
+                </td>
+                <td>
+                    {% if openingHour.morningClose is not null %}
+                        {{ openingHour.morningClose|date('H:i:s') }}
+                    {% else %}
+                        Fermé
+                    {% endif %}
+                </td>
+                <td data-label="Horaires après-midi">
+                    {% if openingHour.afternoonOpen is not null %}
+                        {{ openingHour.afternoonOpen|date('H:i:s') }}
+                    {% else %}
+                        Fermé
+                    {% endif %}
+                </td>
+                <td>
+                    {% if openingHour.afternoonClose is not null %}
+                        {{ openingHour.afternoonClose|date('H:i:s') }}
+                    {% else %}
+                        Fermé
+                    {% endif %}
+                </td>
+
+                <td data-label="Jour Concerné">{{ openingHour.dayOfWeek | trans }}</td>
                 <td>
                     <a href="{{ path('app_openinghours_show', {'id': openingHour.id}) }}"><i class="fa-solid fa-eye"></i></a>
                     <a href="{{ path('app_openinghours_edit', {'id': openingHour.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
