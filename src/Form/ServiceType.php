@@ -24,6 +24,7 @@ class ServiceType extends AbstractType
             ->add('published',CheckboxType::class,[ 'label' => 'Publier?',
                 'attr' => ['class' => 'custom-checkbox'],
                 'required' => false,
+                'data' => false,
             ])
         ;
     }
