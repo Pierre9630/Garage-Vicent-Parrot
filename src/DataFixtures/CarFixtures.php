@@ -70,7 +70,7 @@ class CarFixtures extends Fixture
                 'price' => 35000,
                 'description' => 'Pack Sport',
                 'typeFuel' => 'Essence',
-                'reference' => 'A230101004',
+                'reference' => 'A230101005',
             ],
         ];
 
