@@ -20,12 +20,12 @@
         <tbody>
         {% for car in cars %}
             <tr class="word-break-auto">
-                <td>{{ car.brand }}</td>
-                <td>{{ car.model }}</td>
-                <td>{{ car.year }}</td>
-                <td>{{ car.kilometers }}</td>
-                <td>{{ car.price }}</td>
-                <td>{{ car.description }}</td>
+                <td data-label="Marque">{{ car.brand }}</td>
+                <td data-label="Modèle">{{ car.model }}</td>
+                <td data-label="Année">{{ car.year }}</td>
+                <td data-label="Kilomètres">{{ car.kilometers }}</td>
+                <td data-label="Prix">{{ car.price }}</td>
+                <td data-label="Description">{{ car.description }}</td>
                 <td>
                     <div class="d-flex justify-content-md-2 align-items-center">
                     <a href="{{ path('app_cars_show', {'id': car.id}) }}"><i class="fa-solid fa-eye"></i></a>

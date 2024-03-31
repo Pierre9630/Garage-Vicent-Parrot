@@ -21,12 +21,12 @@
         <tbody>
         {% for testimonial in testimonials %}
             <tr class="word-break-auto">
-                <td>{{ testimonial.name }}</td>
-                <td>{{ testimonial.lastname }}</td>
-                <td>{{ testimonial.note }}</td>
-                <td>{{ testimonial.message }}</td>
-                <td>{% if testimonial.isApproved is same as true %}Oui{% else %} Non{% endif %}</td>
-                <td>{{ testimonial.createdAt ? testimonial.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td data-label="Nom">{{ testimonial.name }}</td>
+                <td data-label="Prenom">{{ testimonial.lastname }}</td>
+                <td data-label="Note">{{ testimonial.note }}</td>
+                <td data-label="Message">{{ testimonial.message }}</td>
+                <td data-label="Avis approuvé ?">{% if testimonial.isApproved is same as true %}Oui{% else %} Non{% endif %}</td>
+                <td data-label="Crée le">{{ testimonial.createdAt ? testimonial.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <div class="d-flex justify-content-md-2 align-items-center">
                     <a href="{{ path('app_testimonial_show', {'id': testimonial.id}) }}"><i class="fa-solid fa-eye" aria-hidden="false"></i></a>

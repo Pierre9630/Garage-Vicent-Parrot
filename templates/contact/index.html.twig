@@ -23,13 +23,13 @@
         {% for contact in contacts %}
             <tr class="word-break-auto">
                 {#  <td>{{ contact.id }}</td>#}
-                <td>{{ contact.email }}</td>
-                <td>{{ contact.subject }}</td>
-                <td>{{ contact.message }}</td>
-                <td>{{ contact.offer.reference | default('') }}</td>
-                <td>{% if contact.offer is not null %}<a href="{{ path('app_offers_show', {id: contact.offer.id }) }}">{{ contact.offer.offertitle }}</a>{% endif %}</td>
-                <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{% if contact.isApproved is same as true %}Oui{% else %} Non{% endif %}</td>
+                <td data-label="Email">{{ contact.email }}</td>
+                <td data-label="Sujet">{{ contact.subject }}</td>
+                <td data-label="Message">{{ contact.message }}</td>
+                <td data-label="Réference annonce">{{ contact.offer.reference | default('') }}</td>
+                <td data-label="Lien annonce">{% if contact.offer is not null %}<a href="{{ path('app_offers_show', {id: contact.offer.id }) }}">{{ contact.offer.offertitle }}</a>{% endif %}</td>
+                <td data-label="Crée le ">{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td data-label="Demande approuvé ?">{% if contact.isApproved is same as true %}Oui{% else %} Non{% endif %}</td>
                 <td>
                     <div class="d-flex justify-content-md-2 align-items-center">
                     <a href="{{ path('app_contact_show', {'id': contact.id}) }}"><i class="fa-solid fa-eye"></i></a>

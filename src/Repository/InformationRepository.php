@@ -27,9 +27,13 @@ class InformationRepository extends ServiceEntityRepository
         $this->createQueryBuilder('i')
             ->update(Information::class, 'i')
             ->set('i.active', ':active')
-            ->where('i.active = :true')// Condition to update only active information pour ne mettre à jour que les informations actives
-            ->setParameter('active', false)// New value for active field La nouvelle valeur du champ 'active' (false pour désactiver)
-            ->setParameter('true', true) // Actual value of active field for WHERE condition La valeur actuelle du champ 'active' pour la condition WHERE
+            // Condition to update only active information pour ne mettre à jour que les informations actives
+            ->where('i.active = :true')
+            // New value for active field La nouvelle valeur du champ 'active' (false pour désactiver)
+            ->setParameter('active', false)
+            // Actual value of active field for WHERE condition La valeur actuelle du champ 'active' pour la condition
+            // WHERE
+            ->setParameter('true', true)
             ->getQuery()
             ->execute();
 
@@ -46,28 +50,4 @@ class InformationRepository extends ServiceEntityRepository
         return $this->findOneBy(['active' => true]);
     }
 
-//    /**
-//     * @return Information[] Returns an array of Information objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Information
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

@@ -18,10 +18,10 @@
         <tbody>
         {% for offer in offers %}
             <tr class="word-break-auto">
-                <td>{{ offer.reference }}</td>
-                <td>{{ offer.offerTitle }}</td>
-                <td>{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td data-label="Reference Annonce">{{ offer.reference }}</td>
+                <td data-label="Titre de l'annonce">{{ offer.offerTitle }}</td>
+                <td data-label="Crée le">{{ offer.createdAt ? offer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td data-label="Modifié le">{{ offer.modifiedAt ? offer.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <div class="d-flex justify-content-md-2 align-items-center">
                         <a href="{{ path('app_offers_show', {'id': offer.id}) }}"><i class="fa-solid fa-eye"></i></a>
