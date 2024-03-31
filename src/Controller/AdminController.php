@@ -40,57 +40,7 @@ class AdminController extends AbstractController
         TestimonialRepository $tr
     ): Response {
 
-        /*$openingHour = new OpeningHour();
-        $service = new Service();
-        $information = new Information();
 
-        // Création des formulaires associés
-        $openingHourForm = $this->createForm(OpeningHourEditAdminType::class, $openingHour);
-        $serviceForm = $this->createForm(ServiceType::class, $service);
-        $informationForm = $this->createForm(InformationType::class, $information);*/
-
-        /*// Traitement du formulaire OpeningHour
-        $openingHourForm->handleRequest($request);*/
-        /*if ($openingHourForm->isSubmitted() && $openingHourForm->isValid()) {
-            $openingHourData = $openingHourForm->getData();
-
-            // Vérifiez si un objet OpeningHour similaire existe déjà
-            $existingOpeningHour = $or->findOneBy(['dayOfWeek' => $openingHourData->getDayOfWeek()]);
-
-            if ($existingOpeningHour) {
-                // Si oui, mettez à jour l'objet existant au lieu de créer un nouveau
-                $existingOpeningHour->setMorningOpen($openingHourData->getMorningOpen());
-                $existingOpeningHour->setMorningClose($openingHourData->getMorningClose());
-                $existingOpeningHour->setAfternoonOpen($openingHourData->getAfternoonOpen());
-                $existingOpeningHour->setAfternoonClose($openingHourData->getAfternoonClose());
-                $entityManager->persist($existingOpeningHour);
-            } else {
-                // Si non, persistez le nouvel objet OpeningHour
-                $entityManager->persist($openingHourData);
-            }
-
-            $entityManager->flush();
-            // Ajoutez d'autres actions ou redirection si nécessaire
-        }
-
-        // Traitement du formulaire Service
-        $serviceForm->handleRequest($request);
-        if ($serviceForm->isSubmitted() && $serviceForm->isValid()) {
-            //$entityManager = $this->getDoctrine()->getManager();
-            $service->setCreatedAt(new \DateTimeImmutable());
-            $entityManager->persist($service);
-            $entityManager->flush();
-            // Ajoutez d'autres actions ou redirection si nécessaire
-        }
-
-        // Traitement du formulaire Information
-        $informationForm->handleRequest($request);
-        if ($informationForm->isSubmitted() && $informationForm->isValid()) {
-            //$entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($information);
-            $entityManager->flush();
-            // Ajoutez d'autres actions ou redirection si nécessaire
-        }*/
         $pagination = $paginator->paginate(
             $userRepository->paginateUsers(),
             $request->query->get('page',1),

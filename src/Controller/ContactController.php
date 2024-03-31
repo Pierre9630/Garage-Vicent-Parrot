@@ -56,7 +56,8 @@ class   ContactController extends AbstractController
             // If the field generalinquiry is checked Vérifier si la case à cocher isGeneralInquiry est cochée
             $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
 
-            // Make related proprety offer at null if generalinquirt is checked Mettre à jour l'offre associée à null si la case est cochée
+            // Make related proprety offer at null if generalinquirt is checked Mettre à jour l'offre associée
+            // à null si la case est cochée
             if ($isGeneralInquiry) {
                 $contact->setOffer(null);
             }
@@ -66,10 +67,12 @@ class   ContactController extends AbstractController
             if ($offer !== null) {
                 $offerReference = $offer->getReference();
 
-                // Get the value entered in field "subject" Obtenir la valeur saisie dans le champ "subject" du formulaire
+                // Get the value entered in field "subject"
+                // Obtenir la valeur saisie dans le champ "subject" du formulaire
                 $subjectToAdd = $form->get('subject')->getData();
 
-                // Merge reference and subject Fusionner la référence de l'objet Offers avec la valeur du formulaire ContactsType
+                // Merge reference and subject Fusionner la référence
+                // de l'objet Offers avec la valeur du formulaire ContactsType
                 $newSubject = '['. $offerReference . ']' . ' ' . $subjectToAdd;
 
                 // Update object Contact with associated reference Mettre à jour l'objet Contacts (propriété subject)
@@ -121,7 +124,8 @@ class   ContactController extends AbstractController
             // Check if generalinquiry is checked Vérifier si la case à cocher isGeneralInquiry est cochée
             $isGeneralInquiry = $form->get('isGeneralInquiry')->getData();
 
-            // Update related proprety offer at null if generalinquirt is checked  Mettre à jour l'offre associée à null si la case est cochée
+            // Update related proprety offer at null if generalinquirt is checked
+            //  Mettre à jour l'offre associée à null si la case est cochée
             if ($isGeneralInquiry) {
                 $contact->setOffer(null);
             }
@@ -154,7 +158,8 @@ class   ContactController extends AbstractController
 
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
-                // If a user is connected return to previous page  Si c'est un utilisateur, retour à la page précédente s'il existe
+                // If a user is connected return to previous page
+                // Si c'est un utilisateur, retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
                     $entityManager->remove($contact);
@@ -187,7 +192,8 @@ class   ContactController extends AbstractController
         // Save modifications in db Enregistrer les modifications dans la base de données
         $entityManager->flush();
 
-        // Redirect user/visitor to previous page Rediriger l'utilisateur/visiteur vers la page précédente ou un autre page
+        // Redirect user/visitor to previous page Rediriger
+        // l'utilisateur/visiteur vers la page précédente ou un autre page
         return new RedirectResponse($referer);
     }
 

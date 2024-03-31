@@ -60,7 +60,7 @@ npm install
 npm run dev
 ```
 
-## Deinstaller les dépendences (et des dépendences associées) pouvant empêcher le bon fonctionnement local
+## Deinstaller les dépendences (et des dépendences associées) pouvant empêcher le bon fonctionnement local (à utiliser en cas de problème liés à ces dépedences)
 
 ```bash
 composer remove nelmio/cors-bundle --update-with-dependencies

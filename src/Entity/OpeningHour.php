@@ -41,7 +41,7 @@ class OpeningHour
     private ?bool $nullifyMorning = null;
 
     #[ORM\Column]
-    private ?bool $nullifyAfternoon = null;   
+    private ?bool $nullifyAfternoon = null;
 
     public function __toString()
     {

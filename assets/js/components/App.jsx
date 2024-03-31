@@ -39,8 +39,9 @@ export default function App() {
     // Build API URI and fetch
     // Construction de l'URI de requête en utilisant les propriétés de l'objet newSearchString
     let response = await fetch(`${newSearchString.link}${newSearchString.offer_title}${newSearchString.reference}${newSearchString.price}${newSearchString.kilometers}${newSearchString.year}`);
-    // Get json data from response
-    // Récupération des données au format JSON à partir de la réponse
+    // Get json data from response (wait the promise and assign it to the data variable)
+    // Récupération des données au format JSON à partir de la réponse (attendre la promesse et l'assigner à la varia
+    // ble data)
     let data = await response.json();
     // Update listCar state
     // Mise à jour de l'état de la variable listCar avec la propriété "hydra:member" des données

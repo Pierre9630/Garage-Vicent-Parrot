@@ -37,7 +37,7 @@ class Image
         $this->name = $name;
 
         return $this;
-    }    
+    }
 
     public function getOffer(): ?Offer
     {
