@@ -21,7 +21,10 @@ class ServiceType extends AbstractType
                 'attr' => ['class' => 'custom-textarea']])
             //->add('createdAt')
             //->add('modifiedAt')
-            ->add('published',CheckboxType::class,[ 'label' => 'Publier?','attr' => ['class' => 'custom-checkbox']])
+            ->add('published',CheckboxType::class,[ 'label' => 'Publier?',
+                'attr' => ['class' => 'custom-checkbox'],
+                'required' => false,
+            ])
         ;
     }
 

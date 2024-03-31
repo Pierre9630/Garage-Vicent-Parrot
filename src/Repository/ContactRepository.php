@@ -44,7 +44,8 @@ class ContactRepository extends ServiceEntityRepository
     public function findApprovedComments(Offer $offer)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.isApproved = :approved')
+            //->andWhere('c.isApproved = :approved')
+            ->where('c.isApproved = :approved')
             ->setParameter('approved', 1)
             ->getQuery()
             ->getResult();

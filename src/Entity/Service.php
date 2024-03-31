@@ -29,8 +29,8 @@ class Service
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $modifiedAt = null;
 
-    #[ORM\Column]
-    private ?bool $published = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $published = false;
 
     public function getId(): ?string
     {
