@@ -43,6 +43,22 @@ class TestimonialController extends AbstractController
         ]);
     }
 
+    #[Route('/all', name: 'all_testimonials',methods: ['GET'])]
+    public function all(Request $request, PaginatorInterface $paginator,
+                        TestimonialRepository $testimonialRepository): Response
+    {
+        $pagination = $paginator->paginate(
+            $testimonialRepository->paginateTestimonials(),
+            $request->query->get('page',1),
+            16 //Number of paginated advice Nombre d'avis paginées
+        );
+        return $this->render('testimonial/show_all.html.twig', [
+            'testimonials' => $pagination,
+            'openingHours' => $this->dataService->getOpeningHours(),
+            'information' => $this->dataService->getActiveInformation(),
+        ]);
+    }
+
     /**
      * @throws \Exception
      */

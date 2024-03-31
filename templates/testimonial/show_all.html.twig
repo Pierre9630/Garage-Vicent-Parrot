@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les avis - VParrot{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <style>
+        .margin-divider {
+            height: 30px; /* Hauteur de la marge */
+            background: transparent; /* Couleur de fond transparente */
+        }
+    </style>
+    <div class="margin-divider"></div>
+    <div class="container-fluid">
+        <h3 class="mark text-center">Tous les avis des clients</h3>
+        <div class="row">
+            {% for testimonial in testimonials %}
+                {% if testimonial.isApproved %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text lead">{{ testimonial.message }}</p>
+                                <p class="card-text">
+                                    <strong>Note :
+                                        <span class="badge badge-primary">{{ testimonial.note }}/5</span>
+                                    </strong>
+                                </p>
+                                <p class="card-text">Posté par {{ testimonial.name }} {{ testimonial.lastname }}</p>
+                                <p class="card-text">Date et Heure de publication : {{ testimonial.createdAt|date('d/m/Y H:i') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if knp_pagination_render(testimonials) %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {{ knp_pagination_render(testimonials, '@KnpPaginator/Pagination/sliding.html.twig') }}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+    <a href="{{ path('app_index') }}"><i class="fa-solid fa-arrow-left" aria-hidden="false"></i><span class="sr-only">Retour</span></a>
+{% endblock %}

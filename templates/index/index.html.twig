@@ -38,7 +38,7 @@
         .intro-message p {
             font-size: 18px; /* Taille de la police du texte */
         }
-         .margin-divider {
+        .margin-divider {
             height: 30px; /* Hauteur de la marge */
             background: transparent; /* Couleur de fond transparente */
         }
@@ -139,7 +139,12 @@
             {% endif %}
         {% endfor %}
     </div>
+    <div class="text-center">
+        <a href="{{ path('all_testimonials') }}" class="btn btn-dark">Voir tous les avis</a>
+    </div>
 </div>
+
+    <div class="margin-divider"></div>
 
 {% include 'index/iframe.html.twig' %}
 

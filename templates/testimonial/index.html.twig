@@ -43,7 +43,7 @@
         </tbody>
     </table>
     {%  if knp_pagination_render(testimonials) %}
-        <label>Changer de Page : </label>{{ knp_pagination_render(contacts)}}<br>
+        <label>Changer de Page : </label>{{ knp_pagination_render(testimonials)}}<br>
     {% endif %}
     <a href="{{ path('app_testimonial_new') }}"><i class="fa-solid fa-plus" aria-hidden="false"></i><span class="sr-only">Nouveau</span></a>
 {% endblock %}
