@@ -105,7 +105,8 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
+        "liip/functional-test-bundle": "*",
+        "phpunit/phpunit": "*",
         "symfony/browser-kit": "6.3.*",
         "symfony/css-selector": "6.3.*",
         "symfony/debug-bundle": "6.3.*",

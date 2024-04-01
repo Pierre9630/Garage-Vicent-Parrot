@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Car
 {
-    #[ORM\Id]    
+    #[ORM\Id]
     #[ORM\GeneratedValue("CUSTOM")]
     #[Assert\Uuid]
     #[ORM\Column(type:"uuid", unique:true)]

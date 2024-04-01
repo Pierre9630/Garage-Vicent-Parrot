@@ -22,7 +22,8 @@ class CarFixtures extends Fixture
                 'price' => 200000,
                 'description' => 'Pack clim et toute option',
                 'typeFuel' => 'Essence',
-                'reference' => 'A230101001',
+                'reference' =>'C230101001',
+                'reference_for_date' => '23-01-01-001',
             ],
             [
                 'brand' => 'Honda',
@@ -34,7 +35,8 @@ class CarFixtures extends Fixture
                 'price' => 18000,
                 'description' => '',
                 'typeFuel' => 'Essence',
-                'reference' => 'A230101002',
+                'reference' =>'C230101002',
+                'reference_for_date' => '23-01-01-002',
             ],
             [
                 'brand' => 'Ford',
@@ -46,7 +48,8 @@ class CarFixtures extends Fixture
                 'price' => 17000,
                 'description' => 'Spacieuse et confortable, options bluetooth et gps',
                 'typeFuel' => 'Diesel',
-                'reference' => 'A230101003',
+                'reference' =>'C230101003',
+                'reference_for_date' => '23-01-01-003',
             ],
             [
                 'brand' => 'Renault',
@@ -58,7 +61,8 @@ class CarFixtures extends Fixture
                 'price' => 17000,
                 'description' => 'Spacieuse et confortable, options bluetooth et gps',
                 'typeFuel' => 'Diesel',
-                'reference' => 'A230101004',
+                'reference' =>'C230101004',
+                'reference_for_date' => '23-01-01-004',
             ],
             [
                 'brand' => 'BMW',
@@ -70,7 +74,8 @@ class CarFixtures extends Fixture
                 'price' => 35000,
                 'description' => 'Pack Sport',
                 'typeFuel' => 'Essence',
-                'reference' => 'A230101005',
+                'reference' => 'C230101005',
+                'reference_for_date' => '23-01-01-005',
             ],
         ];
 
@@ -85,13 +90,15 @@ class CarFixtures extends Fixture
             $car->setPrice($carData['price']);
             $car->setDescription($carData['description']);
             $car->setTypeFuel($carData['typeFuel']);
+            $car->setReference($carData['reference']);
 
-            $referenceParts = explode('-', $carData['reference']);
-            $year = substr($referenceParts[2], 0, 2);
-            $month = substr($referenceParts[2], 2, 2);
-            $day = substr($referenceParts[2], 4, 2);
+            $referenceParts = explode('-', $carData['reference_for_date']);
+            $year = substr($referenceParts[0], 0, 2);
+            $month = substr($referenceParts[1], 0, 2);
+            $day = substr($referenceParts[2], 0, 2);
 
-            $createdAt = new \DateTimeImmutable("20$year-$month-$day");
+            $createdAt = new \DateTimeImmutable("C20$year$month$day");
+
             $car->setCreatedAt($createdAt);
 
             $manager->persist($car);
