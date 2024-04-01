@@ -1,18 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import images from "core-js/internals/array-iteration";
-import * as PropTypes from "prop-types";
-//import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import ImageCarousel from './ImageCarousel';
 
-{/*function Carousel(props) {
-    return null;
-}*/}
 
-//Carousel.propTypes = {children: PropTypes.node};
 export default function CardCar(props) {
     const { offer } = props; // offer is in the prop offer L'offre est dans la prop 'offer'
     const car = offer.car; // access to car proprety Accéder aux propriétés de la voiture dans l'offre

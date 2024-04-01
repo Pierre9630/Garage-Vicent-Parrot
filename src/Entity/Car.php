@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Car
 {
-    #[ORM\Id]    
+    #[ORM\Id]
     #[ORM\GeneratedValue("CUSTOM")]
     #[Assert\Uuid]
     #[ORM\Column(type:"uuid", unique:true)]
@@ -47,11 +47,6 @@ class Car
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    /*#[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Images::class, orphanRemoval: true,cascade: ["persist", "remove"])]
-    private Collection $images;*/
-
-    /*#[ORM\OneToMany(mappedBy: 'cars_id', targetEntity: Contact::class, orphanRemoval: true,cascade: ["persist", "remove"])]
-    private Collection $contact_id;*/
 
     #[ORM\Column(length: 50)]
     private ?string $typeFuel = null;
@@ -69,13 +64,11 @@ class Car
     #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
-    /*#[ORM\Column(length: 100)]
-    private ?string $reference = null;*/
+
 
     public function __construct()
     {
-        //$this->images = new ArrayCollection();
-        //$this->contact_id = new ArrayCollection();
+
     }
 
     public function getId(): ?string
@@ -176,13 +169,12 @@ class Car
         $this->description = $description;
 
         return $this;
-    }    
+    }
     
     public function __toString() : string
     {
-        //return $this->brand;
         return $this->getReference();
-    }    
+    }
 
     public function getTypeFuel(): ?string
     {
@@ -219,18 +211,6 @@ class Car
 
         return $this;
     }
-
-    /*public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(string $reference): static
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }*/
 
     public function getOffer(): ?Offer
     {
