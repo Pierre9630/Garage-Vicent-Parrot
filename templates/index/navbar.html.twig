@@ -35,11 +35,11 @@
                 <a class="user" href="{% if is_granted('ROLE_ADMIN') %}{{ path("app_admin_index") }}{% else %}{{ path("app_user_index") }}{% endif %}">{{ app.user.lastname }}</a>
             </div>
             <div class="nav-item">
-                <a class="nav-link nav-link-disconnect ml-auto " href="{{ path("app_logout") }}">Déconnexion</a>
+                <a class="nav-link nav-link-disconnect mr-3 " href="{{ path("app_logout") }}">Déconnexion</a>
             </div>
         {% else %}
             <div class="nav-item">
-                <a class="nav-link nav-link-connect" href="{{ path("app_login") }}">Connexion</a>
+                <a class="nav-link nav-link-connect mr3-l" href="{{ path("app_login") }}">Connexion</a>
             </div>
         {% endif %}
     </div>

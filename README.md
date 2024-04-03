@@ -75,6 +75,13 @@ Pour lancer le serveur Symfony en mode détaché :
 symfony serve -d
 ```
 
+### Compatibilité Moteurs Bases de données
+
+SQLITE non compatible
+```bash
+
+```
+
 L'application devrait être accessible à l'adresse [http://localhost:8000](http://localhost:8000).
 Lien du Trello https://trello.com/b/r7JBZ2B1/garage-vparrot
 ---

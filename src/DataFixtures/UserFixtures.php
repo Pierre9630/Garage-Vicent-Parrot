@@ -18,10 +18,10 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         'tifainedupond@orange.fr',
     ];
     const Pass = [
-        'Kevin',
-        'Clara!',
-        'Marie!',
-        'Tifaine!',
+        'Kevin310958!',
+        'Clara!41548/',
+        'Marie881411!',
+        'Tifaine5485!',
     ];
     const FirstNames = [
         'Lacombe',

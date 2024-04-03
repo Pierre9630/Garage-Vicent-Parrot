@@ -83,7 +83,7 @@
                                         {% else %}
                                             <div class="carousel-item">
                                                 <img class="d-block w-100" src="{{ asset('assets/uploadscars/'~ image.name)
-                                                |imagine_filter('reduc')}}" alt="slide">
+                                                |imagine_filter('reduc')}}" alt="{{ offer.offertitle }}">
                                             </div>
                                         {% endif %}
                                     {% endfor %}
