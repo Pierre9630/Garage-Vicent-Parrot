@@ -45,7 +45,7 @@ FLUSH PRIVILEGES;
 4. Modifiez la variable `DATABASE_URL` dans le fichier `.env` avec vos informations de connexion :
 
 ```env
-DATABASE_URL=mysql://vparrot:2C5rbvC6m3B3hA@localhost:3306/GarageVParrot
+DATABASE_URL=mysql://vparrot:lemotdepasse@localhost:3306/GarageVParrot
 ```
 
 ## Installation des Modules Node.js avec npm
