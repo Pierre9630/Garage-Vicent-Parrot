@@ -159,7 +159,7 @@ class OfferController extends AbstractController
 
     #[Route('/edit/{id}', name: 'app_offers_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Offer $offer, EntityManagerInterface $entityManager,
-                         PictureService $pictureService): Response
+                         FileUploader $fileUploader): Response
     {
         $offer= $entityManager->getRepository(Offer::class)->find($offer->getId());
         if (!$offer) {
@@ -175,9 +175,16 @@ class OfferController extends AbstractController
 
             if (!empty($images)) {
                 $folder = 'cars';
+                $delImages = $offer->getImages();
+                // Supprimer chaque image associée
+                foreach ($delImages as $image) {
 
+                    $fileUploader->delete($image->getName());
+                    $offer->removeImage($image);
+                }
                 foreach ($images as $image) {
-                    $file = $pictureService->add($image, $folder);
+
+                    $file = $fileUploader->upload($image);
 
                     $img = new Image();
                     $img->setName($file);
