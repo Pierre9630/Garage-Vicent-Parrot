@@ -12,15 +12,15 @@
                     {% for image in offer.images %}
                         {% if loop.first %}
                             <div class="img-fluid carousel-item active">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
                             </div>
                         {% elseif loop.last %}
                             <div class="img-fluid carousel-item">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
                             </div>
                         {% else %}
                             <div class="img-fluid carousel-item">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploadscars/') ~ image.name }}" alt="slide">
+                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
                             </div>
                         {% endif %}
                     {% endfor %}

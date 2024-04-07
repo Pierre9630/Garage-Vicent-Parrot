@@ -13,9 +13,11 @@ use App\Repository\ContactRepository;
 use App\Repository\OfferRepository;
 use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Package;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,7 +50,7 @@ class OfferController extends AbstractController
 
     #[Route('/new', name: 'app_offers_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,
-                        PictureService $pictureService): Response
+                         FileUploader $fileUploader): Response
     {
         //  Instanciate class Offer Instancier la classe Offer
         $offer = new Offer();
@@ -70,12 +72,14 @@ class OfferController extends AbstractController
             //Add images On rajoute les images
             $images = $form->get('images')->getData();
             foreach ($images as $image) {
+
+                $file = $fileUploader->upload($image);
                 // Define target folder définir le dossier de destination
-                $folder = 'cars';
+                //$folder = '/assets/uploadcars/';
 
                 // Call PictureService Appel du Service PictureService.php
-                $file = $pictureService->add($image, $folder);
-
+                //$file = $pictureService->add($image);
+                //dd($folder . $file);
                 $img = new Image();
                 $img->setName($file);
                 $offer->addImage($img);
@@ -155,7 +159,7 @@ class OfferController extends AbstractController
 
     #[Route('/edit/{id}', name: 'app_offers_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Offer $offer, EntityManagerInterface $entityManager,
-                         PictureService $pictureService, OpeningHourRepository $oh, ContactRepository $cr): Response
+                         PictureService $pictureService): Response
     {
         $offer= $entityManager->getRepository(Offer::class)->find($offer->getId());
         if (!$offer) {
@@ -202,13 +206,18 @@ class OfferController extends AbstractController
 
     #[Route('/delete/{id}', name: 'app_offers_delete', methods: ['POST'])]
     public function delete(Request $request, Offer $offer, EntityManagerInterface $entityManager,
-                           PictureService $pictureService): Response
+                           FileUploader $fileUploader): Response
     {
         if ($this->isCsrfTokenValid('delete' . $offer->getId(), $request->request->get('_token'))) {
             $images = $offer->getImages();
             // Supprimer chaque image associée
             foreach ($images as $image) {
-                $pictureService->delete($image->getName());
+                // Define target folder définir le dossier de destination
+                $folder = '/assets/uploadcars/';
+                //dd($folder . $image->getName());
+                //$pictureService->delete($image->getName(),$folder);
+                $fileUploader->delete($image->getName());
+
             }
 
             $entityManager->remove($offer);

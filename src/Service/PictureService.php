@@ -36,6 +36,7 @@ class PictureService
         // Move original image in the target folder Déplacer l'image originale vers le dossier de destination
         $path = $this->params->get('images_directory') . $folder;
 
+        //dd($path);
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         }

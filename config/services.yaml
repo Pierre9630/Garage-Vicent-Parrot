@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
-    images_directory: '%kernel.project_dir%/public/assets/uploads'
+    app.path.images_directory: '%kernel.project_dir%/public/assets/uploads'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -40,3 +40,6 @@ services:
 
     Liip\ImagineBundle\Binary\Loader\LoaderInterface:
         alias: liip_imagine.binary.loader.default
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%app.path.images_directory%'
