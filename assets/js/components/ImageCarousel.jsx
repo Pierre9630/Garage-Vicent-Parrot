@@ -10,7 +10,7 @@ export default function ImageCarousel(props) {
     <Carousel prevLabel nextLabel indicators={null} >
     
       {imageList.map(image => (<Carousel.Item key={image.id}>
-        <Image src={`/assets/uploadscars/${image.name}`} thumbnail />
+        <Image src={`/assets/uploads/${image.name}`} thumbnail />
       </Carousel.Item>))}
 
     </Carousel>
