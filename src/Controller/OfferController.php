@@ -11,17 +11,15 @@ use App\Form\OfferEditType;
 use App\Form\OfferType;
 use App\Repository\ContactRepository;
 use App\Repository\OfferRepository;
-use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Asset\Package;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\PictureService;
+
 
 #[Route('/offers')]
 class OfferController extends AbstractController

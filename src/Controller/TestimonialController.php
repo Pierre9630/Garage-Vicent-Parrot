@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/testimonial')]
 class TestimonialController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -105,7 +105,8 @@ class TestimonialController extends AbstractController
     }
 
     #[Route('/sucess', name: 'app_testimonial_index_sucess', methods: ['GET'])]
-    public function sucess(){
+    public function sucess(): RedirectResponse
+    {
 
         return $this->redirectToRoute('app_index', [], Response::HTTP_SEE_OTHER);
 
@@ -151,7 +152,8 @@ class TestimonialController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
             } else {
-                // If user connected go to previous page Si c'est un utilisateur, retour à la page précédente s'il existe
+                // If user connected go to previous page Si c'est un utilisateur,
+                // retour à la page précédente s'il existe
                 $referer = $request->headers->get('referer');
                 if ($referer) {
                     $entityManager->remove($testimonial);

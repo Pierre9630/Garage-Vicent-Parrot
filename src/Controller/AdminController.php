@@ -2,17 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Offer;
+
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\AdminType;
 use App\Repository\ContactRepository;
-use App\Repository\InformationRepository;
-use App\Repository\OpeningHourRepository;
 use App\Repository\TestimonialRepository;
 use App\Repository\UserRepository;
 use App\Service\DataService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +22,7 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -85,7 +82,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_show', methods: ['GET'])]
-    public function show(User $admin,OpeningHourRepository $oh): Response
+    public function show(User $admin): Response
     {
         return $this->render('admin/show.html.twig', [
             'user' => $admin,
@@ -135,7 +132,6 @@ class AdminController extends AbstractController
     #[Route('/dashboard', name: 'app_admin_dash', methods: ['POST'])]
     public function dash( UserRepository $userRepository): Response
     {
-        //$repository = $entityManager->getRepository(Offer::class);
 
         return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),

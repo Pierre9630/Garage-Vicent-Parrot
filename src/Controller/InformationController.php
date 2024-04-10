@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Information;
 use App\Form\InformationType;
 use App\Repository\InformationRepository;
-use App\Repository\OpeningHourRepository;
 use App\Service\DataService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

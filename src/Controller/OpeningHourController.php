@@ -15,7 +15,7 @@ use App\Service\DataService;
 #[Route('/openinghours')]
 class OpeningHourController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -52,7 +52,7 @@ class OpeningHourController extends AbstractController
         
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $openingHours = $form->getData(); // Get openinghours object Obtenir l'objet OpeningHours complet
+
             if ($form->get('nullifyMorning')->getData()) {
                 $openingHour->setMorningOpen(null);
                 $openingHour->setMorningClose(null);
@@ -62,14 +62,6 @@ class OpeningHourController extends AbstractController
                 $openingHour->setAfternoonOpen(null);
                 $openingHour->setAfternoonClose(null);
             }
-            $selectedDayOfWeek = $openingHours->getDayOfWeek();
-            // Get day of week in string form Obtenir le jour de la semaine sélectionné sous forme de chaîne
-             // get day of week in english Récupérer la valeur de dayOfWeek en anglais
-            $englishDay = $openingHour->getDayOfWeek();
-
-        // Traduce day of weeks in french Traduire la valeur en français à partir du tableau de traduction
-            //$frenchDay = $WeekDayTrans[$englishDay];
-
 
             $entityManager->flush();
 

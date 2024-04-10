@@ -6,24 +6,32 @@
     <section class="gradient-custom">
         <div class="container my-5 py-5 fixed-height-carousel">
             <h1>{{ offer.offertitle }}</h1>
-            {% if offer.images is not empty %}
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    {% for image in offer.images %}
-                        {% if loop.first %}
-                            <div class="img-fluid carousel-item active">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
-                            </div>
-                        {% elseif loop.last %}
-                            <div class="img-fluid carousel-item">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
-                            </div>
-                        {% else %}
-                            <div class="img-fluid carousel-item">
-                                <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ image.name }}" alt="slide">
-                            </div>
+                    {% if offer.images is empty %}
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="{{ asset('assets/Images/default.jpg') }}" alt="{{ offer.offertitle }}">
+                        </div>
+                    {% else %}
+                        {% if offer.images is not empty %}
+                            {% for image in offer.images %}
+                                {% if loop.first %}
+                                    <div class="img-fluid carousel-item active">
+                                        <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ (image.name ?: 'default.jpg') }}" alt="{{ offer.offertitle }}">
+                                    </div>
+                                {% elseif loop.last %}
+                                    <div class="img-fluid carousel-item">
+                                        <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ (image.name ?: 'default.jpg') }}" alt="{{ offer.offertitle }}">
+                                    </div>
+                                {% else %}
+                                    <div class="img-fluid carousel-item">
+                                        <img class="img-fluid d-block w-100" src="{{ asset('assets/uploads/') ~ (image.name ?: 'default.jpg') }}" alt="{{ offer.offertitle }}">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
-                    {% endfor %}
+
+
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -66,10 +66,7 @@ class Car
 
 
 
-    public function __construct()
-    {
 
-    }
 
     public function getId(): ?string
     {

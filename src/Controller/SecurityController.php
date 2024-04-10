@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    private $dataService;
+    private DataService $dataService;
 
     public function __construct(DataService $dataService)
     {
@@ -29,7 +29,8 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig',
-            ['last_username' => $lastUsername, 'error' => $error, 'openingHours' => $this->dataService->getOpeningHours(),
+            ['last_username' => $lastUsername, 'error' => $error, 'openingHours' =>
+                $this->dataService->getOpeningHours(),
             'information' => $this->dataService->getActiveInformation()]);
     }
 
